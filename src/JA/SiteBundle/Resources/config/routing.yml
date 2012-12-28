@@ -1,0 +1,3 @@
+ja_site_homepage:
+    pattern:  /
+    defaults: { _controller: JASiteBundle:Default:index }

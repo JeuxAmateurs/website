@@ -14,21 +14,28 @@ use JA\NewsBundle\Form\NewsType;
  */
 class NewsController extends Controller
 {
-    /**
-     * Lists all News entities.
+	/**
+     * Displays all News entities in a page.
      *
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        return $this->render('JANewsBundle:News:index.html.twig');
+    }
+	
+	/**
+     * Displays all News entities.
+     *
+     */
+    public function listAction()
+    {
+		$em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('JANewsBundle:News')->findAll();
-
-        return $this->render('JANewsBundle:News:index.html.twig', array(
-            'entities' => $entities,
-        ));
+		
+        return $this->render('JANewsBundle:News:list.html.twig', array('entities' => $entities));
     }
-
+	
     /**
      * Finds and displays a News entity.
      *

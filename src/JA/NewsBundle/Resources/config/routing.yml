@@ -1,0 +1,3 @@
+ja_news:
+    resource: "routing/news.yml"
+    prefix:   /

@@ -1,0 +1,50 @@
+{% extends "JANewsBundle::layout.html.twig" %}
+
+{% block content %}
+	<h3>News</h3>
+	<p>Ici c'est la page de toutes les news !</p>
+
+	<table class="records_list">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Title</th>
+				<th>Slug</th>
+				<th>Content</th>
+				<th>Createdat</th>
+				<th>Updatedat</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for entity in entities %}
+			<tr>
+				<td>{{ entity.id }}</td>
+				<td>{{ entity.title }}</td>
+				<td><a href="{{ path('news_show', { 'slug': entity.slug }) }}">{{ entity.slug }}</a></td>
+				<td>{{ entity.content }}</td>
+				<td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+				<td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+				<td>
+					<ul>
+						<li>
+							<a href="{{ path('news_show', { 'slug': entity.slug }) }}">show</a>
+						</li>
+						<li>
+							<a href="{{ path('news_edit', { 'slug': entity.slug }) }}">edit</a>
+						</li>
+					</ul>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<ul>
+		<li>
+			<a href="{{ path('news_new') }}">
+				Create a new entry
+			</a>
+		</li>
+	</ul>
+{% endblock %}

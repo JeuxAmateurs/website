@@ -1,3 +1,7 @@
+ja_news:
+    resource: "@JANewsBundle/Resources/config/routing.yml"
+    prefix:   /news
+
 ja_site:
     resource: "@JASiteBundle/Resources/config/routing.yml"
     prefix:   /

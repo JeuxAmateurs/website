@@ -1,3 +1,7 @@
+ja_game:
+    resource: "@JAGameBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ja_news:
     resource: "@JANewsBundle/Resources/config/routing.yml"
     prefix:   /news

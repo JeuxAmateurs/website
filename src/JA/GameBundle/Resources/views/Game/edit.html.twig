@@ -1,0 +1,28 @@
+{% extends "JAGameBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} - Edit {{ entity.title }} {% endblock %}
+
+{% block content %}
+	<h3>Game edit</h3>
+
+	<form action="{{ path('game_update', { 'id': entity.id, 'slug': entity.slug }) }}" method="post" {{ form_enctype(edit_form) }}>
+		{{ form_widget(edit_form) }}
+		<p>
+			<button type="submit">Edit</button>
+		</p>
+	</form>
+
+	<ul class="record_actions">
+		<li>
+			<a href="{{ path('game') }}">
+				Back to the list
+			</a>
+		</li>
+		<li>
+			<form action="{{ path('game_delete', { 'id': entity.id, 'slug': entity.slug }) }}" method="post">
+				{{ form_widget(delete_form) }}
+				<button type="submit">Delete</button>
+			</form>
+		</li>
+	</ul>
+{% endblock %}

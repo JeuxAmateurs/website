@@ -1,0 +1,67 @@
+{% extends "JAGameBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} - {{ entity.title }} {% endblock %}
+
+{% block content %}
+	<h3>{{ entity.title }}</h3>
+
+	<table class="record_properties">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ entity.id }}</td>
+			</tr>
+			<tr>
+				<th>Title</th>
+				<td>{{ entity.title }}</td>
+			</tr>
+			<tr>
+				<th>Version</th>
+				<td>{{ entity.version }}</td>
+			</tr>
+			<tr>
+				<th>Createdat</th>
+				<td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+			</tr>
+			<tr>
+				<th>Updatedat</th>
+				<td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+			</tr>
+			<tr>
+				<th>Platforms</th>
+				<td>{{ entity.platforms }}</td>
+			</tr>
+			<tr>
+				<th>About</th>
+				<td>{{ entity.about }}</td>
+			</tr>
+			<tr>
+				<th>Download</th>
+				<td>{{ entity.download }}</td>
+			</tr>
+			<tr>
+				<th>Slug</th>
+				<td>{{ entity.slug }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ul class="record_actions">
+		<li>
+			<a href="{{ path('game') }}">
+				Back to the list
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('game_edit', { 'id': entity.id, 'slug': entity.slug }) }}">
+				Edit
+			</a>
+		</li>
+		<li>
+			<form action="{{ path('game_delete', { 'id': entity.id, 'slug': entity.slug }) }}" method="post">
+				{{ form_widget(delete_form) }}
+				<button type="submit">Delete</button>
+			</form>
+		</li>
+	</ul>
+{% endblock %}

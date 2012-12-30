@@ -1,0 +1,38 @@
+game:
+    pattern:  /
+    defaults: { _controller: "JAGameBundle:Game:index" }
+
+game_new:
+    pattern:  /new
+    defaults: { _controller: "JAGameBundle:Game:new" }
+
+game_create:
+    pattern:  /create
+    defaults: { _controller: "JAGameBundle:Game:create" }
+    requirements: { _method: post }
+
+game_edit:
+    pattern:  /{id}-{slug}/edit
+    defaults: { _controller: "JAGameBundle:Game:edit" }
+    requirements:
+        slug: "[a-zA-Z0-9\-_/]+"
+
+game_update:
+    pattern:  /{id}-{slug}/update
+    defaults: { _controller: "JAGameBundle:Game:update" }
+    requirements:
+        _method: post
+        slug: "[a-zA-Z0-9\-_/]+"
+
+game_delete:
+    pattern:  /{id}-{slug}/delete
+    defaults: { _controller: "JAGameBundle:Game:delete" }
+    requirements:
+        _method: post
+        slug: "[a-zA-Z0-9\-_/]+"
+
+game_show:
+    pattern:  /{id}-{slug}
+    defaults: { _controller: "JAGameBundle:Game:show" }
+    requirements:
+        slug: "[a-zA-Z0-9\-_/]+"

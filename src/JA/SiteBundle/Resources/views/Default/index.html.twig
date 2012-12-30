@@ -6,8 +6,19 @@
 	
 	<p>Salut c'est la page d'accueil !</p>
 	
+	<hr />
+	
 	<h4>News</h4>
 	{% render "JANewsBundle:News:list" %}
+	<p><a href="{{ path('news') }}">Voir toutes les news</a></p>
+	
+	<hr />
+	
+	<h4>Games</h4>
+	{% render "JAGameBundle:Game:list" %}
+	<p><a href="{{ path('game') }}">Voir tous les jeux</a></p>
+	
+	<hr />
 	
 	<h4>Ins&eacute;rer l'index d'un bundle ici</h4>
 	<p>Contenu de l'index du bundle.</p>

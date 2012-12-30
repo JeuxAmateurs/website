@@ -1,0 +1,16 @@
+{% extends "JAGameBundle::layout.html.twig" %}
+
+{% block content %}
+	<h3>Games</h3>
+	<p>Ici c'est la page de tous les jeux !</p>
+
+	{% render 'JAGameBundle:Game:list' %}
+	
+	<ul>
+		<li>
+			<a href="{{ path('game_new') }}">
+				Create a new entry
+			</a>
+		</li>
+	</ul>
+{% endblock %}

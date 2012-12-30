@@ -142,7 +142,7 @@ class NewsController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('news_edit', array('slug' => $slug)));
+            return $this->redirect($this->generateUrl('news_show', array('slug' => $entity->getSlug())));
         }
 
         return $this->render('JANewsBundle:News:edit.html.twig', array(

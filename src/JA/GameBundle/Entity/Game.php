@@ -3,6 +3,8 @@
 namespace JA\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Game
@@ -38,6 +40,7 @@ class Game
     /**
      * @var \DateTime
      *
+	 * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
@@ -45,6 +48,7 @@ class Game
     /**
      * @var \DateTime
      *
+	 * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
@@ -53,6 +57,7 @@ class Game
      * @var string
      *
      * @ORM\Column(name="platforms", type="string", length=255)
+	 * @Assert\MinLength(5)
      */
     private $platforms;
 
@@ -60,20 +65,22 @@ class Game
      * @var string
      *
      * @ORM\Column(name="about", type="text")
+	 * @Assert\MinLength(10)
      */
     private $about;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="download", type="string", length=255)
+     * @ORM\Column(name="download", type="string", length=255, nullable=true)
      */
-    private $download;
+    private $download = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+	 * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
 

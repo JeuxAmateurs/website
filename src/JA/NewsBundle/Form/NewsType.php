@@ -12,11 +12,8 @@ class NewsType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('slug')
             ->add('content')
-            ->add('createdAt')
-            ->add('updatedAt')
-			->add('games', 'entity', array('class' => 'JAGameBundle:Game', 'property' => 'title', 'multiple' => true))
+			->add('games', 'entity', array('class' => 'JAGameBundle:Game', 'property' => 'title', 'multiple' => true, 'required' => false))
         ;
     }
 

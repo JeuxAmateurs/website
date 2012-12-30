@@ -1,5 +1,5 @@
 {
-    "hash": "addf2541972b996b4b6ae1658b8e4591",
+    "hash": "49e5561d282b0288876a4b8d99c36f2f",
     "packages": [
         {
             "name": "doctrine/common",
@@ -273,6 +273,67 @@
             "keywords": [
                 "database",
                 "orm"
+            ]
+        },
+        {
+            "name": "gedmo/doctrine-extensions",
+            "version": "v2.3.2",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/l3pp4rd/DoctrineExtensions.git",
+                "reference": "v2.3.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/l3pp4rd/DoctrineExtensions/archive/v2.3.2.zip",
+                "reference": "v2.3.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "doctrine/common": ">=2.1,<2.4-dev"
+            },
+            "suggest": {
+                "doctrine/orm": ">=2.1",
+                "doctrine/mongodb-odm": "*"
+            },
+            "time": "2012-07-13 15:26:40",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Gedmo": "lib/"
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gediminas Morkevicius",
+                    "email": "gediminas.morkevicius@gmail.com"
+                }
+            ],
+            "description": "Doctrine2 behavioral extensions",
+            "homepage": "http://gediminasm.org/",
+            "keywords": [
+                "tree",
+                "behaviors",
+                "doctrine2",
+                "extensions",
+                "gedmo",
+                "sluggable",
+                "loggable",
+                "translatable",
+                "nestedset",
+                "sortable",
+                "timestampable"
             ]
         },
         {
@@ -804,6 +865,69 @@
             "description": "This bundle generates code for you"
         },
         {
+            "name": "stof/doctrine-extensions-bundle",
+            "version": "dev-master",
+            "target-dir": "Stof/DoctrineExtensionsBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stof/StofDoctrineExtensionsBundle",
+                "reference": "4a17550d8b101c5aafc56c9950149aa189b8402d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/stof/StofDoctrineExtensionsBundle/archive/4a17550d8b101c5aafc56c9950149aa189b8402d.zip",
+                "reference": "4a17550d8b101c5aafc56c9950149aa189b8402d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">=2.1,<2.3-dev",
+                "gedmo/doctrine-extensions": "2.3.*"
+            },
+            "suggest": {
+                "doctrine/doctrine-bundle": "*",
+                "doctrine/mongodb-odm-bundle": "2.1.*"
+            },
+            "time": "2012-12-13 17:58:07",
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Stof\\DoctrineExtensionsBundle": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                }
+            ],
+            "description": "Integration of the gedmo/doctrine-extensions with Symfony2",
+            "homepage": "https://github.com/stof/StofDoctrineExtensionsBundle",
+            "keywords": [
+                "tree",
+                "behaviors",
+                "doctrine2",
+                "extensions",
+                "gedmo",
+                "sluggable",
+                "loggable",
+                "translatable",
+                "nestedset",
+                "sortable",
+                "timestampable"
+            ]
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v4.2.2",
             "source": {
@@ -1217,15 +1341,14 @@
             ]
         }
     ],
-    "packages-dev": [
-
-    ],
+    "packages-dev": null,
     "aliases": [
 
     ],
     "minimum-stability": "stable",
     "stability-flags": {
         "twig/extensions": 20,
-        "kriswallsmith/assetic": 20
+        "kriswallsmith/assetic": 20,
+        "stof/doctrine-extensions-bundle": 20
     }
 }

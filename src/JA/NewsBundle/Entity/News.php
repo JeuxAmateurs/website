@@ -3,6 +3,8 @@
 namespace JA\NewsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * News
@@ -25,13 +27,16 @@ class News
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+	 * @Assert\MinLength(10)
+	 * @Assert\MaxLength(255)
      */
     private $title;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="slug", type="string", length=255)
+     * 
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+	 * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
 
@@ -39,12 +44,14 @@ class News
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+	 * @Assert\MinLength(10)
      */
     private $content;
 
     /**
      * @var \DateTime
      *
+	 * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
@@ -52,6 +59,7 @@ class News
     /**
      * @var \DateTime
      *
+	 * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
@@ -60,6 +68,7 @@ class News
      * @var Entity
      *
      * @ORM\ManyToMany(targetEntity="JA\GameBundle\Entity\Game", cascade={"persist"})
+	 * @ORM\JoinColumn(nullable=true)
      */
     private $games;
 

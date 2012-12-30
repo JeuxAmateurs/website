@@ -31,6 +31,18 @@
 				<th>Updatedat</th>
 				<td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
 			</tr>
+			<tr>
+				<th>Games</th>
+				<td>
+					<ul>
+					{% for game in entity.games %}
+						<li><a href="{{ path('game_show', {'id' : game.id, 'slug' : game.slug}) }}">{{ game.title }}</a></li>
+					{% else %}
+						<li>No game here :(.</li>
+					{% endfor %}
+					</ul>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 

@@ -55,6 +55,13 @@ class News
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
+	
+	/**
+     * @var Entity
+     *
+     * @ORM\ManyToMany(targetEntity="JA\GameBundle\Entity\Game", cascade={"persist"})
+     */
+    private $games;
 
 
     /**
@@ -180,5 +187,45 @@ class News
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->games = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add games
+     *
+     * @param \JA\GameBundle\Entity\Game $games
+     * @return News
+     */
+    public function addGame(\JA\GameBundle\Entity\Game $games)
+    {
+        $this->games[] = $games;
+    
+        return $this;
+    }
+
+    /**
+     * Remove games
+     *
+     * @param \JA\GameBundle\Entity\Game $games
+     */
+    public function removeGame(\JA\GameBundle\Entity\Game $games)
+    {
+        $this->games->removeElement($games);
+    }
+
+    /**
+     * Get games
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGames()
+    {
+        return $this->games;
     }
 }

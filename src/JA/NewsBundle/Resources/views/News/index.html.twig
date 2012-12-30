@@ -4,6 +4,13 @@
 	<h3>News</h3>
 	<p>Ici c'est la page de toutes les news !</p>
 
-	{#{% include "JANewsBundle:News:list.html.twig" %}#}
 	{% render 'JANewsBundle:News:list' %}
+	
+	<ul>
+		<li>
+			<a href="{{ path('news_new') }}">
+				Create a new entry
+			</a>
+		</li>
+	</ul>
 {% endblock %}

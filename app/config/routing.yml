@@ -1,6 +1,10 @@
+ja_admin:
+    resource: "@JAAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
 ja_game:
     resource: "@JAGameBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /games
 
 ja_news:
     resource: "@JANewsBundle/Resources/config/routing.yml"

@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new JA\SiteBundle\JASiteBundle(),
             new JA\GameBundle\JAGameBundle(),
             new JA\UserBundle\JAUserBundle(),
+            new JA\AdminBundle\JAAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

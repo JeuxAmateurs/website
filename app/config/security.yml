@@ -3,6 +3,10 @@ jms_security_extra:
     expressions: true
 
 security:
+
+    acl:
+        connection: default
+
     encoders:
         "FOS\UserBundle\Model\UserInterface": sha512
 
@@ -11,11 +15,6 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
         fos_userbundle:
             id: fos_user.user_manager
 
@@ -23,10 +22,6 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
-        #login:
-            #pattern:   ^/(login$|register|resetting)
-            #anonymous: true
         
         main:
             pattern: ^/
@@ -44,3 +39,4 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, role: ROLE_ADMIN }

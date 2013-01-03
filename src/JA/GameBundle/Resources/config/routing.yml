@@ -1,3 +1,3 @@
 ja_game_game:
     resource: "routing/game.yml"
-    prefix: /games
+    prefix: /

@@ -91,6 +91,7 @@ class NewsController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
+			// Get the current user
 			$securityContext = $this->get('security.context');
 			$user = $securityContext->getToken()->getUser();
 			if(!is_object($user))

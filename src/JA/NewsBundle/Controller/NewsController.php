@@ -69,13 +69,25 @@ class NewsController extends Controller
      * Displays a form to create a new News entity.
      * @Secure(roles="ROLE_USER")
      */
-    public function newAction()
+    public function newAction($id_game = null)
     {
-        $entity = new News();
-        $form   = $this->createForm(new NewsType(), $entity);
+        $news = new News();
+		if(null != $id_game)
+		{
+			$em = $this->getDoctrine()->getManager();
+
+			$game = $em->getRepository('JAGameBundle:Game')->find($id_game);
+
+			if (!$game) {
+				throw $this->createNotFoundException('Unable to find Game entity.');
+			}
+			
+			$news->addGame($game);
+		}
+		$form   = $this->createForm(new NewsType(), $news);
 
         return $this->render('JANewsBundle:News:new.html.twig', array(
-            'entity' => $entity,
+            'entity' => $news,
             'form'   => $form->createView(),
         ));
     }
@@ -94,6 +106,7 @@ class NewsController extends Controller
 			// Get the current user
 			$securityContext = $this->get('security.context');
 			$user = $securityContext->getToken()->getUser();
+			$entity->setAuthor($user);
 			if(!is_object($user))
 			{
 				throw new AccessDeniedException('You are not authenticated');

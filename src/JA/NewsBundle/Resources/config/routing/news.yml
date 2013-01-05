@@ -3,8 +3,8 @@ news:
     defaults: { _controller: "JANewsBundle:News:index" }
 
 news_new:
-    pattern:  /new
-    defaults: { _controller: "JANewsBundle:News:new" }
+    pattern:  /new/{id_game}
+    defaults: { _controller: "JANewsBundle:News:new", id_game: null }
 
 news_create:
     pattern:  /create

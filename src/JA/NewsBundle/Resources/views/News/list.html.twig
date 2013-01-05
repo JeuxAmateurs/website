@@ -4,6 +4,7 @@
 			<th>Id</th>
 			<th>Title</th>
 			<th>Slug</th>
+			<th>Author</th>
 			<th>Content</th>
 			<th>Createdat</th>
 			<th>Updatedat</th>
@@ -17,6 +18,7 @@
 			<td>{{ entity.id }}</td>
 			<td>{{ entity.title }}</td>
 			<td><a href="{{ path('news_show', { 'slug': entity.slug }) }}">{{ entity.slug }}</a></td>
+			<td>{{ entity.author.username }}</td>
 			<td>{{ entity.content }}</td>
 			<td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
 			<td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>

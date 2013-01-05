@@ -71,6 +71,14 @@ class News
 	 * @ORM\JoinColumn(nullable=true)
      */
     private $games;
+	
+	/**
+     * @var Entity
+     *
+     * @ORM\ManyToOne(targetEntity="JA\UserBundle\Entity\User", inversedBy="news", cascade={"persist"})
+	 * @ORM\JoinColumn(nullable=true)
+     */
+    private $author;
 
 
     /**
@@ -237,5 +245,29 @@ class News
     public function getGames()
     {
         return $this->games;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \JA\UserBundle\Entity\User $author
+     * @return News
+     */
+    public function setAuthor(\JA\UserBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+		$author->addNew($this);
+    
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \JA\UserBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }

@@ -57,6 +57,12 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	{% if is_granted('CREATE', entity) %}
+	<ul>
+		{% if is_granted('ROLE_USER') %}<li><a href="{{ path('news_new', {'id_game' : entity.id}) }}">Add news</a></li>{% endif %}
+	</ul>
+	{% endif %}
 
 	<ul class="record_actions">
 		<li>
@@ -66,7 +72,7 @@
 		</li>
 		<li>
 			{% if is_granted('EDIT', entity) %}
-                <a href="{{ path('game_show', { 'id': entity.id, 'slug': entity.slug }) }}">show</a>
+                <a href="{{ path('game_edit', { 'id': entity.id, 'slug': entity.slug }) }}">Edit</a>
 			{% else %}
 				<p>Pas les droits d'&eacute;dition :/</p>
 			{% endif %}

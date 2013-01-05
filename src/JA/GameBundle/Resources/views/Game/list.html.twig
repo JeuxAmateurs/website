@@ -10,6 +10,7 @@
             <th>About</th>
             <th>Download</th>
             <th>Slug</th>
+            <th>News</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -25,6 +26,15 @@
             <td>{{ entity.about }}</td>
             <td>{{ entity.download }}</td>
             <td>{{ entity.slug }}</td>
+            <td>
+				<ul>
+				{% for news in entity.news %}
+					<li><a href="{{ path('news_show', {'slug' : news.slug}) }}">{{ news.title }}</a></li>
+				{% else %}
+					<li>No news related. :(</li>
+				{% endfor %}
+				</ul>
+			</td>
             <td>
                 <ul>
                     <li>

@@ -43,6 +43,18 @@
 				<th>Slug</th>
 				<td>{{ entity.slug }}</td>
 			</tr>
+			<tr>
+				<th>News</th>
+				<td>
+					<ul>
+					{% for news in entity.news %}
+						<li><a href="{{ path('news_show', {'slug' : news.slug}) }}">{{ news.title }}</a></li>
+					{% else %}
+						<li>No news here :(.</li>
+					{% endfor %}
+					</ul>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 

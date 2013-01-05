@@ -4,6 +4,14 @@ namespace JA\NewsBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\Security\Acl\Voter\FieldVote;
+
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use JA\NewsBundle\Entity\News;
 use JA\NewsBundle\Form\NewsType;
@@ -59,7 +67,7 @@ class NewsController extends Controller
 
     /**
      * Displays a form to create a new News entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
@@ -74,7 +82,7 @@ class NewsController extends Controller
 
     /**
      * Creates a new News entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
     {
@@ -83,9 +91,35 @@ class NewsController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
+			$securityContext = $this->get('security.context');
+			$user = $securityContext->getToken()->getUser();
+			if(!is_object($user))
+			{
+				throw new AccessDeniedException('You are not authenticated');
+			}
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+			
+			// Build the bidirectional relation
+			$games = $form['games']->getData();
+			foreach($games as $game)
+			{
+				$entity->addGame($game);
+			}
+			
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+			
+			$aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($entity);
+            $acl = $aclProvider->createAcl($objectIdentity);
+			
+			$roleSecurityIdentity = new RoleSecurityIdentity('ROLE_ADMIN');
+			$acl->insertObjectAce($roleSecurityIdentity, MaskBuilder::MASK_MASTER);
+			
+			$acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+			// $acl->insertObjectFieldAce('title', $securityIdentity, MaskBuilder::MASK_VIEW);
+            $aclProvider->updateAcl($acl);
 
             return $this->redirect($this->generateUrl('news_show', array('slug' => $entity->getSlug())));
         }
@@ -98,7 +132,7 @@ class NewsController extends Controller
 
     /**
      * Displays a form to edit an existing News entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction($slug)
     {
@@ -109,6 +143,16 @@ class NewsController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find News entity.');
         }
+		
+		$securityContext = $this->get('security.context');
+        if (false === $securityContext->isGranted('EDIT', $entity))
+        {
+            throw new AccessDeniedException('You don\'t have permissions to do this');
+        }
+		/* if (false === $securityContext->isGranted('EDIT', new FieldVote($entity, 'id')))
+        {
+            throw new AccessDeniedException('You don\'t have permissions to do this');
+        } */
 
         $editForm = $this->createForm(new NewsType(), $entity);
         $deleteForm = $this->createDeleteForm($slug);
@@ -122,7 +166,7 @@ class NewsController extends Controller
 
     /**
      * Edits an existing News entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, $slug)
     {
@@ -132,6 +176,12 @@ class NewsController extends Controller
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find News entity.');
+        }
+		
+		$securityContext = $this->get('security.context');
+        if (false === $securityContext->isGranted('EDIT', $entity))
+        {
+            throw new AccessDeniedException('You don\'t have permissions to do this');
         }
 
         $deleteForm = $this->createDeleteForm($slug);
@@ -154,7 +204,7 @@ class NewsController extends Controller
 
     /**
      * Deletes a News entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Request $request, $slug)
     {
@@ -168,6 +218,12 @@ class NewsController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find News entity.');
             }
+			
+			$securityContext = $this->get('security.context');
+			if (false === $securityContext->isGranted('DELETE', $entity))
+			{
+				throw new AccessDeniedException('You don\'t have permissions to do this');
+			}
 
             $em->remove($entity);
             $em->flush();

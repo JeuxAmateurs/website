@@ -83,6 +83,14 @@ class Game
 	 * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
+	
+	/**
+     * @var Entity
+     *
+     * @ORM\ManyToMany(targetEntity="JA\NewsBundle\Entity\News", inversedBy="games", cascade={"persist"})
+	 * @ORM\JoinColumn(nullable=true)
+     */
+    private $news;
 
 
     /**
@@ -277,5 +285,45 @@ class Game
     public function getSlug()
     {
         return $this->slug;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->news = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add news
+     *
+     * @param \JA\NewsBundle\Entity\News $news
+     * @return Game
+     */
+    public function addNew(\JA\NewsBundle\Entity\News $news)
+    {
+        $this->news[] = $news;
+    
+        return $this;
+    }
+
+    /**
+     * Remove news
+     *
+     * @param \JA\NewsBundle\Entity\News $news
+     */
+    public function removeNew(\JA\NewsBundle\Entity\News $news)
+    {
+        $this->news->removeElement($news);
+    }
+
+    /**
+     * Get news
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNews()
+    {
+        return $this->news;
     }
 }

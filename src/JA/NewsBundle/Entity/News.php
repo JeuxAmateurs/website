@@ -67,7 +67,7 @@ class News
 	/**
      * @var Entity
      *
-     * @ORM\ManyToMany(targetEntity="JA\GameBundle\Entity\Game", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="JA\GameBundle\Entity\Game", mappedBy="news", cascade={"persist"})
 	 * @ORM\JoinColumn(nullable=true)
      */
     private $games;
@@ -208,12 +208,13 @@ class News
     /**
      * Add games
      *
-     * @param \JA\GameBundle\Entity\Game $games
+     * @param \JA\GameBundle\Entity\Game $game
      * @return News
      */
-    public function addGame(\JA\GameBundle\Entity\Game $games)
+    public function addGame(\JA\GameBundle\Entity\Game $game)
     {
-        $this->games[] = $games;
+		$game->addNew($this);
+        $this->games[] = $game;
     
         return $this;
     }
@@ -221,11 +222,11 @@ class News
     /**
      * Remove games
      *
-     * @param \JA\GameBundle\Entity\Game $games
+     * @param \JA\GameBundle\Entity\Game $game
      */
-    public function removeGame(\JA\GameBundle\Entity\Game $games)
+    public function removeGame(\JA\GameBundle\Entity\Game $game)
     {
-        $this->games->removeElement($games);
+        $this->games->removeElement($game);
     }
 
     /**

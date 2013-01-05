@@ -65,15 +65,21 @@
 			</a>
 		</li>
 		<li>
-			<a href="{{ path('game_edit', { 'id': entity.id, 'slug': entity.slug }) }}">
-				Edit
-			</a>
+			{% if is_granted('EDIT', entity) %}
+                <a href="{{ path('game_show', { 'id': entity.id, 'slug': entity.slug }) }}">show</a>
+			{% else %}
+				<p>Pas les droits d'&eacute;dition :/</p>
+			{% endif %}
 		</li>
 		<li>
-			<form action="{{ path('game_delete', { 'id': entity.id, 'slug': entity.slug }) }}" method="post">
-				{{ form_widget(delete_form) }}
-				<button type="submit">Delete</button>
-			</form>
+			{% if is_granted('DELETE', entity) %}
+				<form action="{{ path('game_delete', { 'id': entity.id, 'slug': entity.slug }) }}" method="post">
+					{{ form_widget(delete_form) }}
+					<button type="submit">Delete</button>
+				</form>
+			{% else %}
+				<p>Pas les droits de suppression :/</p>
+			{% endif %}
 		</li>
 	</ul>
 {% endblock %}

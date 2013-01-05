@@ -41,7 +41,11 @@
                         <a href="{{ path('game_show', { 'id': entity.id, 'slug': entity.slug }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('game_edit', { 'id': entity.id, 'slug': entity.slug }) }}">edit</a>
+                        {% if is_granted('EDIT', entity) %}
+							<a href="{{ path('game_edit', { 'id': entity.id, 'slug': entity.slug }) }}">edit</a>
+						{% else %}
+							<p>Pas les droits d'&eacute;dition :/</p>
+						{% endif %}
                     </li>
                 </ul>
             </td>

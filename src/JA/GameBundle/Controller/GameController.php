@@ -4,6 +4,14 @@ namespace JA\GameBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Domain\RoleSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\Security\Acl\Voter\FieldVote;
+
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use JA\GameBundle\Entity\Game;
 use JA\GameBundle\Form\GameType;
@@ -59,7 +67,7 @@ class GameController extends Controller
 
     /**
      * Displays a form to create a new Game entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function newAction()
     {
@@ -74,7 +82,7 @@ class GameController extends Controller
 
     /**
      * Creates a new Game entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function createAction(Request $request)
     {
@@ -83,9 +91,29 @@ class GameController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
+			// Get the current user
+			$securityContext = $this->get('security.context');
+			$user = $securityContext->getToken()->getUser();
+			if(!is_object($user))
+			{
+				throw new AccessDeniedException('You are not authenticated');
+			}
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+			
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+			
+			$aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($entity);
+            $acl = $aclProvider->createAcl($objectIdentity);
+			
+			$roleSecurityIdentity = new RoleSecurityIdentity('ROLE_ADMIN');
+			$acl->insertObjectAce($roleSecurityIdentity, MaskBuilder::MASK_MASTER);
+			
+			$acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+			// $acl->insertObjectFieldAce('title', $securityIdentity, MaskBuilder::MASK_VIEW);
+            $aclProvider->updateAcl($acl);
 
             return $this->redirect($this->generateUrl('game_show', array('id' => $entity->getId(), 'slug' => $entity->getSlug())));
         }
@@ -98,7 +126,7 @@ class GameController extends Controller
 
     /**
      * Displays a form to edit an existing Game entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function editAction($id, $slug)
     {
@@ -122,7 +150,7 @@ class GameController extends Controller
 
     /**
      * Edits an existing Game entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function updateAction(Request $request, $id, $slug)
     {
@@ -154,7 +182,7 @@ class GameController extends Controller
 
     /**
      * Deletes a Game entity.
-     *
+     * @Secure(roles="ROLE_USER")
      */
     public function deleteAction(Request $request, $id, $slug)
     {

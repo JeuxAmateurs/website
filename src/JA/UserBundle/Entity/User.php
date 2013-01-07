@@ -35,6 +35,7 @@ class User extends BaseUser
     public function __construct()
     {
         $this->news = new \Doctrine\Common\Collections\ArrayCollection();
+		parent::__construct();
     }
     
     /**

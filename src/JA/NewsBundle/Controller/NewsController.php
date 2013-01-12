@@ -52,7 +52,7 @@ class NewsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('JANewsBundle:News')->findOneBySlug($slug);
+        $entity = $em->getRepository('JANewsBundle:News')->findOneWithAllDependencies($slug);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find News entity.');

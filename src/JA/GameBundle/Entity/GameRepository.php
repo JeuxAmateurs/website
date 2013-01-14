@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class GameRepository extends EntityRepository
 {
+	function findOneWithAllDependencies($id)
+	{
+		return $this->createQueryBuilder('g')
+					->where(':id = g.id')
+					->setParameter('id', $id)
+					->innerJoin('g.news', 'n')
+					->addSelect('n')
+					->getQuery()
+					->getSingleResult();
+	}
+	
+	function findAllWithAllDependencies()
+	{
+		return $this->createQueryBuilder('g')
+					->innerJoin('g.news', 'n')
+					->addSelect('n')
+					->getQuery()
+					->getResult();
+	}
 }

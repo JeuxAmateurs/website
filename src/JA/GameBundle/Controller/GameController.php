@@ -39,7 +39,7 @@ class GameController extends Controller
     {
 		$em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('JAGameBundle:Game')->findAll();
+        $entities = $em->getRepository('JAGameBundle:Game')->findAllWithAllDependencies();
 		
         return $this->render('JAGameBundle:Game:list.html.twig', array('entities' => $entities));
     }
@@ -52,7 +52,7 @@ class GameController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('JAGameBundle:Game')->find($id);
+        $entity = $em->getRepository('JAGameBundle:Game')->findOneWithAllDependencies($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Game entity.');

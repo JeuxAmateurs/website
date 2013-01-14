@@ -24,4 +24,15 @@ class NewsRepository extends EntityRepository
 					->getQuery()
 					->getSingleResult();
 	}
+	
+	function findAllWithAllDependencies()
+	{
+		return $this->createQueryBuilder('n')
+					->innerJoin('n.games', 'g')
+					->addSelect('g')
+					->innerJoin('n.author', 'a')
+					->addSelect('a')
+					->getQuery()
+					->getResult();
+	}
 }

@@ -39,7 +39,7 @@ class NewsController extends Controller
     {
 		$em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('JANewsBundle:News')->findAll();
+        $entities = $em->getRepository('JANewsBundle:News')->findAllWithAllDependencies();
 		
         return $this->render('JANewsBundle:News:list.html.twig', array('entities' => $entities));
     }

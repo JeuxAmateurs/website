@@ -17,7 +17,7 @@ class GameRepository extends EntityRepository
 		return $this->createQueryBuilder('g')
 					->where(':id = g.id')
 					->setParameter('id', $id)
-					->innerJoin('g.news', 'n')
+					->leftJoin('g.news', 'n')
 					->addSelect('n')
 					->getQuery()
 					->getSingleResult();

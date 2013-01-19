@@ -1,0 +1,43 @@
+{% extends "JAGameBundle::layout.html.twig" %}
+
+{% block content %}
+	<h3>GameSheet list</h3>
+
+	<table class="records_list">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Project Name</th>
+				<th>Developer</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for entity in entities %}
+			<tr>
+				<td><a href="{{ path('gamesheet_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+				<td>{{ entity.projectName }}</td>
+				<td>{{ entity.developer }}</td>
+				<td>
+					<ul>
+						<li>
+							<a href="{{ path('gamesheet_show', { 'id': entity.id }) }}">show</a>
+						</li>
+						<li>
+							<a href="{{ path('gamesheet_edit', { 'id': entity.id }) }}">edit</a>
+						</li>
+					</ul>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<ul>
+		<li>
+			<a href="{{ path('gamesheet_new') }}">
+				Create a new entry
+			</a>
+		</li>
+	</ul>
+{% endblock %}

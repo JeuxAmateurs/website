@@ -1,0 +1,30 @@
+gamesheet:
+    pattern:  /
+    defaults: { _controller: "JAGameBundle:GameSheet:index" }
+
+gamesheet_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "JAGameBundle:GameSheet:show" }
+
+gamesheet_new:
+    pattern:  /new
+    defaults: { _controller: "JAGameBundle:GameSheet:new" }
+
+gamesheet_create:
+    pattern:  /create
+    defaults: { _controller: "JAGameBundle:GameSheet:create" }
+    requirements: { _method: post }
+
+gamesheet_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "JAGameBundle:GameSheet:edit" }
+
+gamesheet_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "JAGameBundle:GameSheet:update" }
+    requirements: { _method: post }
+
+gamesheet_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "JAGameBundle:GameSheet:delete" }
+    requirements: { _method: post }

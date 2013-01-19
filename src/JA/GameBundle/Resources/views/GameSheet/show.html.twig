@@ -1,0 +1,43 @@
+{% extends "JAGameBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} - {{ entity.projectName }} {% endblock %}
+
+{% block content %}
+	<h3>GameSheet</h3>
+
+	<table class="record_properties">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ entity.id }}</td>
+			</tr>
+			<tr>
+				<th>Project Name</th>
+				<td>{{ entity.projectName }}</td>
+			</tr>
+			<tr>
+				<th>Developer</th>
+				<td>{{ entity.developer }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ul class="record_actions">
+		<li>
+			<a href="{{ path('gamesheet') }}">
+				Back to the list
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('gamesheet_edit', { 'id': entity.id }) }}">
+				Edit
+			</a>
+		</li>
+		<li>
+			<form action="{{ path('gamesheet_delete', { 'id': entity.id }) }}" method="post">
+				{{ form_widget(delete_form) }}
+				<button type="submit">Delete</button>
+			</form>
+		</li>
+	</ul>
+{% endblock %}

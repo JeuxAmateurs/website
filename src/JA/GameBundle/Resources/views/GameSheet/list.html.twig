@@ -1,0 +1,28 @@
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Developer</th>
+			<th>Project Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('gamesheet_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.developer }}</td>
+            <td>{{ entity.projectName }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('gamesheet_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('gamesheet_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

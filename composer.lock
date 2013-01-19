@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-    "hash": "61f0d726604d99aba88232c99ea28ec4",
-=======
-    "hash": "4417050623803a082ae6c927ab4a3e3f",
->>>>>>> a8316a75b886f420038dff0ecd57bf3da7de6bf4
+    "hash": "b901fc484f4e6dce06fb064fa3065d98",
     "packages": [
         {
             "name": "doctrine/common",
@@ -347,27 +343,35 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.3.2",
+            "version": "v2.3.3",
             "source": {
                 "type": "git",
                 "url": "git://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "v2.3.2"
+                "reference": "v2.3.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/l3pp4rd/DoctrineExtensions/archive/v2.3.2.zip",
-                "reference": "v2.3.2",
+                "url": "https://github.com/l3pp4rd/DoctrineExtensions/archive/v2.3.3.zip",
+                "reference": "v2.3.3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "doctrine/common": ">=2.1,<2.4-dev"
+                "doctrine/common": ">=2.2,<2.5-dev"
+            },
+            "require-dev": {
+                "doctrine/mongodb": ">=1.0.0-BETA1",
+                "doctrine/mongodb-odm": ">=1.0.0-BETA6",
+                "doctrine/orm": ">=2.2",
+                "doctrine/dbal": ">=2.2"
             },
             "suggest": {
-                "doctrine/orm": ">=2.1",
-                "doctrine/mongodb-odm": "*"
+                "doctrine/mongodb": ">=1.0.0-BETA1",
+                "doctrine/mongodb-odm": ">=1.0.0-BETA6",
+                "doctrine/orm": ">=2.2",
+                "doctrine/dbal": ">=2.2"
             },
-            "time": "2012-07-13 15:26:40",
+            "time": "2012-12-18 21:02:17",
             "type": "library",
             "extra": {
                 "branch-alias": {

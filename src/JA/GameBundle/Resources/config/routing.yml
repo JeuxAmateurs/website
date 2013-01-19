@@ -1,3 +1,7 @@
+ja_game_gamesheet:
+    resource: "routing/gamesheet.yml"
+    prefix:   /gamesheet
+
 ja_game_game:
     resource: "routing/game.yml"
     prefix: /games

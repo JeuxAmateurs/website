@@ -14,6 +14,12 @@
 	
 	<hr />
 	
+	<h4>Projects</h4>
+	{% render "JAGameBundle:GameSheet:list" %}
+	<p><a href="{{ path('gamesheet') }}">Voir tous les jeux</a></p>
+	
+	<hr />
+	
 	<h4>Games</h4>
 	{% render "JAGameBundle:Game:list" %}
 	<p><a href="{{ path('game') }}">Voir tous les jeux</a></p>

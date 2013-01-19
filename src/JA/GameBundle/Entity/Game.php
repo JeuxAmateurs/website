@@ -27,7 +27,13 @@ class Game
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
-
+	
+    /**
+     * @ORM\ManyToOne(targetEntity="JA\GameBundle\Entity\GameSheet")
+     * @ORM\JoinColumn(nullable=false)
+     */
+	private $gameSheet;
+	
     /**
      * @var string
      *
@@ -270,5 +276,28 @@ class Game
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set gameSheet
+     *
+     * @param \JA\GameBundle\Entity\GameSheet $gameSheet
+     * @return GameSheet
+     */
+    public function setGameSheet(\JA\GameBundle\Entity\GameSheet $gameSheet)
+    {
+        $this->gameSheet = $gameSheet;
+    
+        return $this;
+    }
+
+    /**
+     * Get gameSheet
+     *
+     * @return \JA\GameBundle\Entity\Gamesheet
+     */
+    public function getGameSheet()
+    {
+        return $this->gameSheet;
     }
 }

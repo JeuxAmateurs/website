@@ -19,6 +19,9 @@ class GameType extends AbstractType
             ->add('about')
             ->add('download')
             ->add('slug')
+			->add('gameSheet', 'entity', array(
+				'class' => 'JAGameBundle:GameSheet',
+				'property' => 'projectName'));
         ;
     }
 

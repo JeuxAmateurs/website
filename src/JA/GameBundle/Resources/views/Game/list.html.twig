@@ -11,6 +11,7 @@
             <th>About</th>
             <th>Download</th>
             <th>Slug</th>
+            <th>News</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -28,12 +29,25 @@
             <td>{{ entity.download }}</td>
             <td>{{ entity.slug }}</td>
             <td>
+				<ul>
+				{% for news in entity.news %}
+					<li><a href="{{ path('news_show', {'slug' : news.slug}) }}">{{ news.title }}</a></li>
+				{% else %}
+					<li>No news related. :(</li>
+				{% endfor %}
+				</ul>
+			</td>
+            <td>
                 <ul>
                     <li>
                         <a href="{{ path('game_show', { 'id': entity.id, 'slug': entity.slug }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('game_edit', { 'id': entity.id, 'slug': entity.slug }) }}">edit</a>
+                        {% if is_granted('EDIT', entity) %}
+							<a href="{{ path('game_edit', { 'id': entity.id, 'slug': entity.slug }) }}">edit</a>
+						{% else %}
+							<p>Pas les droits d'&eacute;dition :/</p>
+						{% endif %}
                     </li>
                 </ul>
             </td>

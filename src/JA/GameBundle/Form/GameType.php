@@ -13,8 +13,6 @@ class GameType extends AbstractType
         $builder
             ->add('title')
             ->add('version')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('platforms')
             ->add('about')
             ->add('download')
@@ -22,7 +20,6 @@ class GameType extends AbstractType
 			->add('gameSheet', 'entity', array(
 				'class' => 'JAGameBundle:GameSheet',
 				'property' => 'projectName'));
-        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

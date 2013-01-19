@@ -1,0 +1,3 @@
+ja_admin:
+    pattern:  /
+    defaults: { _controller: "JAAdminBundle:Admin:index" }

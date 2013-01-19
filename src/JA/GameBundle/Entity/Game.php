@@ -3,6 +3,8 @@
 namespace JA\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Game
@@ -44,6 +46,7 @@ class Game
     /**
      * @var \DateTime
      *
+	 * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
@@ -51,6 +54,7 @@ class Game
     /**
      * @var \DateTime
      *
+	 * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
@@ -59,6 +63,7 @@ class Game
      * @var string
      *
      * @ORM\Column(name="platforms", type="string", length=255)
+	 * @Assert\MinLength(5)
      */
     private $platforms;
 
@@ -66,22 +71,32 @@ class Game
      * @var string
      *
      * @ORM\Column(name="about", type="text")
+	 * @Assert\MinLength(10)
      */
     private $about;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="download", type="string", length=255)
+     * @ORM\Column(name="download", type="string", length=255, nullable=true)
      */
-    private $download;
+    private $download = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+	 * @Gedmo\Slug(fields={"title"})
      */
     private $slug;
+	
+	/**
+     * @var Entity
+     *
+     * @ORM\ManyToMany(targetEntity="JA\NewsBundle\Entity\News", inversedBy="games", cascade={"persist"})
+	 * @ORM\JoinColumn(nullable=true)
+     */
+    private $news;
 
 
     /**
@@ -287,11 +302,11 @@ class Game
     public function setGameSheet(\JA\GameBundle\Entity\GameSheet $gameSheet)
     {
         $this->gameSheet = $gameSheet;
-    
-        return $this;
+		
+		return $this;
     }
-
-    /**
+	
+	/**
      * Get gameSheet
      *
      * @return \JA\GameBundle\Entity\Gamesheet
@@ -299,5 +314,45 @@ class Game
     public function getGameSheet()
     {
         return $this->gameSheet;
+	}
+    
+    /**
+     * Add news
+     *
+     * @param \JA\NewsBundle\Entity\News $news
+     * @return Game
+     */
+    public function addNew(\JA\NewsBundle\Entity\News $news)
+    {
+        $this->news[] = $news;
+    
+        return $this;
+    }
+
+    /* Remove news
+     *
+     * @param \JA\NewsBundle\Entity\News $news
+     */
+    public function removeNew(\JA\NewsBundle\Entity\News $news)
+    {
+        $this->news->removeElement($news);
+    }
+
+    /**
+     * Get news
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNews()
+    {
+        return $this->news;
+    }
+	
+	/**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->news = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }

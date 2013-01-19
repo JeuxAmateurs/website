@@ -12,4 +12,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class NewsRepository extends EntityRepository
 {
+	function findOneWithAllDependencies($slug)
+	{
+		return $this->createQueryBuilder('n')
+					->where(':slug = n.slug')
+					->setParameter('slug', $slug)
+					->innerJoin('n.games', 'g')
+					->addSelect('g')
+					->innerJoin('n.author', 'a')
+					->addSelect('a')
+					->getQuery()
+					->getSingleResult();
+	}
+	
+	function findAllWithAllDependencies()
+	{
+		return $this->createQueryBuilder('n')
+					->innerJoin('n.games', 'g')
+					->addSelect('g')
+					->innerJoin('n.author', 'a')
+					->addSelect('a')
+					->getQuery()
+					->getResult();
+	}
 }

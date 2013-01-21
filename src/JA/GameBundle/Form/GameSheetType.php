@@ -11,8 +11,8 @@ class GameSheetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('developer', text)
-			->add('projectName', text)
+            ->add('developer', 'text')
+			->add('projectName', 'text')
         ;
     }
 

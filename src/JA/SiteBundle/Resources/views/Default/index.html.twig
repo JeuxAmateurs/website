@@ -9,19 +9,19 @@
 	<hr />
 	
 	<h4>News</h4>
-	{% render "JANewsBundle:News:list" %}
+	{% render controller("JANewsBundle:News:list") %}
 	<p><a href="{{ path('news') }}">Voir toutes les news</a></p>
 	
 	<hr />
 	
 	<h4>Projects</h4>
-	{% render "JAGameBundle:GameSheet:list" %}
+	{% render controller("JAGameBundle:GameSheet:list") %}
 	<p><a href="{{ path('gamesheet') }}">Voir tous les jeux</a></p>
 	
 	<hr />
 	
 	<h4>Games</h4>
-	{% render "JAGameBundle:Game:list" %}
+	{% render controller("JAGameBundle:Game:list") %}
 	<p><a href="{{ path('game') }}">Voir tous les jeux</a></p>
 	
 	<hr />

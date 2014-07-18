@@ -1,0 +1,10 @@
+{% extends "JAGameBundle::layout.html.twig" %}
+
+{% block title "Hello " %}
+
+{% block content %}
+    <h1>Hello {{ id }} !</h1>
+    <p>
+        {{ dump(game) }}
+    </p>
+{% endblock %}

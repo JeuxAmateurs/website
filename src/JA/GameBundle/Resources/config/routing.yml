@@ -1,0 +1,4 @@
+ja_game_game:
+    type:     rest
+    resource: "JA\GameBundle\Controller\GameController"
+    name_prefix: api_1_

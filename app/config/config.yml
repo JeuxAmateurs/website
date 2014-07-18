@@ -28,6 +28,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
 
 # Assetic Configuration
 assetic:
@@ -67,3 +68,35 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+sensio_framework_extra:
+    view: { annotations: false }
+    router:  { annotations: true }
+
+fos_rest:
+    routing_loader:
+        include_format:       false
+    serializer:
+        serialize_null: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml: true
+            json: true
+        templating_formats:
+            html: true
+    format_listener:
+        rules:
+            - { path: '^/', host: 'api.%domain%', priorities: [json], fallback_format: json, prefer_extension: false }
+            # @todo: find a way to display json in the browser without removing xml
+            - { path: '^/', host: '%domain%', priorities: [html], fallback_format: html, prefer_extension: false }
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+    body_listener: true
+
+nelmio_api_doc:
+    name: JeuxAmateurs API

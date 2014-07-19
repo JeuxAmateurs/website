@@ -11,14 +11,14 @@ class GameHandler implements GameHandlerInterface
     private $om;
     private $entityClass;
     private $repository;
-    private $formFactory;
+    //private $formFactory;
 
-    public function __construct(ObjectManager $om, $entityClass, FormFactoryInterface $formFactory)
+    public function __construct(ObjectManager $om, $entityClass/*, FormFactoryInterface $formFactory*/)
     {
         $this->om = $om;
         $this->entityClass = $entityClass;
         $this->repository = $this->om->getRepository($this->entityClass);
-        $this->formFactory = $formFactory;
+        //$this->formFactory = $formFactory;
     }
 
     /**

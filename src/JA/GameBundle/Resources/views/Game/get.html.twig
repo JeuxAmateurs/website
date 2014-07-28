@@ -1,10 +1,22 @@
 {% extends "JAGameBundle::layout.html.twig" %}
 
-{% block title "Hello " %}
+{% block title "Get Game" %}
 
 {% block content %}
-    <h1>Hello {{ id }} !</h1>
-    <p>
-        {{ dump(game) }}
-    </p>
+    <h1>Get Game : {{ path('api_1_get_game', {'id' : id}) }}</h1>
+    <hr/>
+
+    <p>Game Entity :</p>
+    <ul>
+        <li>name : {{ game.name }}</li>
+        <li>createdAt : {{ game.createdAt | date }}</li>
+        <li>updatedAt : {{ game.updatedAt | date }}</li>
+    </ul>
+
+    <br/>
+
+    <p>Links / Actions :</p>
+    <ul>
+        <li><a href="{{ path('api_1_get_games') }}">Back to all games</a></li>
+    </ul>
 {% endblock %}

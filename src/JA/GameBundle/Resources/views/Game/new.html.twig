@@ -1,0 +1,9 @@
+{% extends "JAGameBundle::layout.html.twig" %}
+
+{% block title "New Game" %}
+
+{% block content %}
+    {% if (form is defined) %}
+        {{ form(form) }}
+    {% endif %}
+{% endblock %}

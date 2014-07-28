@@ -1,0 +1,29 @@
+{% extends "JAGameBundle::layout.html.twig" %}
+
+{% block title "Get Games" %}
+
+{% block content %}
+    <h1>Get games: {{ path('api_1_get_games') }}</h1>
+
+    <hr/>
+
+    <p>Game Collection :</p>
+    <ul>
+        {% for game in games %}
+            <li>
+                <a href="{{ path('api_1_get_game', {id: game.id}) }}">
+                    {{ game.name }}
+                </a>
+            </li>
+        {% else %}
+            <li>No games</li>
+        {% endfor %}
+    </ul>
+
+    <br/>
+
+    <p>Links / Actions :</p>
+    <ul>
+        <li><a href="{{ path('api_1_new_game') }}">Create new game</a></li>
+    </ul>
+{% endblock %}

@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class GameType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -16,8 +16,6 @@ class GameType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
     
@@ -27,7 +25,8 @@ class GameType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'JA\GameBundle\Entity\Game'
+            'data_class' => 'JA\GameBundle\Entity\Game',
+            'csrf_protection' => false,
         ));
     }
 
@@ -36,6 +35,6 @@ class GameType extends AbstractType
      */
     public function getName()
     {
-        return 'ja_gamebundle_game';
+        return '';
     }
 }

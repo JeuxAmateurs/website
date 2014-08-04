@@ -3,6 +3,10 @@
 {% block title "New Game" %}
 
 {% block content %}
+    <h1>New game: {{ path('api_1_new_game') }}</h1>
+
+    <hr/>
+
     {% if (form is defined) %}
         {{ form(form) }}
     {% endif %}

@@ -14,6 +14,8 @@ class GameHandlerTest extends WebTestCase
     protected $om;
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     protected $repository;
+    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    protected $formFactory;
 
     const GAME_CLASS = 'JA\GameBundle\Tests\Handler\DummyGame';
 
@@ -26,6 +28,7 @@ class GameHandlerTest extends WebTestCase
         $class = $this->getMock('Doctrine\Common\Persistence\Mapping\ClassMetadata');
         $this->om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
+        $this->formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
 
         $this->om->expects($this->any())
             ->method('getRepository')
@@ -39,7 +42,17 @@ class GameHandlerTest extends WebTestCase
             ->method('getName')
             ->will($this->returnValue(static::GAME_CLASS));
 
-        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS);
+        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory);
+    }
+
+    public function testGetAll()
+    {
+        $games = array();
+        $this->repository->expects($this->once())
+            ->method('findAll')
+            ->will($this->returnValue($games)); // GameCollection
+
+        $this->gameHandler->getAll(); // call the get.
     }
 
     public function testGet()
@@ -54,9 +67,37 @@ class GameHandlerTest extends WebTestCase
         $this->gameHandler->get($id); // call the get.
     }
 
-    protected function createGameHandler($objectManager, $pageClass)
+    public function testPost()
     {
-        return new GameHandler($objectManager, $pageClass);
+        $parameters = array('name' => 'Yolo');
+
+        $game = $this->getGame();
+        $game->setName($parameters['name']);
+
+        $form = $this->getMock('JA\GameBundle\Tests\Handler\FormInterface');
+        $form->expects($this->once())
+            ->method('submit')
+            ->with($this->anything());
+        $form->expects($this->once())
+            ->method('isValid')
+            ->will($this->returnValue(true));
+        $form->expects($this->once())
+            ->method('getData')
+            ->will($this->returnValue($game));
+
+        $this->formFactory->expects($this->once())
+            ->method('create')
+            ->will($this->returnValue($form));
+
+        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory);
+        $gameFromTest = $this->gameHandler->post($parameters);
+
+        $this->assertEquals($game, $gameFromTest);
+    }
+
+    protected function createGameHandler($objectManager, $pageClass, $formFactory)
+    {
+        return new GameHandler($objectManager, $pageClass, $formFactory);
     }
 
     protected function getGame()
@@ -68,3 +109,5 @@ class GameHandlerTest extends WebTestCase
 }
 
 class DummyGame extends Game {}
+
+interface FormInterface extends \Iterator, \Symfony\Component\Form\FormInterface {}

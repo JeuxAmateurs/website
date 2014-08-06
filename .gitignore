@@ -8,6 +8,7 @@
 !var/logs/.gitkeep
 /build/
 /vendor/
-/bin/
+bin/
+!bin/console
 /composer.phar
 .idea/

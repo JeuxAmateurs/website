@@ -1,5 +1,10 @@
 language: php
 
+addons:
+  hosts:
+    - jeuxamateurs.fr
+    - api.jeuxamateurs.fr
+
 php:
   - 5.3.3
   - 5.3

@@ -33,20 +33,80 @@ class GameControllerTest extends WebTestCase
         $this->client = static::createClient(array(), $this->auth);
     }
 
-    public function testJsonGetGameAction()
+    protected function jsonGetGamesRequest()
     {
-        $this->loadFixtures(array('JA\GameBundle\DataFixtures\ORM\LoadGameData'), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
-        $games = LoadGameData::$games;
-        $game = array_pop($games);
-
-        $route = $this->getUrl('api_1_get_game', array('slug' => $game->getSlug()));
+        $route = $this->getUrl('api_1_get_games');
 
         $this->client->request(
             'GET',
             $route,
             array('Accept' => 'application/json')
         );
-        $response = $this->client->getResponse();
+        return $this->client->getResponse();
+    }
+
+    /**
+     * Test getting the entire game collection
+     */
+    public function testJsonGetGamesAction()
+    {
+        $this->loadFixtures(array('JA\GameBundle\DataFixtures\ORM\LoadGameData'), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+        $games = LoadGameData::$games;
+
+        $response = $this->jsonGetGamesRequest();
+
+        $this->assertJsonResponse($response, 200);
+        $content = $response->getContent();
+
+        $decoded = json_decode($content, true);
+        $this->assertTrue(is_array($decoded), 'The response is not an games array as expected');
+
+        // Same number of elements
+        $this->assertEquals(count($games), count($decoded), 'The number of expected games is not the same as received');
+
+        // Same elements
+        $this->assertEquals($games[0]->getId(), $decoded[0]['id'], 'The expected games are not the same as received');
+    }
+
+    /**
+     * Test getting an empty game collection
+     */
+    public function testJsonGetEmptyGamesAction()
+    {
+        $this->loadFixtures(array(), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+
+        $response = $this->jsonGetGamesRequest();
+
+        $this->assertJsonResponse($response, 200, false);
+        $content = $response->getContent();
+
+        $decoded = json_decode($content, true);
+        $this->assertTrue(empty($decoded) && is_array($decoded), 'The response is not an empty array as expected');
+    }
+
+    protected function jsonGetGameRequest($parameters)
+    {
+        $route = $this->getUrl('api_1_get_game', $parameters);
+
+        $this->client->request(
+            'GET',
+            $route,
+            array('Accept' => 'application/json')
+        );
+        return $this->client->getResponse();
+    }
+
+    /**
+     * Test getting a game from the loaded fixtures
+     */
+    public function testJsonGetGameAction()
+    {
+        $this->loadFixtures(array('JA\GameBundle\DataFixtures\ORM\LoadGameData'), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+        $games = LoadGameData::$games;
+        $game = array_pop($games);
+
+        $response = $this->jsonGetGameRequest(array('slug' => $game->getSlug()));
+
         $this->assertJsonResponse($response, 200);
         $content = $response->getContent();
 
@@ -54,7 +114,21 @@ class GameControllerTest extends WebTestCase
         $this->assertTrue(isset($decoded['slug']));
     }
 
-    public function testJsonPostGameAction()
+    /**
+     * Test failing at getting a game (404 Not Found expected)
+     */
+    public function testJsonGetNotFoundGameAction()
+    {
+        // emptying database, so we're sure we're not getting anything
+        $this->loadFixtures(array(), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+
+        $response = $this->jsonGetGameRequest(array('slug' => 'my-super-non-existent-game'));
+
+        $this->assertJsonResponse($response, 404);
+        $content = $response->getContent();
+    }
+
+    protected function jsonPostGameRequest($body = '')
     {
         $this->client->request(
             'POST',
@@ -62,13 +136,40 @@ class GameControllerTest extends WebTestCase
             array(),
             array(),
             array('CONTENT_TYPE' => 'application/json'),
-            '{"name": "test"}'
+            $body
         );
-
-        $this->assertJsonResponse($this->client->getResponse(), 201, false);
+        return $this->client->getResponse();
     }
 
-    // @todo: test with 4xx errors
+    /**
+     * Test success at posting new game
+     */
+    public function testJsonPostGameAction()
+    {
+        $response = $this->jsonPostGameRequest('{"name": "test"}');
+
+        $this->assertJsonResponse($response, 201, false);
+    }
+
+    /**
+     * Test fail at posting new game
+     */
+    public function testJsonPostGameFail422Action()
+    {
+        $response = $this->jsonPostGameRequest('{"jambon": "beurre"}'); // content is not valid
+
+        $this->assertJsonResponse($response, 422);
+    }
+
+    /**
+     * Test fail at posting new game with incomprehensible body
+     */
+    public function testJsonPostGameFail400Action()
+    {
+        $response = $this->jsonPostGameRequest('yolo argh'); // content is really not valid
+
+        $this->assertJsonResponse($response, 400);
+    }
 
     protected function assertJsonResponse(Response $response, $statusCode = 200, $checkValidJson = true, $contentType = 'application/json')
     {

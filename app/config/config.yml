@@ -92,6 +92,7 @@ fos_rest:
             json: true
         templating_formats:
             html: true
+        failed_validation: HTTP_UNPROCESSABLE_ENTITY
     format_listener:
         rules:
             - { path: '^/', host: 'api.%domain%', priorities: [json], fallback_format: json, prefer_extension: false }
@@ -103,7 +104,8 @@ fos_rest:
             'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
-    body_listener: true
+    body_listener:
+        throw_exception_on_unsupported_content_type:  true
 
 jms_serializer:
     visitors:

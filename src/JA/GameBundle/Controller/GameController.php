@@ -101,8 +101,9 @@ class GameController extends FOSRestController implements ClassResourceInterface
      *   output = "",
      *   statusCodes = {
      *     201 = "Returned when successful",
-     *     204 = "Returned when data already exists",
-     *     400 = "Returned when the data sent is not valid"
+     *     204 = "Data already exists",
+     *     400 = "The data sent is not valid",
+     *     422 = "The game data sent contains errors"
      *   }
      * )
      *

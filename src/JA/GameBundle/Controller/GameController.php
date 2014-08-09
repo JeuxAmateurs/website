@@ -20,14 +20,14 @@ class GameController extends FOSRestController implements ClassResourceInterface
 {
     /**
      * Get all the games. @todo: doc !
+     * Empty list if there's no games
      *
      * @ApiDoc(
      *   resource = true,
      *   description = "Gets all games",
      *   output = "JA\GameBundle\Entity\Game",
      *   statusCodes = {
-     *     200 = "Returned when successful",
-     *     404 = "Returned when the game is not found"
+     *     200 = "Returned when successful"
      *   }
      * )
      *
@@ -35,13 +35,10 @@ class GameController extends FOSRestController implements ClassResourceInterface
      *
      * @return array
      *
-     * @throws NotFoundHttpException when games not exist
      */
     public function cgetAction()
     {
-        if(!($games = $this->container->get('ja_game.game.handler')->getAll())) {
-            throw $this->createNotFoundException("The resources were not found.");
-        }
+        $games = $this->container->get('ja_game.game.handler')->getAll();
 
         return $games;
     }
@@ -61,16 +58,16 @@ class GameController extends FOSRestController implements ClassResourceInterface
      *
      * @Rest\View(templateVar="game")
      *
-     * @param int $id   the game id
+     * @param string $slug   the game slug
      *
      * @return array
      *
      * @throws NotFoundHttpException when game not exist
      */
-    public function getAction($id)
+    public function getAction($slug)
     {
-        if(!($game = $this->container->get('ja_game.game.handler')->get($id))) {
-            throw $this->createNotFoundException("The resource '". $id ."' was not found.");
+        if(!($game = $this->container->get('ja_game.game.handler')->get($slug))) {
+            throw $this->createNotFoundException("The resource '". $slug ."' was not found.");
         }
 
         return $game;
@@ -129,7 +126,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
             );
 
             $routeOptions = array(
-                'id' => $newGame->getId()
+                'slug' => $newGame->getSlug()
             );
 
             $view = $this->routeRedirectView('api_1_get_game', $routeOptions, Codes::HTTP_CREATED);

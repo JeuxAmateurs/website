@@ -3,6 +3,8 @@
 namespace JA\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 use JA\GameBundle\Model\GameInterface;
 
 /**
@@ -30,8 +32,17 @@ class Game implements GameInterface
     private $name;
 
     /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(name="slug", type="string", unique=true, length=128)
+     */
+    private $slug;
+
+    /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
@@ -39,6 +50,7 @@ class Game implements GameInterface
     /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
@@ -46,8 +58,6 @@ class Game implements GameInterface
 
     public function  __construct()
     {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
     }
 
 
@@ -85,16 +95,13 @@ class Game implements GameInterface
     }
 
     /**
-     * Set createdAt
+     * Get slug
      *
-     * @param \DateTime $createdAt
-     * @return Game
+     * @return string
      */
-    public function setCreatedAt($createdAt)
+    public function getSlug()
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        return $this->slug;
     }
 
     /**
@@ -105,19 +112,6 @@ class Game implements GameInterface
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Game
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     /**

@@ -73,6 +73,13 @@ sensio_framework_extra:
     view: { annotations: false }
     router:  { annotations: true }
 
+stof_doctrine_extensions:
+    default_locale: fr_FR
+    orm:
+        default:
+            timestampable: true
+            sluggable: true
+
 fos_rest:
     routing_loader:
         include_format:       false

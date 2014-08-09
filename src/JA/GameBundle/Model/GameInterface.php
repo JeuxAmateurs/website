@@ -31,12 +31,11 @@ interface GameInterface
     public function getName();
 
     /**
-     * Set createdAt
+     * Get slug
      *
-     * @param \DateTime $createdAt
-     * @return Game
+     * @return string
      */
-    public function setCreatedAt($createdAt);
+    public function getSlug();
 
     /**
      * Get createdAt
@@ -44,14 +43,6 @@ interface GameInterface
      * @return \DateTime
      */
     public function getCreatedAt();
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Game
-     */
-    public function setUpdatedAt($updatedAt);
 
     /**
      * Get updatedAt

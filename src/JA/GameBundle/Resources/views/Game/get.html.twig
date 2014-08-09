@@ -3,12 +3,14 @@
 {% block title %} {{ parent() }} - Get Game {% endblock %}
 
 {% block content %}
-    <h1>Get Game : {{ path('api_1_get_game', {'id' : id}) }}</h1>
+    <h1>Get Game : {{ path('api_1_get_game', {'slug' : slug}) }}</h1>
     <hr/>
 
     <p>Game Entity :</p>
     <ul>
+        <li>id : {{ game.id }}</li>
         <li>name : {{ game.name }}</li>
+        <li>slug : {{ game.slug }}</li>
         <li>createdAt : {{ game.createdAt | date }}</li>
         <li>updatedAt : {{ game.updatedAt | date }}</li>
     </ul>

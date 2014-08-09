@@ -36,9 +36,9 @@ class GameHandler implements GameHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function get($id)
+    public function get($slug)
     {
-        return $this->repository->find($id);
+        return $this->repository->findOneBy(array('slug' => $slug));
     }
 
     /**

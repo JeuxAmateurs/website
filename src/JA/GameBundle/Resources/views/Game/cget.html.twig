@@ -11,7 +11,7 @@
     <ul>
         {% for game in games %}
             <li>
-                <a href="{{ path('api_1_get_game', {id: game.id}) }}">
+                <a href="{{ path('api_1_get_game', {slug: game.slug}) }}">
                     {{ game.name }}
                 </a>
             </li>

@@ -57,14 +57,14 @@ class GameHandlerTest extends WebTestCase
 
     public function testGet()
     {
-        $id = 1;
+        $slug = 'test'; // value is not important here
         $game = $this->getGame();
         $this->repository->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo($id))
+            ->method('findOneBy')
+            ->with($this->equalTo(array('slug' => $slug)))
             ->will($this->returnValue($game));
 
-        $this->gameHandler->get($id); // call the get.
+        $this->gameHandler->get($slug); // call the get.
     }
 
     public function testPost()

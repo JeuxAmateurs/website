@@ -39,7 +39,7 @@ class GameControllerTest extends WebTestCase
         $games = LoadGameData::$games;
         $game = array_pop($games);
 
-        $route = $this->getUrl('api_1_get_game', array('id' => $game->getId()));
+        $route = $this->getUrl('api_1_get_game', array('slug' => $game->getSlug()));
 
         $this->client->request(
             'GET',
@@ -51,7 +51,7 @@ class GameControllerTest extends WebTestCase
         $content = $response->getContent();
 
         $decoded = json_decode($content, true);
-        $this->assertTrue(isset($decoded['id']));
+        $this->assertTrue(isset($decoded['slug']));
     }
 
     public function testJsonPostGameAction()

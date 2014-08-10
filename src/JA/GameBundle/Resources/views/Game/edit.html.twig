@@ -1,0 +1,13 @@
+{% extends "JAGameBundle::layout.html.twig" %}
+
+{% block title "Edit Game" %}
+
+{% block content %}
+    <h1>Edit game: {{ path('api_1_edit_game', {slug: slug}) }}</h1>
+
+    <hr/>
+
+    {% if (form is defined) %}
+        {{ form(form) }}
+    {% endif %}
+{% endblock %}

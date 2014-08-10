@@ -14,6 +14,12 @@
                 <a href="{{ path('api_1_get_game', {slug: game.slug}) }}">
                     {{ game.name }}
                 </a>
+                <a href="{{ path('api_1_edit_game', {slug: game.slug}) }}">
+                    [edit]
+                </a>
+                <a href="{{ path('api_1_remove_game', {slug: game.slug}) }}">
+                    [remove]
+                </a>
             </li>
         {% else %}
             <li>No games</li>

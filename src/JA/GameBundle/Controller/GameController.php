@@ -2,6 +2,7 @@
 
 namespace JA\GameBundle\Controller;
 
+use JA\GameBundle\Entity\Game;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\Util\Codes;
@@ -77,7 +78,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
      * Presents the form to use to create a new Game.
      *
      * @ApiDoc(
-     *   resource = true,
+     *   resource = false,
      *   statusCodes = {
      *     200 = "Returned when successful"
      *   }
@@ -142,6 +143,47 @@ class GameController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
+     * Presents the form to use to edit a Game.
+     *
+     * @ApiDoc(
+     *   resource = false,
+     *   statusCodes = {
+     *     200 = "Returned when successful",
+     *     404 = "When the Game was not found"
+     *   }
+     * )
+     *
+     * @Rest\View()
+     *
+     * @param string $slug The game slug to edit
+     *
+     * @return FormTypeInterface
+     *
+     * @throws NotFoundHttpException
+     */
+    public function editAction($slug)
+    {
+        if(!$game = $this->container->get('ja_game.game.handler')->get($slug))
+        {
+            throw $this->createNotFoundException('The resource ' . $slug . ' was not found.');
+        }
+
+        $form = $this->createForm(
+            new GameType(),
+            $game,
+            array(
+                'action' => $this->generateUrl(
+                        'api_1_put_game',
+                        array('slug' => $game->getSlug())
+                    ),
+                'method' => 'put'
+            )
+        );
+
+        return $form;
+    }
+
+    /**
      * Edit or create a game from submitted data. @todo: doc !
      *
      * @ApiDoc(
@@ -158,7 +200,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
      *
      * If the template is returned, you have a bad request
      * @Rest\View(
-     *      template="JAGameBundle:Game:new.html.twig",
+     *      template="JAGameBundle:Game:edit.html.twig",
      *      statusCode = Codes::HTTP_BAD_REQUEST
      * )
      *
@@ -171,12 +213,15 @@ class GameController extends FOSRestController implements ClassResourceInterface
     {
         try
         {
+            $parameters = $request->request->all();
+            unset($parameters['_method']); // not really clean...
+
             // if data doesn't exist, we create it
             if(!$game = $this->container->get('ja_game.game.handler')->get($slug))
             {
                 $code = Codes::HTTP_CREATED;
                 $game = $this->container->get('ja_game.game.handler')->post(
-                    $request->request->all()
+                    $parameters
                 );
             }
             else
@@ -184,7 +229,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
                 $code = Codes::HTTP_NO_CONTENT;
                 $game = $this->container->get('ja_game.game.handler')->put(
                     $game,
-                    $request->request->all()
+                    $parameters
                 );
             }
 
@@ -209,7 +254,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Edit partially a new Game from data sent",
+     *   description = "Edit partially a Game from data sent",
      *   output = "",
      *   statusCodes = {
      *     204 = "Returned when successful",
@@ -245,7 +290,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
                 );
             }
             else
-                $this->createNotFoundException('The resource ' . $slug . ' was not found.');
+                throw $this->createNotFoundException('The resource ' . $slug . ' was not found.');
 
             $routeOptions = array(
                 'slug' => $game->getSlug()
@@ -262,11 +307,52 @@ class GameController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * Delete a  partially a game from submitted data. @todo: doc !
+     * Get a form to delete a game. @todo: doc !
+     *
+     * @ApiDoc(
+     *   resource = false,
+     *   description = "Get a form to delete a game",
+     *   output = "",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     404 = "The data sent is not valid"
+     *   }
+     * )
+     *
+     * @Rest\View(
+     *      template="JAGameBundle:Game:remove.html.twig",
+     *      templateVar="form"
+     * )
+     *
+     * @param string $slug The slug to identify the game
+     *
+     * @return FormTypeInterface|View
+     *
+     * @throws NotFoundHttpException
+     */
+    public function removeAction($slug)
+    {
+        $deleteForm = $this->createDeleteForm($slug);
+
+        return $deleteForm;
+    }
+
+    private function createDeleteForm($slug)
+    {
+        return $this->createFormBuilder()
+            ->add('Delete', 'submit')
+            ->setAction($this->generateUrl('api_1_delete_game', array('slug' => $slug)))
+            ->setMethod('delete')
+            ->getForm()
+            ;
+    }
+
+    /**
+     * Delete a game. @todo: doc !
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Edit partially a new Game from data sent",
+     *   description = "Delete a Game",
      *   output = "",
      *   statusCodes = {
      *     204 = "Returned when successful",
@@ -275,8 +361,8 @@ class GameController extends FOSRestController implements ClassResourceInterface
      * )
      *
      * @todo: See for the redirection after success
-     * @ Rest\View(
-     *      template="JAGameBundle:Game:new.html.twig",
+     * @Rest\View(
+     *      template="JAGameBundle:Game:remove.html.twig",
      * )
      *
      * @param string $slug The slug to identify the game
@@ -294,7 +380,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
             );
         }
         else
-            $this->createNotFoundException('The resource ' . $slug . ' was not found.');
+            throw $this->createNotFoundException('The resource ' . $slug . ' was not found.');
 
         $view = $this->routeRedirectView('api_1_get_games', array(), Codes::HTTP_NO_CONTENT);
 

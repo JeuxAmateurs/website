@@ -55,4 +55,12 @@ interface GameHandlerInterface
      * @return GameInterface
      */
     public function patch(GameInterface $game, array $parameters);
+
+    /**
+     * Delete a given Game
+     *
+     * @param GameInterface $game
+     *
+     */
+    public function delete(GameInterface $game);
 }

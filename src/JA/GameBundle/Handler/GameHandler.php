@@ -68,6 +68,15 @@ class GameHandler implements GameHandlerInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function delete(GameInterface $game)
+    {
+        $this->om->remove($game);
+        $this->om->flush();
+    }
+
+    /**
      * Processes the form.
      *
      * @param GameInterface $game

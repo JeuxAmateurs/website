@@ -140,4 +140,164 @@ class GameController extends FOSRestController implements ClassResourceInterface
             return $exception->getForm();
         }
     }
+
+    /**
+     * Edit or create a game from submitted data. @todo: doc !
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Edit or create a new Game from data sent",
+     *   output = "",
+     *   statusCodes = {
+     *     201 = "Returned when the data doesn't exist already",
+     *     204 = "Returned when successful",
+     *     400 = "The data sent is not valid",
+     *     422 = "The game data sent contains errors"
+     *   }
+     * )
+     *
+     * If the template is returned, you have a bad request
+     * @Rest\View(
+     *      template="JAGameBundle:Game:new.html.twig",
+     *      statusCode = Codes::HTTP_BAD_REQUEST
+     * )
+     *
+     * @param Request $request
+     * @param string $slug The slug to identify the game
+     *
+     * @return FormTypeInterface|View
+     */
+    public function putAction(Request $request, $slug)
+    {
+        try
+        {
+            // if data doesn't exist, we create it
+            if(!$game = $this->container->get('ja_game.game.handler')->get($slug))
+            {
+                $code = Codes::HTTP_CREATED;
+                $game = $this->container->get('ja_game.game.handler')->post(
+                    $request->request->all()
+                );
+            }
+            else
+            {
+                $code = Codes::HTTP_NO_CONTENT;
+                $game = $this->container->get('ja_game.game.handler')->put(
+                    $game,
+                    $request->request->all()
+                );
+            }
+
+            $routeOptions = array(
+                'slug' => $game->getSlug()
+            );
+
+            $view = $this->routeRedirectView('api_1_get_game', $routeOptions, $code);
+            if($code === Codes::HTTP_CREATED)
+                $view->setData($game); // we send the data to avoid multiple requests
+
+            return $view;
+        }
+        catch(InvalidFormException $exception)
+        {
+            return $exception->getForm();
+        }
+    }
+
+    /**
+     * Edit partially a game from submitted data. @todo: doc !
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Edit partially a new Game from data sent",
+     *   output = "",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     400 = "The data sent is not valid",
+     *     404 = "The game was not found",
+     *     422 = "The game data sent contains errors"
+     *   }
+     * )
+     *
+     * If the template is returned, you have a bad request
+     * @Rest\View(
+     *      template="JAGameBundle:Game:new.html.twig",
+     *      statusCode = Codes::HTTP_BAD_REQUEST
+     * )
+     *
+     * @param Request $request
+     * @param string $slug The slug to identify the game
+     *
+     * @return FormTypeInterface|View
+     *
+     * @throws NotFoundHttpException
+     */
+    public function patchAction(Request $request, $slug)
+    {
+        try
+        {
+            // if data doesn't exist, we create it
+            if($game = $this->container->get('ja_game.game.handler')->get($slug))
+            {
+                $game = $this->container->get('ja_game.game.handler')->patch(
+                    $game,
+                    $request->request->all()
+                );
+            }
+            else
+                $this->createNotFoundException('The resource ' . $slug . ' was not found.');
+
+            $routeOptions = array(
+                'slug' => $game->getSlug()
+            );
+
+            $view = $this->routeRedirectView('api_1_get_game', $routeOptions, Codes::HTTP_NO_CONTENT);
+
+            return $view;
+        }
+        catch(InvalidFormException $exception)
+        {
+            return $exception->getForm();
+        }
+    }
+
+    /**
+     * Delete a  partially a game from submitted data. @todo: doc !
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Edit partially a new Game from data sent",
+     *   output = "",
+     *   statusCodes = {
+     *     204 = "Returned when successful",
+     *     404 = "The data sent is not valid"
+     *   }
+     * )
+     *
+     * @todo: See for the redirection after success
+     * @ Rest\View(
+     *      template="JAGameBundle:Game:new.html.twig",
+     * )
+     *
+     * @param string $slug The slug to identify the game
+     *
+     * @return FormTypeInterface|View
+     *
+     * @throws NotFoundHttpException
+     */
+    public function deleteAction($slug)
+    {
+        if($game = $this->container->get('ja_game.game.handler')->get($slug))
+        {
+            $this->container->get('ja_game.game.handler')->delete(
+                $game
+            );
+        }
+        else
+            $this->createNotFoundException('The resource ' . $slug . ' was not found.');
+
+        $view = $this->routeRedirectView('api_1_get_games', array(), Codes::HTTP_NO_CONTENT);
+
+        return $view;
+    }
 }

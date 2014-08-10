@@ -4,9 +4,13 @@ imports:
 framework:
     test: ~
     session:
-        storage_id: session.storage.mock_file
+        storage_id: session.storage.filesystem
     profiler:
         collect: false
+
+doctrine:
+    dbal:
+        dbname:   "%database_test_name%"
 
 web_profiler:
     toolbar: false
@@ -14,3 +18,5 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+liip_functional_test: ~

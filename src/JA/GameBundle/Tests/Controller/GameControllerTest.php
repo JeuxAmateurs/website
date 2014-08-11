@@ -33,6 +33,17 @@ class GameControllerTest extends WebTestCase
         $this->client = static::createClient(array(), $this->auth);
     }
 
+    public function loadGames()
+    {
+        $this->loadFixtures(array('JA\GameBundle\DataFixtures\ORM\LoadGameData'), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+        $games = LoadGameData::$games;
+
+        if(empty($games))
+            $this->markTestIncomplete('You must have at least one game in your fixtures');
+
+        return $games;
+    }
+
     protected function jsonGetGamesRequest()
     {
         $route = $this->getUrl('api_1_get_games');
@@ -50,8 +61,7 @@ class GameControllerTest extends WebTestCase
      */
     public function testJsonGetGamesAction()
     {
-        $this->loadFixtures(array('JA\GameBundle\DataFixtures\ORM\LoadGameData'), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
-        $games = LoadGameData::$games;
+        $games = $this->loadGames();
 
         $response = $this->jsonGetGamesRequest();
 
@@ -101,8 +111,7 @@ class GameControllerTest extends WebTestCase
      */
     public function testJsonGetGameAction()
     {
-        $this->loadFixtures(array('JA\GameBundle\DataFixtures\ORM\LoadGameData'), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
-        $games = LoadGameData::$games;
+        $games = $this->loadGames();
         $game = array_pop($games);
 
         $response = $this->jsonGetGameRequest(array('slug' => $game->getSlug()));
@@ -169,6 +178,32 @@ class GameControllerTest extends WebTestCase
         $response = $this->jsonPostGameRequest('yolo argh'); // content is really not valid
 
         $this->assertJsonResponse($response, 400);
+    }
+
+    /**
+     * Test deleting a game
+     */
+    public function testJsonDeleteGame()
+    {
+        $games = $this->loadGames();
+        $game = array_pop($games);
+
+        $this->client->request(
+            'DELETE',
+            $this->getUrl('api_1_delete_game', array('slug' => $game->getSlug()))
+        );
+        $response = $this->client->getResponse();
+
+        $this->assertEquals($response->getStatusCode(), 204, 'The response must be 204 No Content');
+
+        // Verify that the game was well deleted
+        $this->client->request(
+            'GET',
+            $this->getUrl('api_1_get_game', array('slug' => $game->getSlug()))
+        );
+        $response = $this->client->getResponse();
+
+        $this->assertEquals($response->getStatusCode(), 404, 'The game has not been deleted as expected');
     }
 
     protected function assertJsonResponse(Response $response, $statusCode = 200, $checkValidJson = true, $contentType = 'application/json')

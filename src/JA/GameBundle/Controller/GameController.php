@@ -266,7 +266,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
      *
      * If the template is returned, you have a bad request
      * @Rest\View(
-     *      template="JAGameBundle:Game:new.html.twig",
+     *      template="",
      *      statusCode = Codes::HTTP_BAD_REQUEST
      * )
      *
@@ -355,8 +355,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
      *   description = "Delete a Game",
      *   output = "",
      *   statusCodes = {
-     *     204 = "Returned when successful",
-     *     404 = "The data sent is not valid"
+     *     204 = "Returned when successful"
      *   }
      * )
      *
@@ -379,8 +378,6 @@ class GameController extends FOSRestController implements ClassResourceInterface
                 $game
             );
         }
-        else
-            throw $this->createNotFoundException('The resource ' . $slug . ' was not found.');
 
         $view = $this->routeRedirectView('api_1_get_games', array(), Codes::HTTP_NO_CONTENT);
 

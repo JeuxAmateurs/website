@@ -104,8 +104,7 @@ fos_rest:
             'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
-    body_listener:
-        throw_exception_on_unsupported_content_type:  true
+    body_listener: true
 
 jms_serializer:
     visitors:

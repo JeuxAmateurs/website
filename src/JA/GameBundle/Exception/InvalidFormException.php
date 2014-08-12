@@ -2,6 +2,8 @@
 
 namespace JA\GameBundle\Exception;
 
+use Symfony\Component\Form\FormInterface;
+
 class InvalidFormException extends \RuntimeException
 {
     protected $form;
@@ -13,7 +15,7 @@ class InvalidFormException extends \RuntimeException
     }
 
     /**
-     * @return array|null
+     * @return FormInterface|null
      */
     public function getForm()
     {

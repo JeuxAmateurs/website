@@ -39,7 +39,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function cgetAction()
     {
-        $games = $this->container->get('ja_game.game.handler')->getAll();
+        $games = $this->getGameHandler()->getAll();
 
         return $games;
     }
@@ -67,7 +67,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function getAction($slug)
     {
-        if(!($game = $this->container->get('ja_game.game.handler')->get($slug))) {
+        if(!($game = $this->getGameHandler()->get($slug))) {
             throw $this->createNotFoundException("The resource '". $slug ."' was not found.");
         }
 
@@ -123,8 +123,8 @@ class GameController extends FOSRestController implements ClassResourceInterface
         try
         {
             // Game handler create a new Game.
-            $newGame = $this->container->get('ja_game.game.handler')->post(
-                $request->request->all()
+            $newGame = $this->getGameHandler()->post(
+                $request->request->get(GameType::$name)
             );
 
             $routeOptions = array(
@@ -163,7 +163,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function editAction($slug)
     {
-        if(!$game = $this->container->get('ja_game.game.handler')->get($slug))
+        if(!$game = $this->getGameHandler()->get($slug))
         {
             throw $this->createNotFoundException('The resource ' . $slug . ' was not found.');
         }
@@ -213,23 +213,20 @@ class GameController extends FOSRestController implements ClassResourceInterface
     {
         try
         {
-            $parameters = $request->request->all();
-            unset($parameters['_method']); // not really clean...
-
             // if data doesn't exist, we create it
-            if(!$game = $this->container->get('ja_game.game.handler')->get($slug))
+            if(!$game = $this->getGameHandler()->get($slug))
             {
                 $code = Codes::HTTP_CREATED;
-                $game = $this->container->get('ja_game.game.handler')->post(
-                    $parameters
+                $game = $this->getGameHandler()->post(
+                    $request->request->get(GameType::$name)
                 );
             }
             else
             {
                 $code = Codes::HTTP_NO_CONTENT;
-                $game = $this->container->get('ja_game.game.handler')->put(
+                $game = $this->getGameHandler()->put(
                     $game,
-                    $parameters
+                    $request->request->get(GameType::$name)
                 );
             }
 
@@ -282,11 +279,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
         try
         {
             // if data doesn't exist, we create it
-            if($game = $this->container->get('ja_game.game.handler')->get($slug))
+            if($game = $this->getGameHandler()->get($slug))
             {
-                $game = $this->container->get('ja_game.game.handler')->patch(
+                $game = $this->getGameHandler()->patch(
                     $game,
-                    $request->request->all()
+                    $request->request->get(GameType::$name)
                 );
             }
             else
@@ -372,15 +369,18 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function deleteAction($slug)
     {
-        if($game = $this->container->get('ja_game.game.handler')->get($slug))
+        if($game = $this->getGameHandler()->get($slug))
         {
-            $this->container->get('ja_game.game.handler')->delete(
-                $game
-            );
+            $this->getGameHandler()->delete($game);
         }
 
         $view = $this->routeRedirectView('api_1_get_games', array(), Codes::HTTP_NO_CONTENT);
 
         return $view;
+    }
+
+    private function getGameHandler()
+    {
+        return $this->container->get('ja_game.game.handler');
     }
 }

@@ -44,7 +44,7 @@ class GameHandler implements GameHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function post(array $parameters)
+    public function post($parameters)
     {
         $game = $this->createGame();
 
@@ -54,7 +54,7 @@ class GameHandler implements GameHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function put(GameInterface $game, array $parameters)
+    public function put(GameInterface $game, $parameters)
     {
         return $this->processForm($game, $parameters, 'PUT');
     }
@@ -62,7 +62,7 @@ class GameHandler implements GameHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function patch(GameInterface $game, array $parameters)
+    public function patch(GameInterface $game, $parameters)
     {
         return $this->processForm($game, $parameters, 'PATCH');
     }
@@ -80,14 +80,14 @@ class GameHandler implements GameHandlerInterface
      * Processes the form.
      *
      * @param GameInterface $game
-     * @param array         $parameters
+     * @param array|null    $parameters
      * @param String        $method
      *
      * @return GameInterface
      *
      * @throws InvalidFormException
      */
-    private function processForm(GameInterface $game, array $parameters, $method = "PUT")
+    private function processForm(GameInterface $game, $parameters, $method = "PUT")
     {
         $form = $this->formFactory->create(new GameType(), $game, array('method' => $method));
         $form->submit($parameters, 'PATCH' !== $method); // If the method is PATCH, we don't set missing data as NULL

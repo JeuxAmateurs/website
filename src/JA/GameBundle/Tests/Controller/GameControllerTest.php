@@ -155,7 +155,7 @@ class GameControllerTest extends WebTestCase
      */
     public function testJsonPostGameAction()
     {
-        $response = $this->jsonPostGameRequest('{"name": "test"}');
+        $response = $this->jsonPostGameRequest('{"game":{"name": "test"}}');
 
         $this->assertJsonResponse($response, 201, false);
     }
@@ -164,6 +164,16 @@ class GameControllerTest extends WebTestCase
      * Test fail at posting new game
      */
     public function testJsonPostGameFail422Action()
+    {
+        $response = $this->jsonPostGameRequest('{"game":{"jambon": "beurre"}}'); // content is not valid
+
+        $this->assertJsonResponse($response, 422);
+    }
+
+    /**
+     * Test fail at posting some random json
+     */
+    public function testJsonPostGameFailRandomJsonAction()
     {
         $response = $this->jsonPostGameRequest('{"jambon": "beurre"}'); // content is not valid
 

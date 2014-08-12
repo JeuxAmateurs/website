@@ -29,32 +29,32 @@ interface GameHandlerInterface
     /**
      * Create a new Game.
      *
-     * @param array $parameters
+     * @param array|null $parameters
      *
      * @return GameInterface
      */
-    public function post(array $parameters);
+    public function post($parameters);
 
     /**
      * Edit a given Game
      * @todo : or create it if it don't exist
      *
      * @param GameInterface $game
-     * @param array $parameters
+     * @param array|null $parameters
      *
      * @return GameInterface
      */
-    public function put(GameInterface $game, array $parameters);
+    public function put(GameInterface $game, $parameters);
 
     /**
      * Partially update a given Game
      *
      * @param GameInterface $game
-     * @param array $parameters
+     * @param array|null $parameters
      *
      * @return GameInterface
      */
-    public function patch(GameInterface $game, array $parameters);
+    public function patch(GameInterface $game, $parameters);
 
     /**
      * Delete a given Game

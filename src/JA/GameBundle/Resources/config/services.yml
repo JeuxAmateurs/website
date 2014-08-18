@@ -1,6 +1,5 @@
 parameters:
     ja_game.game.handler.class: JA\GameBundle\Handler\GameHandler
-    ja_game.game.class: JA\GameBundle\Entity\Game
 
 services:
     ja_game.game.handler:

@@ -11,9 +11,10 @@ use JA\GameBundle\Model\GameInterface;
  * Game
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="JA\GameBundle\Entity\GameRepository")
+ * @ORM\MappedSuperclass(repositoryClass="JA\GameBundle\Entity\GameRepository")
+ * @ORM\HasLifecycleCallbacks
  */
-class Game implements GameInterface
+abstract class Game implements GameInterface
 {
     /**
      * @var integer
@@ -60,11 +61,10 @@ class Game implements GameInterface
     {
     }
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

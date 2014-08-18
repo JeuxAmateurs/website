@@ -4,9 +4,9 @@ namespace JA\GameBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use JA\GameBundle\Entity\Game;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
-class LoadGameData implements FixtureInterface
+class LoadGameData extends ContainerAware implements FixtureInterface
 {
     static public $games = array();
 
@@ -15,11 +15,13 @@ class LoadGameData implements FixtureInterface
     */
     public function load(ObjectManager $manager)
     {
-        $game = new Game();
+        $gameClass = $this->container->getParameter('ja_game.game.class');
+
+        $game = new $gameClass();
         $game->setName('My Game');
         $manager->persist($game);
 
-        $game2 = new Game();
+        $game2 = new $gameClass();
         $game2->setName('My Second Game');
         $manager->persist($game2);
 

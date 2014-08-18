@@ -1,3 +1,8 @@
+ja_app:
+    type: rest
+    resource: "@JAAppBundle/Resources/config/routing.yml"
+    prefix:   /
+
 ja_game:
     type: rest
     resource: "@JAGameBundle/Resources/config/routing.yml"

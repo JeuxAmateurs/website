@@ -20,3 +20,5 @@ swiftmailer:
     disable_delivery: true
 
 liip_functional_test: ~
+
+ja_game: ~

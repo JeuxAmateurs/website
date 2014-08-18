@@ -1,0 +1,4 @@
+ja_app_homepage:
+    type: rest
+    resource: "JA\AppBundle\Controller\HomepageController"
+    name_prefix: api_1_

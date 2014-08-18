@@ -2,6 +2,7 @@
 
 namespace JA\GameBundle\Tests\Handler;
 
+use JA\GameBundle\Entity\DefaultGame;
 use JA\GameBundle\Entity\Game;
 use JA\GameBundle\Handler\GameHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

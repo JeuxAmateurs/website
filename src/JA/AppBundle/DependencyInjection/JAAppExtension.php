@@ -1,6 +1,6 @@
 <?php
 
-namespace JA\GameBundle\DependencyInjection;
+namespace JA\AppBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class JAGameExtension extends Extension
+class JAAppExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -24,7 +24,5 @@ class JAGameExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-
-        $container->setParameter('ja_game.game.class', $config['game_class']);
     }
 }

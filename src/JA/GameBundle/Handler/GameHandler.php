@@ -3,7 +3,6 @@
 namespace JA\GameBundle\Handler;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Monolog\Logger;
 use Symfony\Component\Form\FormFactoryInterface;
 
 use JA\GameBundle\Form\GameType;

@@ -1,0 +1,24 @@
+{% extends "::baseproto.html.twig" %}
+
+{% block title %} {{ parent() }} - Community about amateur video game {%endblock %}
+
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="flash-message">
+            <em>Notice</em>: {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="block">
+        Here we render the different blocks. (game, news etc...)
+    </div>
+
+    <div class="block">
+        <h1>Resources :</h1>
+        <hr/>
+        <ul>
+            <li><a href="{{ path('api_1_get_games') }}">Games</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

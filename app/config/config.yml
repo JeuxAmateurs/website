@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -110,6 +110,11 @@ jms_serializer:
     visitors:
         json:
             options: JSON_PRETTY_PRINT
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: JA\AppBundle\Entity\User
 
 nelmio_api_doc:
     name: JeuxAmateurs API

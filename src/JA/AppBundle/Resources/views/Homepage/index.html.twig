@@ -10,6 +10,18 @@
     {% endfor %}
 
     <div class="block">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            <a href="{{ path('fos_user_security_logout') }}">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+        {% else %}
+            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            TODO : include form on this page by overriding templates
+        {% endif %}
+    </div>
+
+    <div class="block">
         Here we render the different blocks. (game, news etc...)
     </div>
 

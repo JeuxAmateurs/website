@@ -1,8 +1,8 @@
-{% extends "::baseproto.html.twig" %}
+{% extends "JAAppBundle::layout.html.twig" %}
 
 {% block title %} {{ parent() }} - Community about amateur video game {%endblock %}
 
-{% block body %}
+{% block content %}
     {% for flashMessage in app.session.flashbag.get('notice') %}
         <div class="flash-message">
             <em>Notice</em>: {{ flashMessage }}
@@ -10,27 +10,6 @@
     {% endfor %}
 
     <div class="block">
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-            <a href="{{ path('fos_user_security_logout') }}">
-                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-            </a>
-        {% else %}
-            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-            TODO : include form on this page by overriding templates
-        {% endif %}
-    </div>
-
-    <div class="block">
         Here we render the different blocks. (game, news etc...)
     </div>
-
-    <div class="block">
-        <h1>Resources :</h1>
-        <hr/>
-        <ul>
-            <li><a href="{{ path('api_1_get_games') }}">Games</a></li>
-        </ul>
-    </div>
-
 {% endblock %}

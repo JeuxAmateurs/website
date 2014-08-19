@@ -1,0 +1,15 @@
+{% extends '::baseproto.html.twig' %}
+
+{% block body %}
+    {% include 'JAAppBundle::logbox.html.twig' %}
+
+    {% block content %}{% endblock %}
+
+    <div class="block">
+        <h1>Resources :</h1>
+        <hr/>
+        <ul>
+            <li><a href="{{ path('api_1_get_games') }}">Games</a></li>
+        </ul>
+    </div>
+{% endblock %}

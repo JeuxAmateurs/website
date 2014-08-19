@@ -1,0 +1,13 @@
+{% extends 'JAAppBundle::layout.html.twig' %}
+
+{% block title %}Sign in - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="block">
+        {% if error %}
+            <div>{{ error|trans }}</div>
+        {% endif %}
+
+        {% include 'JAAppBundle:Forms:login.html.twig' %}
+    </div>
+{% endblock %}

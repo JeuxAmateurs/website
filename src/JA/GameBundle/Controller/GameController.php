@@ -11,7 +11,6 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Doctrine\ORM\UnitOfWork;
 use Symfony\Component\Form\FormTypeInterface;
 
 use JA\GameBundle\Form\GameType;

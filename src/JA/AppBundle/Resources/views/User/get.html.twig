@@ -1,0 +1,36 @@
+{% extends 'JAAppBundle:User:layout.html.twig' %}
+
+{% block title %}{{ user.username }} - {{ parent() }}{% endblock %}
+
+{% block content %}
+    <h1>
+        Get User : {{ path('api_1_get_user', {'username' : user.username}) }}
+    </h1>
+    <hr/>
+
+    <p>User Entity :</p>
+    <ul>
+        <li><b>id</b> : {{ user.id }}</li>
+        <li><b>username</b> : {{ user.username }}</li>
+        <li><b>usernameCanonical</b> : {{ user.usernameCanonical }}</li>
+        <li><b>enabled</b> : {{ user.enabled }}</li>
+        <li><b>lastLogin</b> : {{ user.lastLogin | date }}</li>
+        <li><b>groups</b> :
+            <ul>
+            {% for group in user.groups %}
+                <li>{{ group }}</li>
+            {% else %}
+                <li>No group yet !</li>
+            {% endfor %}
+            </ul>
+        </li>
+        <li><b>locked</b> : {% if user.locked %} Yep {% else %} Nope {% endif %}</li>
+        <li><b>roles</b> :
+            <ul>
+                {% for role in user.roles %}
+                    <li>{{ role }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

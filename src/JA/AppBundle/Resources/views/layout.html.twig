@@ -3,13 +3,21 @@
 {% block body %}
     {% include 'JAAppBundle::logbox.html.twig' %}
 
-    {% block content %}{% endblock %}
+    {% block subbody %}
+
+        <div class="block">
+            {% block content %}{% endblock %}
+        </div>
+
+    {% endblock %}
 
     <div class="block">
         <h1>Resources :</h1>
         <hr/>
         <ul>
+            <li><a href="{{ path('api_1_get_users') }}">Users</a></li>
             <li><a href="{{ path('api_1_get_games') }}">Games</a></li>
         </ul>
     </div>
+
 {% endblock %}

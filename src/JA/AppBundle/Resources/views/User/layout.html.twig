@@ -1,0 +1,19 @@
+{% extends "JAAppBundle::layout.html.twig" %}
+
+{% block title %}Users - {{ parent() }}{%endblock %}
+
+{% block subbody %}
+
+    <div class="block">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="block">
+        <h1>Links / Actions :</h1>
+        <hr/>
+        <ul>
+            <li><a href="{{ path('api_1_get_users') }}">All users</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

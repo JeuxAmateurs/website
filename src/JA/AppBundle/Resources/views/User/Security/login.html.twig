@@ -1,5 +1,7 @@
 {% extends 'JAAppBundle::layout.html.twig' %}
 
+{% trans_default_domain 'FOSUserBundle' %}
+
 {% block title %}Sign in - {{ parent() }}{% endblock %}
 
 {% block body %}
@@ -9,5 +11,9 @@
         {% endif %}
 
         {% include 'JAAppBundle:Forms:login.html.twig' %}
+
+        {#<a href="{{ path('fos_user_change_password') }}">
+            {{ 'change_password.forgotten'|trans }}
+        </a>#} {# @todo: Activate this after setting mails #}
     </div>
 {% endblock %}

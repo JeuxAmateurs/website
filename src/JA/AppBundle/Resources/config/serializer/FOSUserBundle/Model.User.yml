@@ -1,0 +1,41 @@
+FOS\UserBundle\Model\User:
+    exclusion_policy: ALL
+    properties:
+        id:
+            groups: [Default]
+        username:
+            groups: [Default]
+        usernameCanonical:
+            groups: [Default]
+        email:
+            groups: [me]
+        emailCanonical:
+            groups: [me]
+        enabled:
+            groups: [Default]
+        salt:
+            expose: false
+        password:
+            expose: false
+        plainPassword:
+            expose: false
+        lastLogin:
+            groups: [Default]
+        confirmationToken:
+            expose: false
+        passwordRequestedAt:
+            expose: false
+        groups:
+            groups: [Default]
+        locked:
+            groups: [Default]
+        expired:
+            groups: [me]
+        expiresAt:
+            groups: [me]
+        roles:
+            groups: [Default]
+        credentialsExpired:
+            groups: [me]
+        credentialsExpireAt:
+            groups: [me]

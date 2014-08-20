@@ -11,7 +11,7 @@ interface GameHandlerInterface
      *
      * @api
      *
-     * @return GameInterface
+     * @return array()
      */
     public function getAll();
 
@@ -20,11 +20,11 @@ interface GameHandlerInterface
      *
      * @api
      *
-     * @param mixed $id
+     * @param string $slug
      *
      * @return GameInterface
      */
-    public function get($id);
+    public function get($slug);
 
     /**
      * Create a new Game.

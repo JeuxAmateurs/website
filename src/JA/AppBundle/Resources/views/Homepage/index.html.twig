@@ -3,13 +3,5 @@
 {% block title %} {{ parent() }} - Community about amateur video game {%endblock %}
 
 {% block content %}
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div class="flash-message">
-            <em>Notice</em>: {{ flashMessage }}
-        </div>
-    {% endfor %}
-
-    <div class="block">
-        Here we render the different blocks. (game, news etc...)
-    </div>
+    Here we render the different blocks. (game, news etc...)
 {% endblock %}

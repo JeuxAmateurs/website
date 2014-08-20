@@ -2,3 +2,8 @@ ja_app_homepage:
     type: rest
     resource: "JA\AppBundle\Controller\HomepageController"
     name_prefix: api_1_
+
+ja_app_user:
+    type: rest
+    resource: "JA\AppBundle\Controller\UserController"
+    name_prefix: api_1_

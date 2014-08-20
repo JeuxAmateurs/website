@@ -112,6 +112,12 @@ jms_serializer:
     visitors:
         json:
             options: JSON_PRETTY_PRINT
+    metadata:
+        auto_detection: true
+        directories:
+            FOSUserBundle:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "@JAAppBundle/Resources/config/serializer/FOSUserBundle"
 
 fos_user:
     db_driver: orm

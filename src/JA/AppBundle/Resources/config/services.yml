@@ -1,7 +1,8 @@
 parameters:
-#    ja_app.example.class: JA\AppBundle\Example
+    ja_app.user.handler.class: JA\AppBundle\Handler\UserHandler
+    ja_app.user.class: JA\AppBundle\Entity\User
 
 services:
-#    ja_app.example:
-#        class: %ja_app.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    ja_app.user.handler:
+        class: %ja_app.user.handler.class%
+        arguments: [@doctrine.orm.entity_manager, %ja_app.user.class%]

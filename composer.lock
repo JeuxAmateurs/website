@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5373261c399abf7e2294a276e97e8232",
+    "hash": "8fc22047d2ee78c9fab81b163779af24",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -631,17 +631,17 @@
         },
         {
             "name": "friendsofsymfony/rest-bundle",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "target-dir": "FOS/RestBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "e3a28ebf74724a51a31d6142b002c0c9652f71a4"
+                "reference": "0649a4c1d8cecd27885b09c1cddddb497a0d3ca3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/e3a28ebf74724a51a31d6142b002c0c9652f71a4",
-                "reference": "e3a28ebf74724a51a31d6142b002c0c9652f71a4",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/0649a4c1d8cecd27885b09c1cddddb497a0d3ca3",
+                "reference": "0649a4c1d8cecd27885b09c1cddddb497a0d3ca3",
                 "shasum": ""
             },
             "require": {
@@ -657,7 +657,7 @@
                 "jms/serializer-bundle": "<0.11"
             },
             "require-dev": {
-                "jms/serializer-bundle": "0.12.*",
+                "jms/serializer-bundle": "~0.12",
                 "sensio/framework-extra-bundle": "~2.2",
                 "symfony/form": "~2.2",
                 "symfony/security": "~2.2",
@@ -666,7 +666,7 @@
                 "symfony/yaml": "~2.2"
             },
             "suggest": {
-                "jms/serializer-bundle": "Add support for advanced serialization capabilities, recommended, requires 0.12.*",
+                "jms/serializer-bundle": "Add support for advanced serialization capabilities, recommended, requires ~0.12",
                 "sensio/framework-extra-bundle": "Add support for route annotations and the view response listener",
                 "symfony/serializer": "Add support for basic serialization capabilities and xml decoding, requires ~2.2",
                 "symfony/validator": "Add support for validation capabilities in the ParamFetcher, requires ~2.2"
@@ -697,8 +697,7 @@
                 },
                 {
                     "name": "Konstantin Kudryashov",
-                    "email": "ever.zet@gmail.com",
-                    "homepage": "http://everzet.com"
+                    "email": "ever.zet@gmail.com"
                 }
             ],
             "description": "This Bundle provides various tools to rapidly develop RESTful API's with Symfony2",
@@ -706,7 +705,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2014-07-11 21:09:03"
+            "time": "2014-08-15 12:18:54"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1449,6 +1448,67 @@
             "time": "2014-05-16 09:33:58"
         },
         {
+            "name": "ornicar/gravatar-bundle",
+            "version": "dev-master",
+            "target-dir": "Ornicar/GravatarBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ornicar/GravatarBundle.git",
+                "reference": "1a97823ad7ae24bcf4c85fa31d68c84ffc8c46fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ornicar/GravatarBundle/zipball/1a97823ad7ae24bcf4c85fa31d68c84ffc8c46fb",
+                "reference": "1a97823ad7ae24bcf4c85fa31d68c84ffc8c46fb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/framework-bundle": ">=2.0"
+            },
+            "require-dev": {
+                "twig/extensions": "1.0.*"
+            },
+            "suggest": {
+                "twig/twig": ">=1.3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Ornicar\\GravatarBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thibault Duplessis",
+                    "email": "thibault.duplessis@gmail.com",
+                    "homepage": "http://ornicar.github.com"
+                },
+                {
+                    "name": "Henrik Bjornskov",
+                    "email": "henrik@bjrnskov.dk",
+                    "homepage": "http://henrik.bjrnskov.dk"
+                }
+            ],
+            "description": "This bundles provides a Gravatar API various utilities to work with it in templates",
+            "keywords": [
+                "Symfony2",
+                "gravatar",
+                "templating",
+                "twig"
+            ],
+            "time": "2014-05-30 08:11:27"
+        },
+        {
             "name": "phpcollection/phpcollection",
             "version": "0.4.0",
             "source": {
@@ -1921,20 +1981,22 @@
         },
         {
             "name": "symfony/icu",
-            "version": "v1.0.1",
+            "version": "v1.2.2",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975"
+                "reference": "d4d85d6055b87f394d941b45ddd3a9173e1e3d2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/fdba214b1e087c149843bde976263c53ac10c975",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/d4d85d6055b87f394d941b45ddd3a9173e1e3d2a",
+                "reference": "d4d85d6055b87f394d941b45ddd3a9173e1e3d2a",
                 "shasum": ""
             },
             "require": {
+                "ext-intl": "*",
+                "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
                 "symfony/intl": "~2.3"
             },
@@ -1964,7 +2026,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2013-10-04 09:12:07"
+            "time": "2014-07-25 09:58:17"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -2456,12 +2518,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
-                "reference": "ccd69d9ec90013955a412a21125672afc09738dc"
+                "reference": "3ffa2184c94d94477d5bb625b94597ed0d44ebe0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/ccd69d9ec90013955a412a21125672afc09738dc",
-                "reference": "ccd69d9ec90013955a412a21125672afc09738dc",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/3ffa2184c94d94477d5bb625b94597ed0d44ebe0",
+                "reference": "3ffa2184c94d94477d5bb625b94597ed0d44ebe0",
                 "shasum": ""
             },
             "require": {
@@ -2487,18 +2549,16 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
                 },
                 {
                     "name": "Doctrine Project",
                     "homepage": "http://www.doctrine-project.org"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony DoctrineFixturesBundle",
@@ -2507,7 +2567,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2014-03-05 01:11:31"
+            "time": "2014-08-20 20:34:54"
         },
         {
             "name": "liip/functional-test-bundle",
@@ -2516,12 +2576,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/LiipFunctionalTestBundle.git",
-                "reference": "e665bb4fca6ca449e225db569db671348a2579e4"
+                "reference": "2574c9d319067b122ec783e5be9408e306b62673"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/e665bb4fca6ca449e225db569db671348a2579e4",
-                "reference": "e665bb4fca6ca449e225db569db671348a2579e4",
+                "url": "https://api.github.com/repos/liip/LiipFunctionalTestBundle/zipball/2574c9d319067b122ec783e5be9408e306b62673",
+                "reference": "2574c9d319067b122ec783e5be9408e306b62673",
                 "shasum": ""
             },
             "require": {
@@ -2564,7 +2624,7 @@
             "keywords": [
                 "Symfony2"
             ],
-            "time": "2014-06-27 14:00:35"
+            "time": "2014-08-13 18:37:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2983,14 +3043,13 @@
             "time": "2014-04-28 14:01:06"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "stof/doctrine-extensions-bundle": 20,
         "jms/serializer-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
+        "ornicar/gravatar-bundle": 20,
         "doctrine/doctrine-fixtures-bundle": 20,
         "liip/functional-test-bundle": 20
     },
@@ -2998,7 +3057,5 @@
     "platform": {
         "php": ">=5.3.3"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }

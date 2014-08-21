@@ -66,6 +66,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
             throw $this->createNotFoundException('The user ' . $username . ' was not found.');
         }
 
+        // @todo: proper way to do this
+        $user->avatar = $this->container->get('gravatar.api')->getUrl($user->getEmail());
+
         return $user;
     }
 

@@ -124,6 +124,9 @@ fos_user:
     firewall_name: main
     user_class: JA\AppBundle\Entity\User
 
+ornicar_gravatar:
+    rating: pg
+
 nelmio_api_doc:
     name: JeuxAmateurs API
 

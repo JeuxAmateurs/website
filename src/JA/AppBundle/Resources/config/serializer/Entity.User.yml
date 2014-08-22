@@ -1,0 +1,5 @@
+JA\AppBundle\Entity\User:
+    exclusion_policy: ALL
+    properties:
+        avatar:
+            groups: [Default]

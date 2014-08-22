@@ -6,3 +6,8 @@ services:
     ja_app.user.handler:
         class: %ja_app.user.handler.class%
         arguments: [@doctrine.orm.entity_manager, %ja_app.user.class%]
+    ja_app.event_listener.avatar:
+        class: JA\AppBundle\EventListener\AvatarListener
+        arguments: [ "@gravatar.api" ]
+        tags:
+            -  { name: doctrine.event_listener, event: postLoad }

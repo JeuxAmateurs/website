@@ -62,6 +62,8 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        resolve_target_entities:
+            JA\GameBundle\Model\GameInterface: JA\AppBundle\Entity\Game # @todo: find a way to put this in the bundle
 
 # Swiftmailer Configuration
 swiftmailer:

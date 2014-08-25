@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('game_class')->isRequired()->defaultValue('JA\GameBundle\Entity\Game')->end();
+                ->scalarNode('game_class')->isRequired()->defaultValue('Acme\GameBundle\Entity\Game')->end();
 
         return $treeBuilder;
     }

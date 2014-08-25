@@ -3,6 +3,8 @@
 namespace JA\GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use JA\GameBundle\Model\GameInterface;
@@ -10,7 +12,6 @@ use JA\GameBundle\Model\GameInterface;
 /**
  * Game
  *
- * @ORM\Table()
  * @ORM\MappedSuperclass(repositoryClass="JA\GameBundle\Entity\GameRepository")
  * @ORM\HasLifecycleCallbacks
  */
@@ -56,9 +57,29 @@ abstract class Game implements GameInterface
      */
     private $updatedAt;
 
+    /*
+     * @var ArrayCollection
+     *
+     * ORM\ManyToMany(targetEntity="Technology", inversedBy="games")
+     * @ORM\JoinTable(name="games_technologies",
+     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id")}
+     * )
+     */
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Technology")
+     * @ORM\JoinTable(name="games_technologies",
+     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id")}
+     * )
+     */
+    private $technologies;
 
     public function  __construct()
     {
+        $this->technologies = new ArrayCollection();
     }
 
     /**
@@ -122,5 +143,79 @@ abstract class Game implements GameInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Game
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Game
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Game
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Add technologies
+     *
+     * @param Technology $technologies
+     * @return Game
+     */
+    public function addTechnology(Technology $technologies)
+    {
+        //$technologies->addGame($this);
+        $this->technologies[] = $technologies;
+
+        return $this;
+    }
+
+    /**
+     * Remove technologies
+     *
+     * @param Technology $technologies
+     */
+    public function removeTechnology(Technology $technologies)
+    {
+        //$technologies->removeGame($this);
+        $this->technologies->removeElement($technologies);
+    }
+
+    /**
+     * Get technologies
+     *
+     * @return Collection
+     */
+    public function getTechnologies()
+    {
+        return $this->technologies;
     }
 }

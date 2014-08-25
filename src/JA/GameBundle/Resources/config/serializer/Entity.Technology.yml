@@ -1,0 +1,17 @@
+JA\GameBundle\Entity\Technology:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+        slug:
+            expose: true
+        description:
+            expose: true
+        content:
+            expose: true
+        createdAt:
+            expose: true
+        updatedAt:
+            expose: true

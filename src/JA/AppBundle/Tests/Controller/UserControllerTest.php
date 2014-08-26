@@ -4,7 +4,6 @@ namespace JA\AppBundle\Tests\Controller;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Component\HttpFoundation\Response;
 
 use JA\AppBundle\DataFixtures\ORM\LoadUserData;
@@ -35,7 +34,7 @@ class UserControllerTest extends WebTestCase
 
     public function loadUsers()
     {
-        $this->loadFixtures(array('JA\AppBundle\DataFixtures\ORM\LoadUserData'), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+        $this->loadFixtures(array('JA\AppBundle\DataFixtures\ORM\LoadUserData'));
         $users = LoadUserData::$users;
 
         if(empty($users))
@@ -83,7 +82,7 @@ class UserControllerTest extends WebTestCase
      */
     public function testJsonGetEmptyUsersAction()
     {
-        $this->loadFixtures(array(), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+        $this->loadFixtures(array());
 
         $response = $this->jsonGetUsersRequest();
 

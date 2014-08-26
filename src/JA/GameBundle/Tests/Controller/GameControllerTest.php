@@ -5,7 +5,6 @@ namespace JA\GameBundle\Tests\Controller;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 
 use JA\GameBundle\DataFixtures\ORM\LoadGameData;
 
@@ -35,7 +34,8 @@ class GameControllerTest extends WebTestCase
 
     public function loadGames()
     {
-        $this->loadFixtures(array('JA\GameBundle\DataFixtures\ORM\LoadGameData'), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+        $this->loadFixtures(array('JA\GameBundle\DataFixtures\ORM\LoadTechnologyData',
+                                  'JA\GameBundle\DataFixtures\ORM\LoadGameData'));
         $games = LoadGameData::$games;
 
         if(empty($games))
@@ -83,7 +83,7 @@ class GameControllerTest extends WebTestCase
      */
     public function testJsonGetEmptyGamesAction()
     {
-        $this->loadFixtures(array(), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+        $this->loadFixtures(array());
 
         $response = $this->jsonGetGamesRequest();
 
@@ -129,12 +129,11 @@ class GameControllerTest extends WebTestCase
     public function testJsonGetNotFoundGameAction()
     {
         // emptying database, so we're sure we're not getting anything
-        $this->loadFixtures(array(), null, 'doctrine', ORMPurger::PURGE_MODE_TRUNCATE);
+        $this->loadFixtures(array());
 
         $response = $this->jsonGetGameRequest(array('slug' => 'my-super-non-existent-game'));
 
         $this->assertJsonResponse($response, 404);
-        $content = $response->getContent();
     }
 
     protected function jsonPostGameRequest($body = '')

@@ -16,11 +16,23 @@
 
     <p>Game Entity :</p>
     <ul>
-        <li>id : {{ game.id }}</li>
-        <li>name : {{ game.name }}</li>
-        <li>slug : {{ game.slug }}</li>
-        <li>createdAt : {{ game.createdAt | date }}</li>
-        <li>updatedAt : {{ game.updatedAt | date }}</li>
+        <li><b>id</b> : {{ game.id }}</li>
+        <li><b>name</b> : {{ game.name }}</li>
+        <li><b>slug</b> : {{ game.slug }}</li>
+        <li><b>createdAt</b> : {{ game.createdAt | date }}</li>
+        <li><b>updatedAt</b> : {{ game.updatedAt | date }}</li>
+        <li>
+            <b>technologies</b> :
+            <ul>
+            {% for technologie in game.technologies %}
+                <li>
+                    <a href="#" title="The link is coming soon">
+                        {{ technologie.name }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
     </ul>
 
 {% endblock %}

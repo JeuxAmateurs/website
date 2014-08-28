@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8fc22047d2ee78c9fab81b163779af24",
+    "hash": "c2d72590a326bb4856541b2fded91eae",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -714,12 +714,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "27a84cec3ea4daa32cd6fe308c0847ca9644f588"
+                "reference": "094bea6f318fbb067db3ddf6d26a62af0bf13442"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/27a84cec3ea4daa32cd6fe308c0847ca9644f588",
-                "reference": "27a84cec3ea4daa32cd6fe308c0847ca9644f588",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/094bea6f318fbb067db3ddf6d26a62af0bf13442",
+                "reference": "094bea6f318fbb067db3ddf6d26a62af0bf13442",
                 "shasum": ""
             },
             "require": {
@@ -773,7 +773,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2014-08-04 23:04:17"
+            "time": "2014-08-23 11:32:38"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1046,16 +1046,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "0.16.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "c8a171357ca92b6706e395c757f334902d430ea9"
+                "url": "https://github.com/YoruNoHikage/serializer.git",
+                "reference": "bbdd78483229d5e52bbff6fe6e6bd5f63695c58f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/c8a171357ca92b6706e395c757f334902d430ea9",
-                "reference": "c8a171357ca92b6706e395c757f334902d430ea9",
+                "url": "https://api.github.com/repos/YoruNoHikage/serializer/zipball/bbdd78483229d5e52bbff6fe6e6bd5f63695c58f",
+                "reference": "bbdd78483229d5e52bbff6fe6e6bd5f63695c58f",
                 "shasum": ""
             },
             "require": {
@@ -1083,7 +1083,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.15-dev"
+                    "dev-master": "0.17-dev"
                 }
             },
             "autoload": {
@@ -1091,16 +1091,13 @@
                     "JMS\\Serializer": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache2"
             ],
             "authors": [
                 {
                     "name": "Johannes M. Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
-                    "role": "Developer of wrapped JMSSerializerBundle"
+                    "email": "schmittjoh@gmail.com"
                 }
             ],
             "description": "Library for (de-)serializing data of any complexity; supports XML, JSON, and YAML.",
@@ -1112,7 +1109,10 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2014-03-18 08:39:00"
+            "support": {
+                "source": "https://github.com/YoruNoHikage/serializer/tree/master"
+            },
+            "time": "2014-08-28 09:09:24"
         },
         {
             "name": "jms/serializer-bundle",
@@ -1647,17 +1647,17 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "df82b1ee2b833be97677c0b95fca27e68fd4a344"
+                "reference": "ad10123f2532f6e311e583cce203ef368eedc469"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/df82b1ee2b833be97677c0b95fca27e68fd4a344",
-                "reference": "df82b1ee2b833be97677c0b95fca27e68fd4a344",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/ad10123f2532f6e311e583cce203ef368eedc469",
+                "reference": "ad10123f2532f6e311e583cce203ef368eedc469",
                 "shasum": ""
             },
             "require": {
@@ -1696,7 +1696,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-08-06 09:24:35"
+            "time": "2014-08-26 13:14:47"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -3043,10 +3043,18 @@
             "time": "2014-04-28 14:01:06"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "0.13.*@dev",
+            "alias_normalized": "dev-0.13.*@",
+            "version": "9999999-dev",
+            "package": "jms/serializer"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
         "stof/doctrine-extensions-bundle": 20,
+        "jms/serializer": 20,
         "jms/serializer-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
         "ornicar/gravatar-bundle": 20,

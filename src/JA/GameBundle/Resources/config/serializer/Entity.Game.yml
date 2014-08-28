@@ -3,13 +3,22 @@ JA\GameBundle\Entity\Game:
     properties:
         id:
             expose: true
+            groups: [details, list]
         name:
             expose: true
+            groups: [details, list]
         slug:
             expose: true
+            groups: [details, list]
         createdAt:
             expose: true
+            groups: [details, list]
         updatedAt:
             expose: true
+            groups: [details, list]
         technologies:
             expose: true
+            groups: [details, list]
+            recursion_groups:
+                add: [list]
+                remove: [details]

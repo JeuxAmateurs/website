@@ -6,6 +6,12 @@
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/YoruNoHikage/serializer"
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.5.*",
@@ -20,6 +26,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         "friendsofsymfony/rest-bundle": "1.4.*",
+        "jms/serializer": "dev-master as 0.13.*@dev",
         "jms/serializer-bundle": "0.13.*@dev",
         "nelmio/api-doc-bundle": "2.5.*",
         "friendsofsymfony/user-bundle": "~2.0@dev",

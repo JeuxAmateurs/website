@@ -31,7 +31,10 @@ class GameController extends FOSRestController implements ClassResourceInterface
      *   }
      * )
      *
-     * @Rest\View(templateVar="games")
+     * @Rest\View(
+     *      templateVar="games",
+     *      serializerGroups={"list"}
+     * )
      *
      * @return array
      *
@@ -56,7 +59,10 @@ class GameController extends FOSRestController implements ClassResourceInterface
      *   }
      * )
      *
-     * @Rest\View(templateVar="game")
+     * @Rest\View(
+     *      templateVar="game",
+     *      serializerGroups={"details"}
+     * )
      *
      * @param string $slug   the game slug
      *

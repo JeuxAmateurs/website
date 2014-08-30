@@ -120,6 +120,9 @@ jms_serializer:
             FOSUserBundle:
                 namespace_prefix: "FOS\\UserBundle"
                 path: "@JAAppBundle/Resources/config/serializer/FOSUserBundle"
+            JAGameBundle:
+                namespace_prefix: "JA\\GameBundle"
+                path: "@JAAppBundle/Resources/config/serializer/JAGameBundle"
 
 fos_user:
     db_driver: orm

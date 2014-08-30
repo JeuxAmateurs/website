@@ -1,6 +1,6 @@
 <?php
 
-namespace JA\GameBundle\DataFixtures\ORM;
+namespace JA\GameBundle\Tests\Fixtures\ORM;
 
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;

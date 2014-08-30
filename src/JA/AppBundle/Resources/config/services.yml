@@ -1,6 +1,7 @@
 parameters:
     ja_app.user.handler.class: JA\AppBundle\Handler\UserHandler
     ja_app.user.class: JA\AppBundle\Entity\User
+    ja_app.game.class: JA\AppBundle\Entity\Game
 
 services:
     ja_app.user.handler:

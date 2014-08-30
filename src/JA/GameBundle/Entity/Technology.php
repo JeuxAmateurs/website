@@ -74,7 +74,7 @@ class Technology implements TechnologyInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="JA\GameBundle\Model\GameInterface", mappedBy="technologies")
+     * @ORM\ManyToMany(targetEntity="JA\GameBundle\Model\GameInterface") //, mappedBy="technologies")
      */
     private $games;
 

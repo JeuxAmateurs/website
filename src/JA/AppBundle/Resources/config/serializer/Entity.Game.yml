@@ -1,10 +1,9 @@
-JA\AppBundle\Entity\User:
+JA\AppBundle\Entity\Game:
     exclusion_policy: ALL
     properties:
-        avatar:
-            groups: [Default]
-        ownedGames:
-            groups: [Default]
+        owner:
+            expose: true
+            groups: [details, list]
             recursion_groups:
                 add: [list]
                 remove: [details]

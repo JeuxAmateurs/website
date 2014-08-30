@@ -2,11 +2,11 @@ FOS\UserBundle\Model\User:
     exclusion_policy: ALL
     properties:
         id:
-            groups: [Default]
+            groups: [Default, list]
         username:
-            groups: [Default]
+            groups: [Default, list]
         usernameCanonical:
-            groups: [Default]
+            groups: [Default, list]
         email:
             groups: [me]
         emailCanonical:

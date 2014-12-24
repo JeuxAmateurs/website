@@ -10,11 +10,6 @@ La licence n'a pas encore été choisie, tous les droits sont réservés pour le
 Le projet est basé sur Symfony2 et gère ses dépendances via l'outil Composer. Le projet utilise la nouvelle structure de répertoires (par défaut dans le futur Symfony3).
 
     php composer.phar install
-    
-Configurez les hosts de cette façon :
-
-    127.0.0.1 exemple.local
-    127.0.0.1 api.exemple.local
 
 Le second permettra d'accéder à l'API de JeuxAmateurs.
 

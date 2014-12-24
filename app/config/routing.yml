@@ -1,13 +1,13 @@
 ja_app:
     type: rest
     resource: "@JAAppBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /api
 
 ja_game:
     type: rest
     resource: "@JAGameBundle/Resources/config/routing.yml"
-    prefix:   /
-
+    prefix:   /api
+nano
 api_doc:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /doc

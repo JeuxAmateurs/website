@@ -22,9 +22,7 @@ class UserControllerTest extends WebTestCase
 
     public function setUp()
     {
-        $domain = $this->getContainer()->getParameter('domain');
         $this->auth = array(
-            'HTTP_HOST' => 'api.' . $domain,
             'PHP_AUTH_USER' => 'user',
             'PHP_AUTH_PW' => 'userpass',
         );

@@ -7,7 +7,7 @@ ja_game:
     type: rest
     resource: "@JAGameBundle/Resources/config/routing.yml"
     prefix:   /api
-nano
+
 api_doc:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /doc

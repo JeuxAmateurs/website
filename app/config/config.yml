@@ -62,8 +62,6 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
-        resolve_target_entities:
-            JA\GameBundle\Model\GameInterface: JA\AppBundle\Entity\Game # @todo: find a way to put this in the bundle
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -120,9 +118,6 @@ jms_serializer:
             FOSUserBundle:
                 namespace_prefix: "FOS\\UserBundle"
                 path: "@JAAppBundle/Resources/config/serializer/FOSUserBundle"
-            JAGameBundle:
-                namespace_prefix: "JA\\GameBundle"
-                path: "@JAAppBundle/Resources/config/serializer/JAGameBundle"
 
 fos_user:
     db_driver: orm
@@ -134,6 +129,3 @@ ornicar_gravatar:
 
 nelmio_api_doc:
     name: JeuxAmateurs API
-
-ja_game:
-    game_class: JA\AppBundle\Entity\Game

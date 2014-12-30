@@ -1,6 +1,6 @@
 <?php
 
-namespace JA\AppBundle\DataFixtures\ORM;
+namespace JA\AppBundle\Tests\Fixtures\ORM;
 
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -24,22 +24,16 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface, C
     {
         $gameClass = $this->container->getParameter('ja_app.game.class');
 
-        $user = $this->getReference('user-dev');
-
         $game = new $gameClass();
         $game->setName('My Game');
         $game->addTechnology($this->getReference('tech')); // Tech will auto add the game
         $game->addTechnology($this->getReference('tech2'));
-        $user->addOwnedGame($game);
         $manager->persist($game);
-        $manager->persist($user);
 
         $game2 = new $gameClass();
         $game2->setName('My Second Game');
         $game2->addTechnology($this->getReference('tech2'));
-        $user->addOwnedGame($game2);
         $manager->persist($game2);
-        $manager->persist($user);
 
         self::$games = array($game, $game2);
 
@@ -57,13 +51,5 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface, C
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-    }
-}
-
-class LoadTechnologyData extends \JA\AppBundle\Tests\Fixtures\ORM\LoadTechnologyData
-{
-    public function getOrder()
-    {
-        return 1;
     }
 }

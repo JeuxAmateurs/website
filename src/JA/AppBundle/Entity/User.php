@@ -4,8 +4,11 @@ namespace JA\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
-use JA\AppBundle\Model\AvatarInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+
+use JA\AppBundle\Model\GameInterface;
+use JA\AppBundle\Model\UserInterface;
+use JA\AppBundle\Model\AvatarInterface;
 
 /**
  * User
@@ -13,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="ja_user")
  * @ORM\Entity(repositoryClass="JA\AppBundle\Entity\UserRepository")
  */
-class User extends BaseUser implements AvatarInterface
+class User extends BaseUser implements UserInterface, AvatarInterface
 {
     /**
      * @var integer
@@ -78,10 +81,10 @@ class User extends BaseUser implements AvatarInterface
     /**
      * Add ownedGame
      *
-     * @param Game $ownedGame
+     * @param GameInterface $ownedGame
      * @return User
      */
-    public function addOwnedGame(Game $ownedGame)
+    public function addOwnedGame(GameInterface $ownedGame)
     {
         $this->ownedGames[] = $ownedGame;
         $ownedGame->setOwner($this);
@@ -92,9 +95,9 @@ class User extends BaseUser implements AvatarInterface
     /**
      * Remove one element to ownedGames
      *
-     * @param Game $ownedGame
+     * @param GameInterface $ownedGame
      */
-    public function removeOwnedGame(Game $ownedGame)
+    public function removeOwnedGame(GameInterface $ownedGame)
     {
         $this->ownedGames->removeElement($ownedGame);
     }

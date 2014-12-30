@@ -1,4 +1,4 @@
-JA\AppBundle\Entity\Game:
+JA\AppBundle\Entity\Technology:
     exclusion_policy: ALL
     properties:
         id:
@@ -10,21 +10,15 @@ JA\AppBundle\Entity\Game:
         slug:
             expose: true
             groups: [details, list]
+        description:
+            expose: true
+            groups: [details, list]
+        content:
+            expose: true
+            groups: [details]
         createdAt:
             expose: true
-            groups: [details, list]
+            groups: [details]
         updatedAt:
             expose: true
-            groups: [details, list]
-        technologies:
-            expose: true
-            groups: [details, list]
-            recursion_groups:
-                add: [list]
-                remove: [details]
-        owner:
-            expose: true
-            groups: [details, list]
-            recursion_groups:
-                add: [list]
-                remove: [details]
+            groups: [details]

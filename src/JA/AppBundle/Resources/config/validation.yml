@@ -1,0 +1,10 @@
+JA\AppBundle\Entity\Game:
+    properties:
+        name:
+            - NotBlank:
+                message: "The game must have a name."
+            - Length:
+                min: 2
+                max: 100
+                minMessage: "The game name must be at least {{ limit }} characters length."
+                maxMessage: "The game name cannot be longer than {{ limit }} characters length."

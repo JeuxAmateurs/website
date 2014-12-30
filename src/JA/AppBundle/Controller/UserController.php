@@ -42,7 +42,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
      * @ApiDoc(
      *   resource = true,
      *   description = "Gets a Game for a given id",
-     *   output = "JA\GameBundle\Entity\User",
+     *   output = "JA\AppBundle\Entity\User",
      *   statusCodes = {
      *     200 = "Returned when successful",
      *     404 = "Returned when the user is not found"

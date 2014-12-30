@@ -1,0 +1,13 @@
+{% extends "layout.html.twig" %}
+
+{% block title "Remove Game" %}
+
+{% block content %}
+    <h1>Remove game: {{ path('api_1_remove_game', {slug: slug}) }}</h1>
+
+    <hr/>
+
+    {% if (form is defined) %}
+        {{ form(form) }}
+    {% endif %}
+{% endblock %}

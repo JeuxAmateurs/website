@@ -3,6 +3,11 @@ ja_app_homepage:
     resource: "JA\AppBundle\Controller\HomepageController"
     name_prefix: api_1_
 
+ja_app_game:
+    type:     rest
+    resource: "JA\AppBundle\Controller\GameController"
+    name_prefix: api_1_
+
 ja_app_user:
     type: rest
     resource: "JA\AppBundle\Controller\UserController"

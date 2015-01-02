@@ -8,8 +8,6 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-use JA\AppBundle\Entity\User;
-
 class UserController extends FOSRestController implements ClassResourceInterface
 {
     /**

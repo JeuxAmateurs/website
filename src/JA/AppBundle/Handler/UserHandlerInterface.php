@@ -11,7 +11,7 @@ interface UserHandlerInterface
      *
      * @api
      *
-     * @return array()
+     * @return array
      */
     public function getAll();
 

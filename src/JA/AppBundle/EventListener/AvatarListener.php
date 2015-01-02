@@ -15,6 +15,8 @@ use JA\AppBundle\Model\AvatarInterface;
  */
 class AvatarListener
 {
+    private $gravatarApi;
+
     public function __construct(GravatarApi $gravatarApi)
     {
         $this->gravatarApi = $gravatarApi;

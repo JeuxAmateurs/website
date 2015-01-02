@@ -11,7 +11,7 @@ interface GameHandlerInterface
      *
      * @api
      *
-     * @return array()
+     * @return array
      */
     public function getAll();
 

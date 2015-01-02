@@ -109,7 +109,7 @@ class Game implements GameInterface
      * Set name
      *
      * @param string $name
-     * @return Game
+     * @return GameInterface $this
      */
     public function setName($name)
     {
@@ -162,7 +162,7 @@ class Game implements GameInterface
      * Set slug
      *
      * @param string $slug
-     * @return Game
+     * @return GameInterface $this
      */
     public function setSlug($slug)
     {
@@ -175,7 +175,7 @@ class Game implements GameInterface
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return Game
+     * @return Game $this
      */
     public function setCreatedAt($createdAt)
     {
@@ -188,7 +188,7 @@ class Game implements GameInterface
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return Game
+     * @return Game $this
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -201,7 +201,7 @@ class Game implements GameInterface
      * Add technologies
      *
      * @param Technology $technologies
-     * @return Game
+     * @return GameInterface $this
      */
     public function addTechnology(Technology $technologies)
     {
@@ -236,7 +236,7 @@ class Game implements GameInterface
      * Set owner
      *
      * @param UserInterface $owner
-     * @return Game
+     * @return GameInterface $this
      */
     public function setOwner(UserInterface $owner)
     {

@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class GameType extends AbstractType
 {
-    static $name = 'game';
+    const NAME = 'game';
 
     /**
      * @param FormBuilderInterface $builder
@@ -37,6 +37,6 @@ class GameType extends AbstractType
      */
     public function getName()
     {
-        return self::$name;
+        return self::NAME;
     }
 }

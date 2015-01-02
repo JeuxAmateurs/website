@@ -5,7 +5,7 @@ namespace JA\AppBundle\Handler;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Form\FormFactoryInterface;
 
-use JA\AppBundle\Form\GameType;
+use JA\AppBundle\Form\Type\GameType;
 use JA\AppBundle\Model\GameInterface;
 use JA\AppBundle\Exception\InvalidFormException;
 
@@ -96,7 +96,7 @@ class GameHandler implements GameHandlerInterface
             $game = $form->getData();
 
             $this->om->persist($game);
-            $this->om->flush($game);
+            $this->om->flush();
 
             return $game;
         }

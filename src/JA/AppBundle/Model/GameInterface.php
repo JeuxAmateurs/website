@@ -19,7 +19,7 @@ interface GameInterface
      * Set name
      *
      * @param string $name
-     * @return Game
+     * @return GameInterface $this
      */
     public function setName($name);
 
@@ -55,7 +55,7 @@ interface GameInterface
      * Set owner
      *
      * @param UserInterface $owner
-     * @return GameInterface
+     * @return GameInterface $this
      */
     public function setOwner(UserInterface $owner);
 

@@ -13,7 +13,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Form\FormTypeInterface;
 
-use JA\AppBundle\Form\GameType;
+use JA\AppBundle\Form\Type\GameType;
 use JA\AppBundle\Exception\InvalidFormException;
 
 class GameController extends FOSRestController implements ClassResourceInterface
@@ -129,7 +129,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
         {
             // Game handler create a new Game.
             $newGame = $this->getGameHandler()->post(
-                $request->request->get(GameType::$name)
+                $request->request->get(GameType::NAME)
             );
 
             $routeOptions = array(
@@ -219,11 +219,12 @@ class GameController extends FOSRestController implements ClassResourceInterface
         try
         {
             // if data doesn't exist, we create it
+            $formName = $request->request->get(GameType::NAME);
             if(!$game = $this->getGameHandler()->get($slug))
             {
                 $code = Codes::HTTP_CREATED;
                 $game = $this->getGameHandler()->post(
-                    $request->request->get(GameType::$name)
+                    $formName
                 );
             }
             else
@@ -231,7 +232,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
                 $code = Codes::HTTP_NO_CONTENT;
                 $game = $this->getGameHandler()->put(
                     $game,
-                    $request->request->get(GameType::$name)
+                    $formName
                 );
             }
 
@@ -288,7 +289,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
             {
                 $game = $this->getGameHandler()->patch(
                     $game,
-                    $request->request->get(GameType::$name)
+                    $request->request->get(GameType::NAME)
                 );
             }
             else

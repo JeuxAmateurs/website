@@ -2,7 +2,6 @@
 
 namespace JA\AppBundle\Controller;
 
-use JA\AppBundle\Entity\Game;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\Util\Codes;

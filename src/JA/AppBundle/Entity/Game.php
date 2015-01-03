@@ -59,22 +59,13 @@ class Game implements GameInterface
      */
     private $updatedAt;
 
-    /*
-     * @var ArrayCollection
-     *
-     * ORM\ManyToMany(targetEntity="Technology", inversedBy="games")
-     * @ORM\JoinTable(name="games_technologies",
-     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id")}
-     * )
-     */
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Technology")
-     * @ORM\JoinTable(name="games_technologies",
+     * @ORM\ManyToMany(targetEntity="Technology", inversedBy="games")
+     * @ORM\JoinTable(name="ja_games_technologies",
      *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id")}
+     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id")},
      * )
      */
     private $technologies;
@@ -83,10 +74,7 @@ class Game implements GameInterface
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="ownedGames")
-     * @ORM\JoinTable(name="user_owned_games",
-     *  joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
-     * )
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")//, nullable=false)
      */
     protected $owner;
 
@@ -205,7 +193,7 @@ class Game implements GameInterface
      */
     public function addTechnology(Technology $technologies)
     {
-        //$technologies->addGame($this);
+        $technologies->addGame($this);
         $this->technologies[] = $technologies;
 
         return $this;
@@ -218,14 +206,14 @@ class Game implements GameInterface
      */
     public function removeTechnology(Technology $technologies)
     {
-        //$technologies->removeGame($this);
+        $technologies->removeGame($this);
         $this->technologies->removeElement($technologies);
     }
 
     /**
      * Get technologies
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getTechnologies()
     {

@@ -1,4 +1,4 @@
-{% extends "layout.html.twig" %}
+{% extends "JAAppBundle::layout.html.twig" %}
 
 {% block title %} {{ parent() }} - Get Game {% endblock %}
 
@@ -32,6 +32,14 @@
                 </li>
             {% endfor %}
             </ul>
+        </li>
+        <li>
+            <b>owner</b> :
+            {% if game.owner.username is defined %}
+                <a href="{{ path('api_1_get_user', {'username' : game.owner.username}) }}" title="See {{ game.owner.username }}'s profile">{{ game.owner.username }}</a>
+            {% else %}
+                Owner should not be nullable, fix that !
+            {% endif %}
         </li>
     </ul>
 

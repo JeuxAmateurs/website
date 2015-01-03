@@ -17,6 +17,10 @@ class GameHandlerTest extends WebTestCase
     protected $repository;
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     protected $formFactory;
+    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    protected $token;
+    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    protected $tokenStorage;
 
     const GAME_CLASS = 'JA\AppBundle\Tests\Handler\DummyGame';
 
@@ -30,6 +34,10 @@ class GameHandlerTest extends WebTestCase
         $this->om = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
         $this->formFactory = $this->getMock('Symfony\Component\Form\FormFactoryInterface');
+        $this->token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $this->tokenStorage = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->om->expects($this->any())
             ->method('getRepository')
@@ -43,7 +51,7 @@ class GameHandlerTest extends WebTestCase
             ->method('getName')
             ->will($this->returnValue(static::GAME_CLASS));
 
-        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory);
+        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory, $this->tokenStorage);
     }
 
     public function testGetAll()
@@ -75,6 +83,15 @@ class GameHandlerTest extends WebTestCase
         $game = $this->getGame();
         $game->setName($parameters['name']);
 
+        // We expect to call the Security Token to get the current user
+        $this->tokenStorage->expects($this->once())
+            ->method('getToken')
+            ->will($this->returnValue($this->token));
+
+        $this->token->expects($this->once())
+            ->method('getUser');
+            //->will($this->returnValue($user));
+
         $form = $this->getMock('JA\AppBundle\Tests\Handler\FormInterface');
         $form->expects($this->once())
             ->method('submit')
@@ -90,15 +107,15 @@ class GameHandlerTest extends WebTestCase
             ->method('create')
             ->will($this->returnValue($form));
 
-        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory);
+        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory, $this->tokenStorage);
         $gameFromTest = $this->gameHandler->post($parameters);
 
         $this->assertEquals($game, $gameFromTest);
     }
 
-    protected function createGameHandler($objectManager, $pageClass, $formFactory)
+    protected function createGameHandler($objectManager, $pageClass, $formFactory, $tokenStorage)
     {
-        return new GameHandler($objectManager, $pageClass, $formFactory);
+        return new GameHandler($objectManager, $pageClass, $formFactory, $tokenStorage);
     }
 
     protected function getGame()

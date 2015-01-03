@@ -51,19 +51,11 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface, C
 
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-    }
-}
-
-class LoadTechnologyData extends \JA\AppBundle\Tests\Fixtures\ORM\LoadTechnologyData
-{
-    public function getOrder()
-    {
-        return 1;
     }
 }

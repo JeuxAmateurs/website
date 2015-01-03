@@ -6,7 +6,7 @@ use Liip\FunctionalTestBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Client;
 
-use JA\AppBundle\Tests\Fixtures\ORM\LoadGameData;
+use JA\AppBundle\DataFixtures\ORM\LoadGameData;
 
 class GameControllerTest extends WebTestCase
 {
@@ -32,8 +32,9 @@ class GameControllerTest extends WebTestCase
 
     public function loadGames()
     {
-        $this->loadFixtures(array('JA\AppBundle\Tests\Fixtures\ORM\LoadTechnologyData',
-                                  'JA\AppBundle\Tests\Fixtures\ORM\LoadGameData'));
+        $this->loadFixtures(array('JA\AppBundle\DataFixtures\ORM\LoadUserData',
+                                  'JA\AppBundle\DataFixtures\ORM\LoadTechnologyData',
+                                  'JA\AppBundle\DataFixtures\ORM\LoadGameData'));
         $games = LoadGameData::$games;
 
         if(empty($games))

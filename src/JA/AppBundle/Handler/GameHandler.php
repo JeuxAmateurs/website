@@ -3,11 +3,13 @@
 namespace JA\AppBundle\Handler;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use JA\AppBundle\Model\UserInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 
 use JA\AppBundle\Form\Type\GameType;
 use JA\AppBundle\Model\GameInterface;
 use JA\AppBundle\Exception\InvalidFormException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class GameHandler implements GameHandlerInterface
 {
@@ -15,13 +17,15 @@ class GameHandler implements GameHandlerInterface
     private $entityClass;
     private $repository;
     private $formFactory;
+    private $tokenStorage;
 
-    public function __construct(ObjectManager $om, $entityClass, FormFactoryInterface $formFactory)
+    public function __construct(ObjectManager $om, $entityClass, FormFactoryInterface $formFactory, TokenStorageInterface $tokenStorage)
     {
         $this->om = $om;
         $this->entityClass = $entityClass;
         $this->repository = $this->om->getRepository($this->entityClass);
         $this->formFactory = $formFactory;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -46,6 +50,12 @@ class GameHandler implements GameHandlerInterface
     public function post($parameters)
     {
         $game = $this->createGame();
+
+        $user = $this->tokenStorage->getToken()->getUser();
+        if($user instanceof UserInterface)
+        {
+            $game->setOwner($user);
+        }
 
         return $this->processForm($game, $parameters, 'POST');
     }

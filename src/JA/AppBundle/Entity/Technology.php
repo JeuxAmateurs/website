@@ -4,7 +4,6 @@ namespace JA\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use JA\AppBundle\Model\GameInterface;
@@ -13,7 +12,7 @@ use JA\AppBundle\Model\TechnologyInterface;
 /**
  * Technology
  *
- * @ORM\Table()
+ * @ORM\Table(name="ja_technology")
  * @ORM\Entity
  */
 class Technology implements TechnologyInterface
@@ -74,7 +73,8 @@ class Technology implements TechnologyInterface
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="JA\AppBundle\Entity\Game"), mappedBy="technologies")
+     *
+     * @ORM\ManyToMany(targetEntity="Game", mappedBy="technologies")
      */
     private $games;
 
@@ -221,7 +221,7 @@ class Technology implements TechnologyInterface
     /**
      * Get games
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getGames()
     {

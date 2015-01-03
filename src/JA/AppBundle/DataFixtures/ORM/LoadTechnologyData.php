@@ -1,6 +1,6 @@
 <?php
 
-namespace JA\AppBundle\Tests\Fixtures\ORM;
+namespace JA\AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -61,7 +61,7 @@ class LoadTechnologyData extends AbstractFixture implements OrderedFixtureInterf
 
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 
     public function setContainer(ContainerInterface $container = null)

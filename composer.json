@@ -15,7 +15,7 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.6.*",
-        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/orm": "~2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
@@ -25,17 +25,17 @@
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
-        "friendsofsymfony/rest-bundle": "1.4.*",
+        "friendsofsymfony/rest-bundle": "~1.4",
         "jms/serializer": "dev-master as 0.13.*@dev",
         "jms/serializer-bundle": "0.13.*@dev",
-        "nelmio/api-doc-bundle": "2.5.*",
+        "nelmio/api-doc-bundle": "~2.5",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "ornicar/gravatar-bundle" : "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-		"phpunit/phpunit": "3.7.*",
+		"phpunit/phpunit": "~4.4",
 		"liip/functional-test-bundle":"dev-master"
     },
     "scripts": {

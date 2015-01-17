@@ -1,0 +1,11 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="fos_user_user_show">
+    <p>Private :</p>
+    <ul>
+        <li><b>email</b> : {{ user.email }}</li>
+        <li><b>emailCanonical</b> : {{ user.emailCanonical }}</li>
+    </ul>
+    <p>Public :</p>
+    {% include 'JAAppBundle:User:show_public_content.html.twig' %}
+</div>

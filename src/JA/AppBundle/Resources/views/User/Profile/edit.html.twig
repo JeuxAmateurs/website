@@ -1,0 +1,12 @@
+{% extends 'JAAppBundle:User/Profile:layout.html.twig' %}
+
+{% block title %}Edit profile - {{ parent() }}{% endblock %}
+
+{% block content %}
+    <h1>
+        Profile edit : {{ path('fos_user_profile_edit') }}
+    </h1>
+    <hr/>
+
+    {% include "JAAppBundle:User/Profile:edit_content.html.twig" %}
+{% endblock %}

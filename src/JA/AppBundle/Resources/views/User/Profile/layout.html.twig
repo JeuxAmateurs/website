@@ -1,0 +1,20 @@
+{% extends "JAAppBundle::layout.html.twig" %}
+
+{% block title %}Profile - {{ parent() }}{%endblock %}
+
+{% block subbody %}
+
+    <div class="block">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="block">
+        <h1>Links / Actions :</h1>
+        <hr/>
+        <ul>
+            <li><a href="{{ path('fos_user_profile_show') }}">My profile</a></li>
+            <li><a href="{{ path('fos_user_profile_edit') }}">Edit my profile</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

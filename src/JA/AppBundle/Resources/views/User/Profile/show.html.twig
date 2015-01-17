@@ -1,0 +1,12 @@
+{% extends 'JAAppBundle:User/Profile:layout.html.twig' %}
+
+{% block title %}Your Profile - {{ parent() }}{% endblock %}
+
+{% block content %}
+    <h1>
+        Profile show : {{ path('fos_user_profile_show') }}
+    </h1>
+    <hr/>
+
+    {% include "JAAppBundle:User/Profile:show_content.html.twig" %}
+{% endblock %}

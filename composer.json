@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.6.*",
+        "symfony/symfony": "~2.6",
         "doctrine/orm": "~2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
@@ -30,7 +30,8 @@
         "jms/serializer-bundle": "0.13.*@dev",
         "nelmio/api-doc-bundle": "~2.5",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "ornicar/gravatar-bundle" : "dev-master"
+        "ornicar/gravatar-bundle" : "dev-master",
+        "knplabs/knp-markdown-bundle": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
@@ -71,7 +72,7 @@
             "file": "app/config/parameters.yml"
         },
         "branch-alias": {
-            "dev-master": "2.5-dev"
+            "dev-master": "2.6-dev"
         }
     }
 }

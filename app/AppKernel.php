@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Ornicar\GravatarBundle\OrnicarGravatarBundle(),
+            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
             new JA\AppBundle\JAAppBundle(),
         );
 

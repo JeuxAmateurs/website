@@ -78,9 +78,27 @@ class Game implements GameInterface
      */
     protected $owner;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="News", mappedBy="game")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
+     */
+    protected $ownedNews;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="News", inversedBy="mentionedGames")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
+     */
+    protected $referencedNews;
+
     public function  __construct()
     {
         $this->technologies = new ArrayCollection();
+        $this->ownedNews = new ArrayCollection();
+        $this->referencedNews = new ArrayCollection();
     }
 
     /**
@@ -241,5 +259,75 @@ class Game implements GameInterface
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * Add ownedNews
+     *
+     * @param News $ownedNews
+     * @return Game
+     */
+    public function addOwnedNews(News $ownedNews)
+    {
+        $ownedNews->setGame($this);
+        $this->ownedNews[] = $ownedNews;
+
+        return $this;
+    }
+
+    /**
+     * Remove ownedNews
+     *
+     * @param News $ownedNews
+     */
+    public function removeOwnedNews(News $ownedNews)
+    {
+        $ownedNews->setGame(null);
+        $this->ownedNews->removeElement($ownedNews);
+    }
+
+    /**
+     * Get ownedNews
+     *
+     * @return Collection
+     */
+    public function getOwnedNews()
+    {
+        return $this->ownedNews;
+    }
+
+    /**
+     * Add referencedNews
+     *
+     * @param News $referencedNews
+     * @return Game
+     */
+    public function addReferencedNews(News $referencedNews)
+    {
+        $referencedNews->addMentionedGame($this);
+        $this->referencedNews[] = $referencedNews;
+
+        return $this;
+    }
+
+    /**
+     * Remove referencedNews
+     *
+     * @param News $referencedNews
+     */
+    public function removeReferencedNews(News $referencedNews)
+    {
+        $referencedNews->removeMentionedGame($this);
+        $this->referencedNews->removeElement($referencedNews);
+    }
+
+    /**
+     * Get referencedNews
+     *
+     * @return Collection
+     */
+    public function getReferencedNews()
+    {
+        return $this->referencedNews;
     }
 }

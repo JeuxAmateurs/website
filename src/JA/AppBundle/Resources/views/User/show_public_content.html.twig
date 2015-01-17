@@ -4,6 +4,16 @@
     <li><b>usernameCanonical</b> : {{ user.usernameCanonical }}</li>
     <li><b>enabled</b> : {{ user.enabled }}</li>
     <li><b>lastLogin</b> : {{ user.lastLogin | date }}</li>
+    <li>
+        <b>biography</b> :
+        {% if user.biography is not empty %}
+            <hr/>
+            {{ user.biography | markdown }}
+            <hr/>
+        {% else %}
+            Nope
+        {% endif %}
+    </li>
     <li><b>games</b> :
         <ul>
             {% for game in user.ownedGames %}

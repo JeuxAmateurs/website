@@ -3,6 +3,8 @@ JA\AppBundle\Entity\User:
     properties:
         avatar:
             groups: [Default]
+        biography:
+            groups: [Default]
         ownedGames:
             groups: [Default]
             recursion_groups:

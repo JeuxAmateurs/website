@@ -35,17 +35,32 @@ class User extends BaseUser implements UserInterface, AvatarInterface
     protected $avatar;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="biography", type="text", nullable=true)
+     */
+    protected $biography;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Game", mappedBy="owner")
      */
     protected $ownedGames;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="News", mappedBy="authors")
+     */
+    protected $ownedNews;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->ownedGames = new ArrayCollection();
+        $this->ownedNews = new ArrayCollection();
     }
 
     /**
@@ -76,6 +91,26 @@ class User extends BaseUser implements UserInterface, AvatarInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+    }
+
+    /**
+     * Get biography
+     *
+     * @return integer
+     */
+    public function getBiography()
+    {
+        return $this->biography;
+    }
+
+    /**
+     * Set biography
+     *
+     * @param string $biography
+     */
+    public function setBiography($biography)
+    {
+        $this->biography = $biography;
     }
 
     /**
@@ -110,5 +145,38 @@ class User extends BaseUser implements UserInterface, AvatarInterface
     public function getOwnedGames()
     {
         return $this->ownedGames;
+    }
+
+    /**
+     * Add ownedNews
+     *
+     * @param News $ownedNews
+     * @return User
+     */
+    public function addOwnedNews(News $ownedNews)
+    {
+        $this->ownedNews[] = $ownedNews;
+
+        return $this;
+    }
+
+    /**
+     * Remove ownedNews
+     *
+     * @param News $ownedNews
+     */
+    public function removeOwnedNews(News $ownedNews)
+    {
+        $this->ownedNews->removeElement($ownedNews);
+    }
+
+    /**
+     * Get ownedNews
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOwnedNews()
+    {
+        return $this->ownedNews;
     }
 }

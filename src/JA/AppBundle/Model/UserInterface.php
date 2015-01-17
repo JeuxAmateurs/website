@@ -8,6 +8,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 interface UserInterface extends BaseUserInterface
 {
     /**
+     * Get biography
+     *
+     * @return integer
+     */
+    public function getBiography();
+
+    /**
+     * Set biography
+     *
+     * @param string $biography
+     */
+    public function setBiography($biography);
+
+    /**
      * Add ownedGame
      *
      * @param GameInterface $ownedGame

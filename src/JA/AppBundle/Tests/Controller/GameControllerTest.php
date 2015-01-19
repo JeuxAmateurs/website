@@ -23,11 +23,18 @@ class GameControllerTest extends WebTestCase
     public function setUp()
     {
         $this->auth = array(
-            'PHP_AUTH_USER' => 'user',
-            'PHP_AUTH_PW' => 'userpass',
+            'PHP_AUTH_USER' => 'Jean-Michel',
+            'PHP_AUTH_PW' => 'password',
         );
 
-        $this->client = static::createClient(array(), $this->auth);
+        $this->client = static::createClient();
+    }
+
+    public function authenticate()
+    {
+        // we need data to authenticate
+        $this->loadFixtures(array('JA\AppBundle\DataFixtures\ORM\LoadUserData'));
+        $this->client->setServerParameters($this->auth);
     }
 
     public function loadGames()
@@ -137,6 +144,7 @@ class GameControllerTest extends WebTestCase
 
     protected function jsonPostGameRequest($body = '')
     {
+        $this->authenticate();
         $this->client->request(
             'POST',
             $this->getUrl('api_1_post_game'),
@@ -193,6 +201,7 @@ class GameControllerTest extends WebTestCase
      */
     public function testJsonDeleteGame()
     {
+        $this->authenticate();
         $games = $this->loadGames();
         $game = array_pop($games);
 

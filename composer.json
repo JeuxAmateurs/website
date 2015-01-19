@@ -31,7 +31,8 @@
         "nelmio/api-doc-bundle": "~2.5",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "ornicar/gravatar-bundle" : "dev-master",
-        "knplabs/knp-markdown-bundle": "*"
+        "knplabs/knp-markdown-bundle": "~1.3",
+        "jms/security-extra-bundle": "~1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

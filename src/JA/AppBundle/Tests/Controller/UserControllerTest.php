@@ -23,11 +23,16 @@ class UserControllerTest extends WebTestCase
     public function setUp()
     {
         $this->auth = array(
-            'PHP_AUTH_USER' => 'user',
-            'PHP_AUTH_PW' => 'userpass',
+            'PHP_AUTH_USER' => 'Jean-Michel',
+            'PHP_AUTH_PW' => 'password',
         );
 
-        $this->client = static::createClient(array(), $this->auth);
+        $this->client = static::createClient();
+    }
+
+    public function authenticate()
+    {
+        $this->client->setServerParameters($this->auth);
     }
 
     public function loadUsers()

@@ -94,6 +94,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function newAction()
     {
+        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->createForm(new GameType(), null, array('action' => $this->generateUrl('api_1_post_game')));
     }
 
@@ -124,6 +129,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function postAction(Request $request)
     {
+        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
         try
         {
             // Game handler create a new Game.
@@ -167,6 +177,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function editAction($slug)
     {
+        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
         if(!$game = $this->getGameHandler()->get($slug))
         {
             throw $this->createNotFoundException('The resource ' . $slug . ' was not found.');
@@ -215,6 +230,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function putAction(Request $request, $slug)
     {
+        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
         try
         {
             // if data doesn't exist, we create it
@@ -281,6 +301,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function patchAction(Request $request, $slug)
     {
+        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
         try
         {
             // if data doesn't exist, we create it
@@ -334,6 +359,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function removeAction($slug)
     {
+        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
         $deleteForm = $this->createDeleteForm($slug);
 
         return $deleteForm;
@@ -374,6 +404,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function deleteAction($slug)
     {
+        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
         if($game = $this->getGameHandler()->get($slug))
         {
             $this->getGameHandler()->delete($game);

@@ -15,6 +15,15 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api:
+            pattern: ^/api
+            anonymous: true
+            form_login: false
+            provider: fos_userbundle
+            http_basic:
+                realm: "JeuxAmateurs API"
+            stateless: true
+
         main:
             pattern: ^/
             form_login:

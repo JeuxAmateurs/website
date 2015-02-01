@@ -23,8 +23,8 @@ class GameControllerTest extends WebTestCase
     public function setUp()
     {
         $this->auth = array(
-            'PHP_AUTH_USER' => 'Jean-Michel',
-            'PHP_AUTH_PW' => 'password',
+            'PHP_AUTH_USER' => 'IAmDev',
+            'PHP_AUTH_PW' => 'passdev',
         );
 
         $this->client = static::createClient();
@@ -48,6 +48,12 @@ class GameControllerTest extends WebTestCase
             $this->markTestIncomplete('You must have at least one game in your fixtures');
 
         return $games;
+    }
+
+    protected function getUrl($route, $params = array(), $absolute = false)
+    {
+        $params['_api'] = 'api';
+        return $this->getContainer()->get('router')->generate($route, $params, $absolute);
     }
 
     protected function jsonGetGamesRequest()
@@ -203,7 +209,15 @@ class GameControllerTest extends WebTestCase
     {
         $this->authenticate();
         $games = $this->loadGames();
-        $game = array_pop($games);
+
+        // find a game created by user
+        $gamesByUser = array_filter($games, function ($item) {
+            return $item->getOwner()->getUsername() == $this->auth['PHP_AUTH_USER'];
+        });
+        if(empty($gamesByUser)) {
+            $this->markTestSkipped('You need an user with games to perform a delete');
+        }
+        $game = array_pop($gamesByUser);
 
         $this->client->request(
             'DELETE',

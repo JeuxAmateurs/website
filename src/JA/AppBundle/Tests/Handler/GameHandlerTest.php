@@ -6,6 +6,9 @@ use JA\AppBundle\Entity\DefaultGame;
 use JA\AppBundle\Entity\Game;
 use JA\AppBundle\Handler\GameHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class GameHandlerTest extends WebTestCase
 {
@@ -21,6 +24,10 @@ class GameHandlerTest extends WebTestCase
     protected $token;
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     protected $tokenStorage;
+    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    protected $user;
+    /** @var \PHPUnit_Framework_MockObject_MockObject */
+    protected $authorizationChecker;
 
     const GAME_CLASS = 'JA\AppBundle\Tests\Handler\DummyGame';
 
@@ -38,6 +45,10 @@ class GameHandlerTest extends WebTestCase
         $this->tokenStorage = $this->getMockBuilder('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface')
             ->disableOriginalConstructor()
             ->getMock();
+        $this->user = $this->getMock('JA\AppBundle\Entity\User');
+        $this->authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationChecker')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->om->expects($this->any())
             ->method('getRepository')
@@ -51,7 +62,21 @@ class GameHandlerTest extends WebTestCase
             ->method('getName')
             ->will($this->returnValue(static::GAME_CLASS));
 
-        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory, $this->tokenStorage);
+        // We expect to call the Security Token to get the current user
+        $this->tokenStorage->expects($this->any())
+            ->method('getToken')
+            ->will($this->returnValue($this->token));
+
+        $this->token->expects($this->any())
+            ->method('getUser')
+            ->will($this->returnValue($this->user));
+
+        // The authorization checker will be called to verify permissions
+        $this->authorizationChecker->expects($this->any())
+            ->method('isGranted')
+            ->will($this->returnValue(true));
+
+        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory, $this->tokenStorage, $this->authorizationChecker);
     }
 
     public function testGetAll()
@@ -83,15 +108,6 @@ class GameHandlerTest extends WebTestCase
         $game = $this->getGame();
         $game->setName($parameters['name']);
 
-        // We expect to call the Security Token to get the current user
-        $this->tokenStorage->expects($this->once())
-            ->method('getToken')
-            ->will($this->returnValue($this->token));
-
-        $this->token->expects($this->once())
-            ->method('getUser');
-            //->will($this->returnValue($user));
-
         $form = $this->getMock('JA\AppBundle\Tests\Handler\FormInterface');
         $form->expects($this->once())
             ->method('submit')
@@ -107,15 +123,15 @@ class GameHandlerTest extends WebTestCase
             ->method('create')
             ->will($this->returnValue($form));
 
-        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory, $this->tokenStorage);
+        $this->gameHandler = $this->createGameHandler($this->om, static::GAME_CLASS, $this->formFactory, $this->tokenStorage, $this->authorizationChecker);
         $gameFromTest = $this->gameHandler->post($parameters);
 
         $this->assertEquals($game, $gameFromTest);
     }
 
-    protected function createGameHandler($objectManager, $pageClass, $formFactory, $tokenStorage)
+    protected function createGameHandler($objectManager, $pageClass, $formFactory, $tokenStorage, $authorizationChecker)
     {
-        return new GameHandler($objectManager, $pageClass, $formFactory, $tokenStorage);
+        return new GameHandler($objectManager, $pageClass, $formFactory, $tokenStorage, $authorizationChecker);
     }
 
     protected function getGame()

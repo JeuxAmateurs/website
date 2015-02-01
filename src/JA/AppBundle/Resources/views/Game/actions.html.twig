@@ -1,0 +1,11 @@
+{% if is_granted('edit', game) %}
+    <a href="{{ path('api_1_edit_game', {'slug' : game.slug}) }}">
+        [edit]
+    </a>
+{% endif %}
+
+{% if is_granted('delete', game) %}
+    <a href="{{ path('api_1_remove_game', {'slug' : game.slug}) }}">
+        [remove]
+    </a>
+{% endif %}

@@ -5,12 +5,8 @@
 {% block content %}
     <h1>
         Get Game : {{ path('api_1_get_game', {'slug' : game.slug}) }}
-        <a href="{{ path('api_1_edit_game', {'slug' : game.slug}) }}">
-            [edit]
-        </a>
-        <a href="{{ path('api_1_remove_game', {'slug' : game.slug}) }}">
-            [remove]
-        </a>
+
+        {% include "JAAppBundle:Game:actions.html.twig" %}
     </h1>
     <hr/>
 

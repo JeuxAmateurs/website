@@ -94,7 +94,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function newAction()
     {
-        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        if(false === $this->get('security.authorization_checker')->isGranted('create'))
         {
             throw $this->createAccessDeniedException();
         }
@@ -129,8 +129,9 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function postAction(Request $request)
     {
-        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
+        if(false === $this->get('security.authorization_checker')->isGranted('create'))
         {
+            $this->get('logger')->debug('{user} can\'t create game.', array('user' => $this->get('security.token_storage')->getToken()->getUser()->getUsername()));
             throw $this->createAccessDeniedException();
         }
 
@@ -177,15 +178,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function editAction($slug)
     {
-        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
-        {
-            throw $this->createAccessDeniedException();
-        }
-
         if(!$game = $this->getGameHandler()->get($slug))
-        {
             throw $this->createNotFoundException('The resource ' . $slug . ' was not found.');
-        }
+
+        if(false === $this->get('security.authorization_checker')->isGranted('edit', $game))
+            throw $this->createAccessDeniedException();
 
         $form = $this->createForm(
             new GameType(),
@@ -230,11 +227,6 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function putAction(Request $request, $slug)
     {
-        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
-        {
-            throw $this->createAccessDeniedException();
-        }
-
         try
         {
             // if data doesn't exist, we create it
@@ -248,6 +240,8 @@ class GameController extends FOSRestController implements ClassResourceInterface
             }
             else
             {
+                if(false === $this->get('security.authorization_checker')->isGranted('edit', $game))
+                    throw $this->createAccessDeniedException();
                 $code = Codes::HTTP_NO_CONTENT;
                 $game = $this->getGameHandler()->put(
                     $game,
@@ -301,16 +295,14 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function patchAction(Request $request, $slug)
     {
-        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
-        {
-            throw $this->createAccessDeniedException();
-        }
-
         try
         {
             // if data doesn't exist, we create it
             if($game = $this->getGameHandler()->get($slug))
             {
+                if(false === $this->get('security.authorization_checker')->isGranted('edit', $game))
+                    throw $this->createAccessDeniedException();
+
                 $game = $this->getGameHandler()->patch(
                     $game,
                     $request->request->get(GameType::NAME)
@@ -359,10 +351,11 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function removeAction($slug)
     {
-        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
-        {
+        if(!$game = $this->getGameHandler()->get($slug))
+            $this->createNotFoundException();
+
+        if(false === $this->get('security.authorization_checker')->isGranted('delete', $game))
             throw $this->createAccessDeniedException();
-        }
 
         $deleteForm = $this->createDeleteForm($slug);
 
@@ -404,13 +397,14 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function deleteAction($slug)
     {
-        if(false === $this->get('security.authorization_checker')->isGranted('ROLE_USER'))
-        {
-            throw $this->createAccessDeniedException();
-        }
-
         if($game = $this->getGameHandler()->get($slug))
         {
+            if(false === $this->get('security.authorization_checker')->isGranted('delete', $game))
+            {
+                $this->get('logger')->debug('User can\'t delete this game');
+                throw $this->createAccessDeniedException();
+            }
+
             $this->getGameHandler()->delete($game);
         }
 

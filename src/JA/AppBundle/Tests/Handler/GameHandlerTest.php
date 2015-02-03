@@ -2,13 +2,9 @@
 
 namespace JA\AppBundle\Tests\Handler;
 
-use JA\AppBundle\Entity\DefaultGame;
 use JA\AppBundle\Entity\Game;
 use JA\AppBundle\Handler\GameHandler;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class GameHandlerTest extends WebTestCase
 {

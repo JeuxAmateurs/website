@@ -90,10 +90,7 @@ class Game implements GameInterface
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="News", inversedBy="mentionedGames")
-     * @ORM\JoinTable(name="ja_games_ref_news",
-     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id")},
-     * )
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      */
     protected $referencedNews;
 

@@ -78,10 +78,6 @@ class News
      * @var string
      *
      * @ORM\ManyToMany(targetEntity="User", inversedBy="ownedNews")
-     * @ORM\JoinTable(name="ja_news_authors",
-     *  joinColumns={@ORM\JoinColumn(name="news_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     * )
      */
     private $authors;
 
@@ -103,10 +99,6 @@ class News
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Game", mappedBy="referencedNews")
-     * @ORM\JoinTable(name="ja_news_mentioned_games",
-     *  joinColumns={@ORM\JoinColumn(name="news_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
-     * )
      */
     private $mentionedGames;
 

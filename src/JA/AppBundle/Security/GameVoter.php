@@ -42,25 +42,25 @@ class GameVoter extends AbstractVoter
     {
         $this->token = $token;
 
+        if(!$this->token->getUser() instanceof User) {
+            if(null !== $this->logger)
+                $this->logger->debug('User is not an instance of class', array('class' => 'JA\AppBundle\Entity\User'));
+            return self::ACCESS_DENIED;
+        }
+
         if(null !== $this->logger)
             $this->logger->debug('Invoking game voter');
 
         // No need for object here
         if(in_array(self::CREATE, $attributes, true)
             && !in_array('ROLE_BANNED', $token->getUser()->getRoles(), true))
-            return true;
+            return self::ACCESS_GRANTED;
 
         return parent::vote($token, $object, $attributes);
     }
 
     protected function isGranted($attribute, $game, $user = null)
     {
-        if(!$user instanceof User) {
-            if(null !== $this->logger)
-                $this->logger->debug('User is not an instance of {class}', array('class' => 'JA\AppBundle\Entity\User'));
-            return false;
-        }
-
         // Using this to know hierarchy
         $roleHierarchyVoter = new RoleHierarchyVoter($this->roleHierarchy);
         $adminAccess = $roleHierarchyVoter->vote($this->token, null, array('ROLE_ADMIN'));

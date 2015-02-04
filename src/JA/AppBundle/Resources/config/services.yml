@@ -4,6 +4,8 @@ parameters:
     ja_app.game.class: JA\AppBundle\Entity\Game
     ja_app.game.handler.class: JA\AppBundle\Handler\GameHandler
     ja_app.technology.class: JA\AppBundle\Entity\Technology
+    ja_app.game_voter.class: JA\AppBundle\Security\GameVoter
+    ja_app.profile.form.type.class: JA\AppBundle\Form\Type\ProfileFormType
 
 services:
     ja_app.user.handler:
@@ -18,8 +20,12 @@ services:
         tags:
             -  { name: doctrine.event_listener, event: postLoad }
     ja_app.game_voter:
-        class:      JA\AppBundle\Security\GameVoter
+        class:      %ja_app.game_voter.class%
         arguments: [@security.role_hierarchy, @logger]
         public:     false
         tags:
            - { name: security.voter }
+    ja_app.profile.form.type:
+        class: %ja_app.profile.form.type.class%
+        tags:
+           - { name: form.type, alias: profile }

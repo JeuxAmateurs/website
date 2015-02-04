@@ -123,6 +123,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: JA\AppBundle\Entity\User
+    profile:
+        form:
+            type: profile
 
 ornicar_gravatar:
     rating: pg

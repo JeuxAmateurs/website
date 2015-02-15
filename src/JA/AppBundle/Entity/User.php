@@ -44,6 +44,17 @@ class User extends BaseUser implements UserInterface, AvatarInterface
     /**
      * @var ArrayCollection
      *
+     * @ORM\ManyToMany(targetEntity="Skill", inversedBy="users")
+     * @ORM\JoinTable(name="ja_user_skills",
+     *  joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="skill_id", referencedColumnName="name_canonical")},
+     * )
+     */
+    protected $skills;
+
+    /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Game", mappedBy="owner")
      */
     protected $ownedGames;
@@ -59,6 +70,7 @@ class User extends BaseUser implements UserInterface, AvatarInterface
     {
         parent::__construct();
 
+        $this->skills = new ArrayCollection();
         $this->ownedGames = new ArrayCollection();
         $this->ownedNews = new ArrayCollection();
     }
@@ -111,6 +123,40 @@ class User extends BaseUser implements UserInterface, AvatarInterface
     public function setBiography($biography)
     {
         $this->biography = $biography;
+    }
+
+    /**
+     * Add a skill
+     *
+     * @param Skill $skill
+     * @return $this
+     */
+    public function addSkill(Skill $skill)
+    {
+        $this->skills[] = $skill;
+        $skill->addUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove a skill
+     *
+     * @param Skill $skill
+     */
+    public function removeSkill(Skill $skill)
+    {
+        $this->skills->removeElement($skill);
+    }
+
+    /**
+     * Get skills
+     *
+     * @return ArrayCollection
+     */
+    public function getSkills()
+    {
+        return $this->skills;
     }
 
     /**

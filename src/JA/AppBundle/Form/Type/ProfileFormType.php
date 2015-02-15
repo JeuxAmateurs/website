@@ -11,7 +11,12 @@ class ProfileFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('biography');
+        $builder->add('biography')
+                ->add('skills', 'skill', array(
+                    'multiple' => true,
+                    'expanded' => true,
+                    'required' => false,
+                ));
     }
 
     public function getParent()

@@ -6,6 +6,10 @@ parameters:
     ja_app.technology.class: JA\AppBundle\Entity\Technology
     ja_app.game_voter.class: JA\AppBundle\Security\GameVoter
     ja_app.profile.form.type.class: JA\AppBundle\Form\Type\ProfileFormType
+    skills:
+        developer: Developer
+        graphic_designer: Graphic Designer
+        sound_designer: Sound Designer
 
 services:
     ja_app.user.handler:
@@ -29,3 +33,7 @@ services:
         class: %ja_app.profile.form.type.class%
         tags:
            - { name: form.type, alias: profile }
+    ja_app.form.type.skill:
+        class: JA\AppBundle\Form\Type\SkillType
+        tags:
+            - { name: form.type, alias: skill }

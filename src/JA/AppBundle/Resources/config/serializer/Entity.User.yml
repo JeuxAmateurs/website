@@ -5,6 +5,8 @@ JA\AppBundle\Entity\User:
             groups: [Default]
         biography:
             groups: [Default]
+        skills:
+            groups: [Default]
         ownedGames:
             groups: [Default]
             recursion_groups:

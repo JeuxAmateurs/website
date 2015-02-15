@@ -22,7 +22,15 @@ Le second permettra d'accéder à l'API de JeuxAmateurs.
 
     php bin/console doctrine:database:create # création de la bdd
     php bin/console doctrine:schema:create # création de la structure
-    
+    php bin/console doctrine:migrations:migrate # données initiales et changement de structure
+
+Concernant cette dernière commande, le projet étant toujours au stade initial de développement, nous ne l'utilisons pas pour faire les mises à jour 
+mais seulement pour définir des données initiales (le projet ne peut pas encore être mis en production).
+Si vous rencontrez un problème, il vous suffit de supprimer la base et de la recharger comme ceci :
+
+    php bin/console doctrine:schema:drop --force
+    php bin/console doctrine:schema:update --force
+
 Si vous souhaitez commencer avec des données fictives, vous pouvez charger les fixtures.
 
     php bin/console doctrine:fixtures:load
@@ -30,6 +38,7 @@ Si vous souhaitez commencer avec des données fictives, vous pouvez charger les 
 3) Lancer les tests avant de contribuer
 ---------------------------------------
 
+*N'oubliez pas de mettre la base de test à jour aussi avec l'option ```--env test```*
 Si vous souhaitez contribuer, vérifiez bien qu'il n'y ait pas de régression avant de proposer une pull request.
 
     php bin/phpunit

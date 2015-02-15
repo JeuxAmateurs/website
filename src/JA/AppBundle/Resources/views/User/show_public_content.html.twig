@@ -14,6 +14,15 @@
             Nope
         {% endif %}
     </li>
+    <li><b>skills</b> :
+        <ul>
+            {% for skill in user.skills %}
+                <li>{{ skill.name }}</li>
+            {% else %}
+                <li>No skill !</li>
+            {% endfor %}
+        </ul>
+    </li>
     <li><b>games</b> :
         <ul>
             {% for game in user.ownedGames %}

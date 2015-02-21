@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
 use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 class GameVoter extends AbstractVoter
@@ -42,6 +43,10 @@ class GameVoter extends AbstractVoter
     {
         $this->token = $token;
 
+        // All users can view the game currently (maybe there will be some publish options or private projects in the future)
+        if(in_array(self::VIEW, $attributes, true))
+            return self::ACCESS_GRANTED;
+
         if(!$this->token->getUser() instanceof User) {
             if(null !== $this->logger)
                 $this->logger->debug('User is not an instance of class', array('class' => 'JA\AppBundle\Entity\User'));
@@ -61,6 +66,9 @@ class GameVoter extends AbstractVoter
 
     protected function isGranted($attribute, $game, $user = null)
     {
+        if(!$user)
+            return false;
+
         // Using this to know hierarchy
         $roleHierarchyVoter = new RoleHierarchyVoter($this->roleHierarchy);
         $adminAccess = $roleHierarchyVoter->vote($this->token, null, array('ROLE_ADMIN'));

@@ -28,21 +28,24 @@ class LoadTechnologyData extends AbstractFixture implements OrderedFixtureInterf
         $tech->setName('SFML');
         $tech->setDescription('Simple and Fast Multimedia Library');
         $tech->setContent(
-            'SFML is multi-media
-            ====================
-            SFML provides a simple interface to the various components of your PC, to ease the development of games
-            and multimedia applications. It is composed of five modules: system, window, graphics, audio and network.
+"SFML is multi-media
+====================
 
-            SFML is multi-platform
-            ======================
-            With SFML, your application can compile and run out of the box on the most common operating systems:
-            Windows, Linux, Mac OS X and soon Android & iOS.
+SFML provides a simple interface to the various components of your PC, to ease the development of games
+and multimedia applications. It is composed of five modules: system, window, graphics, audio and network.
 
-            SFML is multi-language
-            ======================
-            SFML has official bindings for the C and .Net languages. And thanks to its active community,
-            it is also available in many other languages such as Java, Ruby, Python, Go, and more.
-        ');
+SFML is multi-platform
+======================
+
+With SFML, your application can compile and run out of the box on the most common operating systems:
+Windows, Linux, Mac OS X and soon Android & iOS.
+
+SFML is multi-language
+======================
+
+SFML has official bindings for the C and .Net languages. And thanks to its active community,
+it is also available in many other languages such as Java, Ruby, Python, Go, and more."
+        );
         $manager->persist($tech);
 
         $tech2 = new $techClass();

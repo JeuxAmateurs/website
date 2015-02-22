@@ -18,10 +18,8 @@ class GameType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('technologies', 'entity', array(
-                'class' => 'JAAppBundle:Technology',
-                'property' => 'name',
-                'multiple' => 'true',
+            ->add('technologies', 'technologies', array(
+                'required' => false
             ))
         ;
     }

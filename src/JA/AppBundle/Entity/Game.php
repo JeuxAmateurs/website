@@ -62,7 +62,7 @@ class Game implements GameInterface
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Technology", inversedBy="games")
+     * @ORM\ManyToMany(targetEntity="Technology", inversedBy="games", cascade={"persist"})
      * @ORM\JoinTable(name="ja_games_technologies",
      *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
      *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id")},

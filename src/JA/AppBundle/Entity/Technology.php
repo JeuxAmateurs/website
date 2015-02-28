@@ -44,14 +44,14 @@ class Technology implements TechnologyInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=100)
+     * @ORM\Column(name="description", type="string", length=100, nullable=true)
      */
     private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
 
@@ -80,10 +80,14 @@ class Technology implements TechnologyInterface
 
     /**
      * Constructor
+     *
+     * @param string|null $name
      */
-    public function __construct()
+    public function __construct($name = null)
     {
         $this->games = new ArrayCollection();
+
+        if($name) $this->setName($name);
     }
 
     /**
@@ -198,12 +202,13 @@ class Technology implements TechnologyInterface
     /**
      * Add games
      *
-     * @param GameInterface $games
+     * @param GameInterface $game
      * @return Technology
      */
-    public function addGame(GameInterface $games)
+    public function addGame(GameInterface $game)
     {
-        $this->games[] = $games;
+        if (!$this->games->contains($game))
+            $this->games[] = $game;
 
         return $this;
     }

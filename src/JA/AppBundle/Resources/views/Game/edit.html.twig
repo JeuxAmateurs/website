@@ -8,6 +8,10 @@
     <hr/>
 
     {% if (form is defined) %}
-        {{ form(form) }}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button type="submit">Submit</button>
+        {{ form_end(form) }}
     {% endif %}
 {% endblock %}

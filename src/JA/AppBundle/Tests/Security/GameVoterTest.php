@@ -35,16 +35,16 @@ class GameVoterTest extends WebTestCase
 
         $object = $this->getGame($this->getMock('\JA\AppBundle\Entity\User'));
 
-        // An user can create a Game
+        // An anonymous user can create a Game
         $this->assertAccess(GameVoter::CREATE, GameVoter::ACCESS_DENIED, $token, null, 'Anonymous user must NOT be able to create a game !');
 
-        // An user can view a Game
+        // An anonymous user can view a Game
         $this->assertAccess(GameVoter::VIEW, GameVoter::ACCESS_GRANTED, $token, $object, 'Anonymous user must be able to view a game !');
 
-        // An user can edit any Game
+        // An anonymous user can edit any Game
         $this->assertAccess(GameVoter::EDIT, GameVoter::ACCESS_DENIED, $token, $object, 'Anonymous user must NOT be able to edit a game !');
 
-        // An user can delete a Game
+        // An anonymous user can delete a Game
         $this->assertAccess(GameVoter::DELETE, GameVoter::ACCESS_DENIED, $token, $object, 'Anonymous user must NOT be able to delete any game !');
     }
 
@@ -53,17 +53,17 @@ class GameVoterTest extends WebTestCase
         $token = $this->getToken(array('ROLE_BANNED'));
         $object = $this->getGame($this->getMock('\JA\AppBundle\Entity\User'));
 
-        // An user can create a Game
-        $this->assertAccess(GameVoter::CREATE, GameVoter::ACCESS_GRANTED, $token, null, 'User must be able to create a game !');
+        // A banned user can create a Game
+        $this->assertAccess(GameVoter::CREATE, GameVoter::ACCESS_GRANTED, $token, null, 'User banned must be able to create a game !');
 
-        // An user can view a Game
-        $this->assertAccess(GameVoter::VIEW, GameVoter::ACCESS_GRANTED, $token, $object, 'User must be able to view a game !');
+        // A banned user can view a Game
+        $this->assertAccess(GameVoter::VIEW, GameVoter::ACCESS_GRANTED, $token, $object, 'User banned must be able to view a game !');
 
-        // An user can edit any Game
-        $this->assertAccess(GameVoter::EDIT, GameVoter::ACCESS_DENIED, $token, $object, 'User must NOT be able to edit a game !');
+        // A banned user can edit any Game
+        $this->assertAccess(GameVoter::EDIT, GameVoter::ACCESS_DENIED, $token, $object, 'User banned must NOT be able to edit a game !');
 
-        // An user can delete a Game
-        $this->assertAccess(GameVoter::DELETE, GameVoter::ACCESS_DENIED, $token, $object, 'User must NOT be able to delete any game !');
+        // A banned user can delete a Game
+        $this->assertAccess(GameVoter::DELETE, GameVoter::ACCESS_DENIED, $token, $object, 'User banned must NOT be able to delete any game !');
     }
 
     public function testUserAccess()
@@ -78,16 +78,16 @@ class GameVoterTest extends WebTestCase
 
         $object = $this->getGame($newUser);
 
-        // An user can create a Game
+        // A user can create a Game
         $this->assertAccess(GameVoter::CREATE, GameVoter::ACCESS_GRANTED, $token, null, 'User must be able to create a game !');
 
-        // An user can view a Game
+        // A user can view a Game
         $this->assertAccess(GameVoter::VIEW, GameVoter::ACCESS_GRANTED, $token, $object, 'User must be able to view a game !');
 
-        // An user can edit any Game
+        // A user can edit any Game
         $this->assertAccess(GameVoter::EDIT, GameVoter::ACCESS_DENIED, $token, $object, 'User must NOT be able to edit a game !');
 
-        // An user can delete a Game
+        // A user can delete a Game
         $this->assertAccess(GameVoter::DELETE, GameVoter::ACCESS_DENIED, $token, $object, 'User must NOT be able to delete any game !');
     }
 
@@ -116,16 +116,16 @@ class GameVoterTest extends WebTestCase
 
         $object = $this->getGame($this->getMock('\JA\AppBundle\Entity\User'));
 
-        // An admin can create a Game
+        // A moderator can create a Game
         $this->assertAccess(GameVoter::CREATE, GameVoter::ACCESS_GRANTED, $token, null, 'Moderator must be able to create a game !');
 
-        // An admin can create a Game
-        $this->assertAccess(GameVoter::VIEW, GameVoter::ACCESS_GRANTED, $token, $object, 'Admin must be able to view a game !');
+        // A moderator can view a Game
+        $this->assertAccess(GameVoter::VIEW, GameVoter::ACCESS_GRANTED, $token, $object, 'Moderator must be able to view a game !');
 
-        // An admin can edit any Game
+        // A moderator can edit any Game
         $this->assertAccess(GameVoter::EDIT, GameVoter::ACCESS_GRANTED, $token, $object, 'Moderator must be able to edit a game !');
 
-        // An admin can delete a Game
+        // A moderator can delete a Game
         $this->assertAccess(GameVoter::DELETE, GameVoter::ACCESS_DENIED, $token, $object, 'Moderator must NOT be able to delete a game !');
     }
 
@@ -138,7 +138,7 @@ class GameVoterTest extends WebTestCase
         // An admin can create a Game
         $this->assertAccess(GameVoter::CREATE, GameVoter::ACCESS_GRANTED, $token, null, 'Admin must be able to create a game !');
 
-        // An admin can create a Game
+        // An admin can view a Game
         $this->assertAccess(GameVoter::VIEW, GameVoter::ACCESS_GRANTED, $token, $object, 'Admin must be able to view a game !');
 
         // An admin can edit any Game

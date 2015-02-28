@@ -2,6 +2,8 @@ parameters:
     ja_app.user.handler.class: JA\AppBundle\Handler\UserHandler
     ja_app.user.class: JA\AppBundle\Entity\User
     ja_app.game.class: JA\AppBundle\Entity\Game
+    ja_app.news.handler.class: JA\AppBundle\Handler\NewsHandler
+    ja_app.news.class: JA\AppBundle\Entity\News
     ja_app.game.handler.class: JA\AppBundle\Handler\GameHandler
     ja_app.technology.class: JA\AppBundle\Entity\Technology
     ja_app.game_voter.class: JA\AppBundle\Security\GameVoter
@@ -18,6 +20,9 @@ services:
     ja_app.game.handler:
         class: %ja_app.game.handler.class%
         arguments: [@doctrine.orm.entity_manager, %ja_app.game.class%, @form.factory, @security.token_storage, @security.authorization_checker]
+    ja_app.news.handler:
+            class: %ja_app.news.handler.class%
+            arguments: [@doctrine.orm.entity_manager, %ja_app.news.class%, @form.factory, @security.token_storage]
     ja_app.event_listener.avatar:
         class: JA\AppBundle\EventListener\AvatarListener
         arguments: [ "@gravatar.api" ]

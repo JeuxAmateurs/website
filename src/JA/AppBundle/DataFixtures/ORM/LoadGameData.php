@@ -32,21 +32,30 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface, C
         $game->addTechnology($this->getReference('tech2'));
         $user->addOwnedGame($game);
         $manager->persist($game);
-        $manager->persist($user);
+
 
         $game2 = new $gameClass();
         $game2->setName('My Second Game');
         $game2->addTechnology($this->getReference('tech2'));
         $user->addOwnedGame($game2);
         $manager->persist($game2);
+
+        $game3 = new $gameClass();
+        $game3->setName('Protal 2');
+        $game3->addTechnology($this->getReference('tech'));
+        $game3->addTechnology($this->getReference('tech2'));
+        $user->addOwnedGame($game3);
+        $manager->persist($game3);
         $manager->persist($user);
 
-        self::$games = array($game, $game2);
+
+        self::$games = array($game, $game2, $game3);
 
         $manager->flush();
 
         $this->addReference('game', $game);
         $this->addReference('game2', $game2);
+        $this->addReference('protal', $game3);
     }
 
     public function getOrder()

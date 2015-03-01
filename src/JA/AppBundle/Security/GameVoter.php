@@ -39,8 +39,24 @@ class GameVoter extends AbstractVoter
         return array('JA\AppBundle\Entity\Game');
     }
 
+    /**
+     * @param string|object|null $object
+     * @return bool
+     */
+    public function supportsClass($object)
+    {
+        if(is_string($object))
+            return parent::supportsClass($object);
+
+        return parent::supportsClass(get_class($object));
+    }
+
     public function vote(TokenInterface $token, $object, array $attributes)
     {
+        if (!$object || !$this->supportsClass($object)) {
+            return self::ACCESS_ABSTAIN;
+        }
+
         $this->token = $token;
 
         // All users can view the game currently (maybe there will be some publish options or private projects in the future)
@@ -56,17 +72,34 @@ class GameVoter extends AbstractVoter
         if(null !== $this->logger)
             $this->logger->debug('Invoking game voter');
 
-        // No need for object here
-        if(in_array(self::CREATE, $attributes, true)
-            && !in_array('ROLE_BANNED', $token->getUser()->getRoles(), true))
-            return self::ACCESS_GRANTED;
+        // abstain vote by default in case none of the attributes are supported
+        $vote = self::ACCESS_ABSTAIN;
 
-        return parent::vote($token, $object, $attributes);
+        foreach ($attributes as $attribute) {
+            if (!$this->supportsAttribute($attribute)) {
+                continue;
+            }
+
+            // as soon as at least one attribute is supported, default is to deny access
+            $vote = self::ACCESS_DENIED;
+
+            // No need for object here
+            if($attribute === self::CREATE
+                && !in_array('ROLE_BANNED', $token->getUser()->getRoles(), true))
+                return self::ACCESS_GRANTED;
+
+            if ($this->isGranted($attribute, $object, $token->getUser())) {
+                // grant access as soon as at least one voter returns a positive response
+                return self::ACCESS_GRANTED;
+            }
+        }
+
+        return $vote;
     }
 
     protected function isGranted($attribute, $game, $user = null)
     {
-        if(!$user)
+        if(!$user || is_string($game))
             return false;
 
         // Using this to know hierarchy

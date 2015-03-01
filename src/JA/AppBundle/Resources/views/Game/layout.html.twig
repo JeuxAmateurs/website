@@ -17,7 +17,7 @@
         <h1>Links / Actions :</h1>
         <hr/>
         <ul>
-            {% if is_granted('create') %}
+            {% if is_granted('create', 'JA\\AppBundle\\Entity\\Game') %}
             <li><a href="{{ path('api_1_new_game') }}">New game</a></li>
             {% endif %}
             <li><a href="{{ path('api_1_get_games') }}">All games</a></li>

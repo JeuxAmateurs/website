@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 use JA\AppBundle\Model\GameInterface;
+use JA\AppBundle\Model\NewsInterface;
 use JA\AppBundle\Model\UserInterface;
 
 /**
@@ -270,7 +271,7 @@ class Game implements GameInterface
      * @param News $ownedNews
      * @return Game
      */
-    public function addOwnedNews(News $ownedNews)
+    public function addOwnedNews(NewsInterface $ownedNews)
     {
         $ownedNews->setGame($this);
         $this->ownedNews[] = $ownedNews;
@@ -283,7 +284,7 @@ class Game implements GameInterface
      *
      * @param News $ownedNews
      */
-    public function removeOwnedNews(News $ownedNews)
+    public function removeOwnedNews(NewsInterface $ownedNews)
     {
         $ownedNews->setGame(null);
         $this->ownedNews->removeElement($ownedNews);
@@ -305,7 +306,7 @@ class Game implements GameInterface
      * @param News $referencedNews
      * @return Game
      */
-    public function addReferencedNews(News $referencedNews)
+    public function addReferencedNews(NewsInterface $referencedNews)
     {
         $referencedNews->addMentionedGame($this);
         $this->referencedNews[] = $referencedNews;
@@ -318,7 +319,7 @@ class Game implements GameInterface
      *
      * @param News $referencedNews
      */
-    public function removeReferencedNews(News $referencedNews)
+    public function removeReferencedNews(NewsInterface $referencedNews)
     {
         $referencedNews->removeMentionedGame($this);
         $this->referencedNews->removeElement($referencedNews);

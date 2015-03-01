@@ -6,13 +6,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use JA\AppBundle\Model\NewsInterface;
+use JA\AppBundle\Model\GameInterface;
+use JA\AppBundle\Model\UserInterface;
+
 /**
  * News
  *
  * @ORM\Table(name="ja_news")
  * @ORM\Entity
  */
-class News
+class News implements NewsInterface
 {
     /**
      * @var integer
@@ -115,6 +119,7 @@ class News
     {
         //$this->medias = new ArrayCollection();
         $this->mentionedGames = new ArrayCollection();
+        $this->authors = new ArrayCollection();
     }
 
     /**
@@ -154,7 +159,7 @@ class News
      * Set content
      *
      * @param string $content
-     * @return News
+     * @return NewsInterface
      */
     public function setContent($content)
     {
@@ -197,7 +202,7 @@ class News
      * Set sources
      *
      * @param string $sources
-     * @return News
+     * @return NewsInterface
      */
     public function setSources($sources)
     {
@@ -220,7 +225,7 @@ class News
      * Set medias
      *
      * @param string $medias
-     * @return News
+     * @return NewsInterface
      */
     public function setMedias($medias)
     {
@@ -243,7 +248,7 @@ class News
      * Set comments
      *
      * @param string $comments
-     * @return News
+     * @return NewsInterface
      */
     public function setComments($comments)
     {
@@ -263,22 +268,9 @@ class News
     }
 
     /**
-     * Set authors
-     *
-     * @param string $authors
-     * @return News
-     */
-    public function setAuthors($authors)
-    {
-        $this->authors = $authors;
-
-        return $this;
-    }
-
-    /**
      * Get authors
      *
-     * @return string 
+     * @return User array
      */
     public function getAuthors()
     {
@@ -289,7 +281,7 @@ class News
      * Set authorTeam
      *
      * @param string $authorTeam
-     * @return News
+     * @return NewsInterface
      */
     public function setAuthorTeam($authorTeam)
     {
@@ -311,10 +303,10 @@ class News
     /**
      * Set game
      *
-     * @param Game $game
-     * @return News
+     * @param GameInterface $game
+     * @return NewsInterface
      */
-    public function setGame($game)
+    public function setGame(GameInterface $game)
     {
         $this->$game = $game;
 
@@ -335,7 +327,7 @@ class News
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return News
+     * @return NewsInterface
      */
     public function setCreatedAt($createdAt)
     {
@@ -348,7 +340,7 @@ class News
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return News
+     * @return NewsInterface
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -360,13 +352,13 @@ class News
     /**
      * Add authors
      *
-     * @param User $authors
-     * @return News
+     * @param UserInterface $author
+     * @return NewsInterface
      */
-    public function addAuthor(User $authors)
+    public function addAuthor(UserInterface $author)
     {
-        $authors->removeOwnedNews($this);
-        $this->authors[] = $authors;
+        $author->removeOwnedNews($this);
+        $this->authors[] = $author;
 
         return $this;
     }
@@ -374,21 +366,21 @@ class News
     /**
      * Remove authors
      *
-     * @param User $authors
+     * @param UserInterface $author
      */
-    public function removeAuthor(User $authors)
+    public function removeAuthor(UserInterface $author)
     {
-        $authors->addOwnedNews($this);
-        $this->authors->removeElement($authors);
+        $author->addOwnedNews($this);
+        $this->authors->removeElement($author);
     }
 
     /**
      * Add mentionedGames
      *
-     * @param Game $mentionedGames
-     * @return News
+     * @param GameInterface $mentionedGames
+     * @return NewsInterface
      */
-    public function addMentionedGame(Game $mentionedGames)
+    public function addMentionedGame(GameInterface $mentionedGames)
     {
         $this->mentionedGames[] = $mentionedGames;
 
@@ -398,9 +390,9 @@ class News
     /**
      * Remove mentionedGames
      *
-     * @param Game $mentionedGames
+     * @param GameInterface $mentionedGames
      */
-    public function removeMentionedGame(Game $mentionedGames)
+    public function removeMentionedGame(GameInterface $mentionedGames)
     {
         $this->mentionedGames->removeElement($mentionedGames);
     }

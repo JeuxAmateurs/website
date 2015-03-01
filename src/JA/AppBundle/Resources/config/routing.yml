@@ -17,3 +17,8 @@ ja_app_technology:
     type: rest
     resource: "JA\AppBundle\Controller\TechnologyController"
     name_prefix: api_1_
+
+ja_app_news:
+    type: rest
+    resource: "JA\AppBundle\Controller\\NewsController"
+    name_prefix: api_1_

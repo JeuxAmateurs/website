@@ -1,0 +1,13 @@
+{% extends "JAAppBundle:Technology:layout.html.twig" %}
+
+{% block title "Remove Technology" %}
+
+{% block content %}
+    <h1>Remove technology: {{ path('api_1_remove_technology', {slug: slug}) }}</h1>
+
+    <hr/>
+
+    {% if (form is defined) %}
+        {{ form(form) }}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "JAAppBundle:Technology:layout.html.twig" %}
+
+{% block title %} {{ parent() }} - Get Technology {% endblock %}
+
+{% block content %}
+    <h1>
+        Get Technology : {{ path('api_1_get_technology', {'slug' : technology.slug}) }}
+
+        {% include "JAAppBundle:Technology:actions.html.twig" %}
+    </h1>
+    <hr/>
+
+    <p>Technology Entity :</p>
+    <ul>
+        <li><b>id</b> : {{ technology.id }}</li>
+        <li><b>name</b> : {{ technology.name }}</li>
+        <li><b>slug</b> : {{ technology.slug }}</li>
+        <li>
+            <b>description</b> :
+            {% if technology.content is not empty %}
+                {{ technology.description }}
+            {% else %}
+                Nope
+            {% endif %}
+        </li>
+        <li>
+            <b>content</b> :
+            {% if technology.content is not empty %}
+                <hr/>
+                {{ technology.content | markdown }}
+                <hr/>
+            {% else %}
+                Nope
+            {% endif %}
+        </li>
+        <li><b>createdAt</b> : {{ technology.createdAt | date }}</li>
+        <li><b>updateAt</b> : {{ technology.updatedAt | date }}</li>
+        <li>
+            <b>games</b> :
+            <ul>
+            {% for game in technology.games %}
+                <li>
+                    <a href="{{ path('api_1_get_game', {'slug': game.slug}) }}">
+                        {{ game.name }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
+    </ul>
+
+{% endblock %}

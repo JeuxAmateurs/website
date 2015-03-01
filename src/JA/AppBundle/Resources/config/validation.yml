@@ -8,3 +8,6 @@ JA\AppBundle\Entity\Game:
                 max: 100
                 minMessage: "The game name must be at least {{ limit }} characters length."
                 maxMessage: "The game name cannot be longer than {{ limit }} characters length."
+JA\AppBundle\Entity\Technology:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name

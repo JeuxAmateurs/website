@@ -1,0 +1,17 @@
+{% extends "JAAppBundle:Technology:layout.html.twig" %}
+
+{% block title "Edit Technology" %}
+
+{% block content %}
+    <h1>Edit technology: {{ path('api_1_edit_technology', {slug: slug}) }}</h1>
+
+    <hr/>
+
+    {% if (form is defined) %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button type="submit">Submit</button>
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

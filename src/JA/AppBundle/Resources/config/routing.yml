@@ -12,3 +12,8 @@ ja_app_user:
     type: rest
     resource: "JA\AppBundle\Controller\UserController"
     name_prefix: api_1_
+
+ja_app_technology:
+    type: rest
+    resource: "JA\AppBundle\Controller\TechnologyController"
+    name_prefix: api_1_

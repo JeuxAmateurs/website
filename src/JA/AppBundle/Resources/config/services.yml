@@ -4,7 +4,9 @@ parameters:
     ja_app.game.class: JA\AppBundle\Entity\Game
     ja_app.game.handler.class: JA\AppBundle\Handler\GameHandler
     ja_app.technology.class: JA\AppBundle\Entity\Technology
+    ja_app.technology.handler.class: JA\AppBundle\Handler\TechnologyHandler
     ja_app.game_voter.class: JA\AppBundle\Security\GameVoter
+    ja_app.technology_voter.class: JA\AppBundle\Security\TechnologyVoter
     ja_app.profile.form.type.class: JA\AppBundle\Form\Type\ProfileFormType
 
 services:
@@ -14,6 +16,9 @@ services:
     ja_app.game.handler:
         class: %ja_app.game.handler.class%
         arguments: [@doctrine.orm.entity_manager, %ja_app.game.class%, @form.factory, @security.token_storage, @security.authorization_checker]
+    ja_app.technology.handler:
+        class: %ja_app.technology.handler.class%
+        arguments: [@doctrine.orm.entity_manager, %ja_app.technology.class%, @form.factory, @security.token_storage, @security.authorization_checker]
     ja_app.event_listener.avatar:
         class: JA\AppBundle\EventListener\AvatarListener
         arguments: [ "@gravatar.api" ]
@@ -21,6 +26,12 @@ services:
             -  { name: doctrine.event_listener, event: postLoad }
     ja_app.game_voter:
         class:      %ja_app.game_voter.class%
+        arguments: [@security.role_hierarchy, @logger]
+        public:     false
+        tags:
+           - { name: security.voter }
+    ja_app.technology_voter:
+        class:      %ja_app.technology_voter.class%
         arguments: [@security.role_hierarchy, @logger]
         public:     false
         tags:

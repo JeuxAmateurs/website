@@ -1,0 +1,11 @@
+{% if is_granted('edit', technology) %}
+    <a href="{{ path('api_1_edit_technology', {'slug' : technology.slug}) }}">
+        [edit]
+    </a>
+{% endif %}
+
+{% if is_granted('delete', technology) %}
+    <a href="{{ path('api_1_remove_technology', {'slug' : technology.slug}) }}">
+        [remove]
+    </a>
+{% endif %}

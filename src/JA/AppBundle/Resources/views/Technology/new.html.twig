@@ -1,0 +1,18 @@
+{% extends "JAAppBundle:Technology:layout.html.twig" %}
+
+{% block title %} {{ parent() }} - New Technology {% endblock %}
+
+{% block content %}
+    <h1>New game: {{ path('api_1_new_technology') }}</h1>
+
+    <hr/>
+
+    {% if (form is defined) %}
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+
+        <button type="submit">Submit</button>
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "JAAppBundle:Technology:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Get Technologies {% endblock %}
+
+{% block content %}
+    <h1>Get technologies: {{ path('api_1_get_technologies') }}</h1>
+
+    <hr/>
+
+    <p>Technology Collection :</p>
+    <ul>
+        {% for technology in technologies %}
+            <li>
+                <a href="{{ path('api_1_get_technology', {slug: technology.slug}) }}">
+                    {{ technology.name }}
+                </a>
+
+                {% include "JAAppBundle:Technology:actions.html.twig" %}
+            </li>
+        {% else %}
+            <li>No technologies</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

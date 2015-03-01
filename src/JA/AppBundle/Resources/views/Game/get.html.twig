@@ -20,12 +20,14 @@
         <li>
             <b>technologies</b> :
             <ul>
-            {% for technologie in game.technologies %}
+            {% for technology in game.technologies %}
                 <li>
-                    <a href="#" title="The link is coming soon">
-                        {{ technologie.name }}
+                    <a href="{{ path('api_1_get_technology', {'slug': technology.slug}) }}">
+                        {{ technology.name }}
                     </a>
                 </li>
+            {% else %}
+                <li>No techs specified :(</li>
             {% endfor %}
             </ul>
         </li>

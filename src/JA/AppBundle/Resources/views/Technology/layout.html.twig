@@ -1,0 +1,22 @@
+{% extends "JAAppBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} - Technologies {%endblock %}
+
+{% block subbody %}
+
+    <div class="block">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="block">
+        <h1>Links / Actions :</h1>
+        <hr/>
+        <ul>
+            {% if is_granted('create', 'JA\\AppBundle\\Entity\\Technology') %}
+            <li><a href="{{ path('api_1_new_technology') }}">New technology</a></li>
+            {% endif %}
+            <li><a href="{{ path('api_1_get_technologies') }}">All technologies</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

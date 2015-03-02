@@ -1,0 +1,24 @@
+{% extends "JAAppBundle:News:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Get News {% endblock %}
+
+{% block content %}
+    <h1>Get news: {{ path('api_1_cget_news') }}</h1>
+
+    <hr/>
+
+    <p>News Collection :</p>
+    <ul>
+        {% for one_news in news %}
+            <li>
+                <a href="{{ path('api_1_get_news', {slug: one_news.slug}) }}">
+                    {{ one_news.title }}
+                </a>
+
+                {% include "JAAppBundle:News:actions.html.twig" %}
+            </li>
+        {% else %}
+            <li>No news</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

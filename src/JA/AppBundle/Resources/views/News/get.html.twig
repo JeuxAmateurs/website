@@ -1,0 +1,68 @@
+{% extends "JAAppBundle:News:layout.html.twig" %}
+
+{% block title %} {{ parent() }} - Get News {% endblock %}
+
+{% block content %}
+    <h1>
+        Get News : {{ path('api_1_get_news', {'slug' : one_news.slug}) }}
+
+        {% include "JAAppBundle:News:actions.html.twig" %}
+    </h1>
+    <hr/>
+
+    <p>News Entity :</p>
+    <ul>
+        <li><b>id</b> : {{ one_news.id }}</li>
+        <li><b>title</b> : {{ one_news.title }}</li>
+        <li><b>slug</b> : {{ one_news.slug }}</li>
+        <li>
+            <b>content</b> :
+            {% if one_news.content is not empty %}
+                <hr/>
+                {{ one_news.content | markdown }}
+                <hr/>
+            {% else %}
+                Nope
+            {% endif %}
+        </li>
+        <li>
+            <b>authors</b> :
+            <ul>
+            {% for author in one_news.authors %}
+                <li>
+                    <a href="{{ path('api_1_get_user', {'username': author.username}) }}">
+                        {{ author.username }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        </li>
+        <li><b>createdAt</b> : {{ one_news.createdAt | date }}</li>
+        <li><b>updatedAt</b> : {{ one_news.updatedAt | date }}</li>
+        <li>
+            <b>game</b> :
+            {% if one_news.game is not null %}
+                <a href="{{ path('api_1_get_game', {'slug': one_news.game.slug}) }}">
+                    {{ one_news.game.name }}
+                </a>
+            {% else %}
+                Nope
+            {% endif %}
+        </li>
+        <li>
+            <b>mentionedGames</b> :
+            <ul>
+            {% for game in one_news.mentionedGames %}
+                <li>
+                    <a href="{{ path('api_1_get_game', {'slug': game.slug}) }}">
+                        {{ game.name }}
+                    </a>
+                </li>
+            {% else %}
+                <li>No mentioned game :(</li>
+            {% endfor %}
+            </ul>
+        </li>
+    </ul>
+
+{% endblock %}

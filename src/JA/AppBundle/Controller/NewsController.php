@@ -2,6 +2,7 @@
 
 namespace JA\AppBundle\Controller;
 
+use JA\AppBundle\Entity\News;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\Util\Codes;
@@ -18,7 +19,7 @@ use JA\AppBundle\Exception\InvalidFormException;
 class NewsController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * Get all the news. @todo: doc !
+     * Get all the news.
      * Empty list if there's no news
      *
      * @ApiDoc(
@@ -45,11 +46,11 @@ class NewsController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * Get single News. @todo: doc !
+     * Get single News.
      *
      * @ApiDoc(
      *   resource = true,
-     *   description = "Gets a news for a given id",
+     *   description = "Gets a news for a given slug",
      *   output = "JA\AppBundle\Entity\News",
      *   statusCodes = {
      *     200 = "Returned when successful",
@@ -58,19 +59,19 @@ class NewsController extends FOSRestController implements ClassResourceInterface
      * )
      *
      * @Rest\View(
-     *      templateVar="news"
+     *      templateVar="one_news"
      * )
      *
-     * @param unsigned int $id the news id
+     * @param string $slug the news slug
      *
      * @return News
      *
      * @throws NotFoundHttpException when news not exist
      */
-    public function getAction($id)
+    public function getAction($slug)
     {
-        if(!($news = $this->getNewsHandler()->get($id))) {
-            throw $this->createNotFoundException("The resource '". $id ."' was not found.");
+        if(!($news = $this->getNewsHandler()->get($slug))) {
+            throw $this->createNotFoundException("The resource '". $slug ."' was not found.");
         }
 
         return $news;
@@ -101,7 +102,7 @@ class NewsController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * Create a news from submitted data. @todo: doc !
+     * Create a news from submitted data.
      *
      * @ApiDoc(
      *   resource = true,
@@ -136,12 +137,13 @@ class NewsController extends FOSRestController implements ClassResourceInterface
         try
         {
             // News handler create a News.
+            /** @var News $newNews */
             $newNews = $this->getNewsHandler()->post(
                 $request->request->get(NewsType::NAME)
             );
 
             $routeOptions = array(
-                'id' => $newNews->getId()
+                'slug' => $newNews->getSlug()
             );
 
             $view = $this->routeRedirectView('api_1_get_news', $routeOptions, Codes::HTTP_CREATED);
@@ -168,16 +170,16 @@ class NewsController extends FOSRestController implements ClassResourceInterface
      *
      * @Rest\View()
      *
-     * @param unsigned int $id The news id to edit
+     * @param string $slug The news slug to edit
      *
      * @return FormTypeInterface
      *
      * @throws NotFoundHttpException
      */
-    public function editAction($id)
+    public function editAction($slug)
     {
-        if(!$news = $this->getNewsHandler()->get($id))
-            throw $this->createNotFoundException('The resource ' . $id . ' was not found.');
+        if(!$news = $this->getNewsHandler()->get($slug))
+            throw $this->createNotFoundException('The resource ' . $slug . ' was not found.');
 
         /*if(false === $this->get('security.authorization_checker')->isGranted('edit', $game))
             throw $this->createAccessDeniedException();
@@ -189,7 +191,7 @@ class NewsController extends FOSRestController implements ClassResourceInterface
             array(
                 'action' => $this->generateUrl(
                         'api_1_put_news',
-                        array('id' => $news->getId())
+                        array('slug' => $news->getSlug())
                     ),
                 'method' => 'put'
             )
@@ -199,7 +201,7 @@ class NewsController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * Edit or create a news from submitted data. @todo: doc !
+     * Edit or create a news from submitted data.
      *
      * @ApiDoc(
      *   resource = true,
@@ -220,17 +222,17 @@ class NewsController extends FOSRestController implements ClassResourceInterface
      * )
      *
      * @param Request $request
-     * @param string $id The identifiers of the news
+     * @param string $slug The slug of the news
      *
      * @return FormTypeInterface|View
      */
-    public function putAction(Request $request, $id)
+    public function putAction(Request $request, $slug)
     {
         try
         {
             // if data doesn't exist, we create it
             $formName = $request->request->get(NewsType::NAME);
-            if(!$news = $this->getNewsHandler()->get($id))
+            if(!$news = $this->getNewsHandler()->get($slug))
             {
                 $code = Codes::HTTP_CREATED;
                 $news = $this->getNewsHandler()->post(
@@ -249,7 +251,7 @@ class NewsController extends FOSRestController implements ClassResourceInterface
             }
 
             $routeOptions = array(
-                'id' => $news->getId()
+                'slug' => $news->getSlug()
             );
 
             $view = $this->routeRedirectView('api_1_get_news', $routeOptions, $code);
@@ -265,7 +267,7 @@ class NewsController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * Edit partially a News from submitted data. @todo: doc !
+     * Edit partially a News from submitted data.
      *
      * @ApiDoc(
      *   resource = true,
@@ -286,18 +288,18 @@ class NewsController extends FOSRestController implements ClassResourceInterface
      * )
      *
      * @param Request $request
-     * @param string $id The news identifier
+     * @param string $slug The news' slug
      *
      * @return FormTypeInterface|View
      *
      * @throws NotFoundHttpException
      */
-    public function patchAction(Request $request, $id)
+    public function patchAction(Request $request, $slug)
     {
         try
         {
             // if data doesn't exist, we create it
-            if($news = $this->getNewsHandler()->get($id))
+            if($news = $this->getNewsHandler()->get($slug))
             {
                 /*if(false === $this->get('security.authorization_checker')->isGranted('edit', $game))
                     throw $this->createAccessDeniedException();*/
@@ -308,10 +310,10 @@ class NewsController extends FOSRestController implements ClassResourceInterface
                 );
             }
             else
-                throw $this->createNotFoundException('The resource ' . $id . ' was not found.');
+                throw $this->createNotFoundException('The resource ' . $slug . ' was not found.');
 
             $routeOptions = array(
-                'id' => $news->getId()
+                'slug' => $news->getSlug()
             );
 
             $view = $this->routeRedirectView('api_1_get_news', $routeOptions, Codes::HTTP_NO_CONTENT);
@@ -325,7 +327,7 @@ class NewsController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * Get a form to delete a news. @todo: doc !
+     * Get a form to delete a news.
      *
      * @ApiDoc(
      *   resource = false,
@@ -342,37 +344,37 @@ class NewsController extends FOSRestController implements ClassResourceInterface
      *      templateVar="form"
      * )
      *
-     * @param unsigned int $id The News identifier
+     * @param string $slug The news' slug
      *
      * @return FormTypeInterface|View
      *
      * @throws NotFoundHttpException
      */
-    public function removeAction($id)
+    public function removeAction($slug)
     {
-        if(!$news = $this->getNewsHandler()->get($id))
+        if(!$news = $this->getNewsHandler()->get($slug))
             $this->createNotFoundException();
 
         /*if(false === $this->get('security.authorization_checker')->isGranted('delete', $game))
             throw $this->createAccessDeniedException();*/
 
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($slug);
 
         return $deleteForm;
     }
 
-    private function createDeleteForm($id)
+    private function createDeleteForm($slug)
     {
         return $this->createFormBuilder()
             ->add('Delete', 'submit')
-            ->setAction($this->generateUrl('api_1_delete_news', array('id' => $id)))
+            ->setAction($this->generateUrl('api_1_delete_news', array('slug' => $slug)))
             ->setMethod('delete')
             ->getForm()
             ;
     }
 
     /**
-     * Delete a news. @todo: doc !
+     * Delete a news.
      *
      * @ApiDoc(
      *   resource = true,
@@ -388,15 +390,15 @@ class NewsController extends FOSRestController implements ClassResourceInterface
      *      template="JAAppBundle:News:remove.html.twig",
      * )
      *
-     * @param unsigned int $id The slug to identify the game
+     * @param string $slug The slug to identify the game
      *
      * @return FormTypeInterface|View
      *
      * @throws NotFoundHttpException
      */
-    public function deleteAction($id)
+    public function deleteAction($slug)
     {
-        if($news = $this->getNewsHandler()->get($id))
+        if($news = $this->getNewsHandler()->get($slug))
         {
             /*if(false === $this->get('security.authorization_checker')->isGranted('delete', $game))
             {

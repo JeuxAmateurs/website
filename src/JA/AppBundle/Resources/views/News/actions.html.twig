@@ -1,0 +1,11 @@
+{% if is_granted('edit', one_news) %}
+    <a href="{{ path('api_1_edit_news', {'slug' : one_news.slug}) }}">
+        [edit]
+    </a>
+{% endif %}
+
+{% if is_granted('delete', one_news) %}
+    <a href="{{ path('api_1_remove_news', {'slug' : one_news.slug}) }}">
+        [remove]
+    </a>
+{% endif %}

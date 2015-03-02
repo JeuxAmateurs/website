@@ -45,9 +45,9 @@ class NewsHandler implements NewsHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function get($id)
+    public function get($slug)
     {
-        $news = $this->repository->find($id);
+        $news = $this->repository->findOneBy(array('slug' => $slug));
 
         return $news;
     }

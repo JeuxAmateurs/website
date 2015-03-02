@@ -3,7 +3,6 @@
 namespace JA\AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -83,7 +82,6 @@ class Game implements GameInterface
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="News", mappedBy="game")
-     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      */
     protected $ownedNews;
 
@@ -268,8 +266,8 @@ class Game implements GameInterface
     /**
      * Add ownedNews
      *
-     * @param News $ownedNews
-     * @return Game
+     * @param NewsInterface $ownedNews
+     * @return Game $this
      */
     public function addOwnedNews(NewsInterface $ownedNews)
     {
@@ -282,7 +280,7 @@ class Game implements GameInterface
     /**
      * Remove ownedNews
      *
-     * @param News $ownedNews
+     * @param NewsInterface $ownedNews
      */
     public function removeOwnedNews(NewsInterface $ownedNews)
     {
@@ -293,7 +291,7 @@ class Game implements GameInterface
     /**
      * Get ownedNews
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getOwnedNews()
     {
@@ -303,7 +301,7 @@ class Game implements GameInterface
     /**
      * Add referencedNews
      *
-     * @param News $referencedNews
+     * @param NewsInterface $referencedNews
      * @return Game
      */
     public function addReferencedNews(NewsInterface $referencedNews)
@@ -317,7 +315,7 @@ class Game implements GameInterface
     /**
      * Remove referencedNews
      *
-     * @param News $referencedNews
+     * @param NewsInterface $referencedNews
      */
     public function removeReferencedNews(NewsInterface $referencedNews)
     {
@@ -328,7 +326,7 @@ class Game implements GameInterface
     /**
      * Get referencedNews
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getReferencedNews()
     {

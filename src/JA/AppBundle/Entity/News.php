@@ -37,9 +37,17 @@ class News implements NewsInterface
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(name="slug", type="string", unique=true, length=255)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="content", type="text")
      */
-    private $content;
+    protected $content;
 
     /**
      * @var \DateTime
@@ -87,21 +95,15 @@ class News implements NewsInterface
      *  inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      * )
      */
-    private $authors;
-
-    /*
-     * @var string
-     *
-     * @ORM\ManyToMany(targetEntity="Team", mappedBy="news")
-     */
-    //private $authorTeam;
+    protected $authors;
 
     /**
      * @var Game
      *
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="ownedNews")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      */
-    private $game;
+    protected $game;
 
     /**
      * @var ArrayCollection
@@ -112,7 +114,7 @@ class News implements NewsInterface
      *  inverseJoinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
      * )
      */
-    private $mentionedGames;
+    protected $mentionedGames;
 
 
     public function __construct()
@@ -133,7 +135,7 @@ class News implements NewsInterface
     }
 
     /**
-     * Set "title
+     * Set title
      *
      * @param string $title
      * @return News
@@ -146,13 +148,23 @@ class News implements NewsInterface
     }
 
     /**
-     * Get "title
+     * Get title
      *
      * @return string 
      */
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -268,47 +280,14 @@ class News implements NewsInterface
     }
 
     /**
-     * Get authors
-     *
-     * @return User array
-     */
-    public function getAuthors()
-    {
-        return $this->authors;
-    }
-
-    /**
-     * Set authorTeam
-     *
-     * @param string $authorTeam
-     * @return NewsInterface
-     */
-    public function setAuthorTeam($authorTeam)
-    {
-        $this->authorTeam = $authorTeam;
-
-        return $this;
-    }
-
-    /**
-     * Get authorTeam
-     *
-     * @return string 
-     */
-    public function getAuthorTeam()
-    {
-        return $this->authorTeam;
-    }
-
-    /**
      * Set game
      *
      * @param GameInterface $game
-     * @return NewsInterface
+     * @return News
      */
     public function setGame(GameInterface $game)
     {
-        $this->$game = $game;
+        $this->game = $game;
 
         return $this;
     }
@@ -324,29 +303,13 @@ class News implements NewsInterface
     }
 
     /**
-     * Set createdAt
+     * Get authors
      *
-     * @param \DateTime $createdAt
-     * @return NewsInterface
+     * @return ArrayCollection
      */
-    public function setCreatedAt($createdAt)
+    public function getAuthors()
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return NewsInterface
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
+        return $this->authors;
     }
 
     /**
@@ -372,6 +335,16 @@ class News implements NewsInterface
     {
         $author->addOwnedNews($this);
         $this->authors->removeElement($author);
+    }
+
+    /**
+     * Get mentionedGames
+     *
+     * @return ArrayCollection
+     */
+    public function getMentionedGames()
+    {
+        return $this->mentionedGames;
     }
 
     /**

@@ -42,10 +42,9 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface, C
 
         $game3 = new $gameClass();
         $game3->setName('Protal 2');
-        $game3->addTechnology($this->getReference('tech'));
-        $game3->addTechnology($this->getReference('tech2'));
         $user->addOwnedGame($game3);
         $manager->persist($game3);
+
         $manager->persist($user);
 
 

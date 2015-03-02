@@ -1,7 +1,7 @@
 <?php
 
 namespace JA\AppBundle\Model;
-use JA\AppBundle\Model\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * News Interface
@@ -106,28 +106,6 @@ interface NewsInterface
     public function getComments();
 
     /**
-     * Get authors
-     *
-     * @return UserInterface array
-     */
-    public function getAuthors();
-
-    /**
-     * Set authorTeam
-     *
-     * @param string $authorTeam
-     * @return NewsInterface
-     */
-    public function setAuthorTeam($authorTeam);
-
-    /**
-     * Get authorTeam
-     *
-     * @return string
-     */
-    public function getAuthorTeam();
-
-    /**
      * Set game
      *
      * @param GameInterface $game
@@ -143,20 +121,11 @@ interface NewsInterface
     public function getGame();
 
     /**
-     * Set createdAt
+     * Get authors
      *
-     * @param \DateTime $createdAt
-     * @return NewsInterface
+     * @return ArrayCollection
      */
-    public function setCreatedAt($createdAt);
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return NewsInterface
-     */
-    public function setUpdatedAt($updatedAt);
+    public function getAuthors();
 
     /**
      * Add authors
@@ -172,6 +141,13 @@ interface NewsInterface
      * @param UserInterface $author
      */
     public function removeAuthor(UserInterface $author);
+
+    /**
+     * Get mentionedGames
+     *
+     * @return ArrayCollection
+     */
+    public function getMentionedGames();
 
     /**
      * Add mentionedGames

@@ -1,0 +1,13 @@
+{% extends "JAAppBundle:News:layout.html.twig" %}
+
+{% block title "Remove News" %}
+
+{% block content %}
+    <h1>Remove news: {{ path('api_1_remove_news', {slug: slug}) }}</h1>
+
+    <hr/>
+
+    {% if (form is defined) %}
+        {{ form(form) }}
+    {% endif %}
+{% endblock %}

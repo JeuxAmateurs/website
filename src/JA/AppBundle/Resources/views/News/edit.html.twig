@@ -1,0 +1,17 @@
+{% extends "JAAppBundle:News:layout.html.twig" %}
+
+{% block title "Edit News" %}
+
+{% block content %}
+    <h1>Edit news: {{ path('api_1_edit_news', {slug: slug}) }}</h1>
+
+    <hr/>
+
+    {% if (form is defined) %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button type="submit">Submit</button>
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

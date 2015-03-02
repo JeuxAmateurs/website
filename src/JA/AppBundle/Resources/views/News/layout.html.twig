@@ -1,0 +1,27 @@
+{% extends "JAAppBundle::layout.html.twig" %}
+
+{% block title %} {{ parent() }} - News {%endblock %}
+
+{% block head %}
+    <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
+    {# <link rel="stylesheet" href="{{ asset('bundles/acmedemo/css/demo.css') }}" /> #}
+{% endblock %}
+
+{% block subbody %}
+
+    <div class="block">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="block">
+        <h1>Links / Actions :</h1>
+        <hr/>
+        <ul>
+            {% if is_granted('create', 'JA\\AppBundle\\Entity\\News') %}
+            <li><a href="{{ path('api_1_new_news') }}">New news</a></li>
+            {% endif %}
+            <li><a href="{{ path('api_1_cget_news') }}">All news</a></li>
+        </ul>
+    </div>
+
+{% endblock %}

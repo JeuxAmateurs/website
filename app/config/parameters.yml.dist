@@ -19,3 +19,5 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    assets_base_url: "http://localhost:8001"

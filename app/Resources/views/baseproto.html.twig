@@ -4,8 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}"/>
     <meta name="robots" content="noindex,nofollow" />
     <title>{% block title 'JeuxAmateurs' %}</title>
-    <link href="{{ asset('bundles/framework/css/structure.css', absolute=true) }}" rel="stylesheet" type="text/css" media="all" />
-    <link href="{{ asset('bundles/framework/css/body.css', absolute=true) }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('bundles/framework/css/structure.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('bundles/framework/css/body.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('assets/commons.css') }}" rel="stylesheet" type="text/css" media="all" />
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -48,6 +49,13 @@
         {% endfor %}
 
         {% block body %}{% endblock %}
+
+		{% if app.environment == "frontdev" %}
+		<script src="{{ asset('webpack-dev-server.js') }}"></script>
+		{% endif %}
+		
+		<script src="{{ asset('assets/commons.js') }}"></script>
+		{% block javascripts %}{% endblock %}
     </div>
 </div>
 </body>

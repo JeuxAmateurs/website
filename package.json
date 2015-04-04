@@ -1,0 +1,21 @@
+{
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/JeuxAmateurs/website.git"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.4",
+    "css-loader": "^0.9.1",
+    "extract-text-webpack-plugin": "^0.5.0",
+    "file-loader": "^0.8.1",
+    "less-loader": "^2.2.0",
+    "node-sass": "^3.0.0-beta.4",
+    "sass-loader": "^1.0.1",
+    "style-loader": "^0.9.0",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.7.3"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^1.8.0"
+  }
+}

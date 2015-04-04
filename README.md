@@ -42,3 +42,18 @@ Si vous souhaitez commencer avec des données fictives, vous pouvez charger les 
 Si vous souhaitez contribuer, vérifiez bien qu'il n'y ait pas de régression avant de proposer une pull request.
 
     php bin/phpunit
+    
+4) Compiler les fichiers statiques (Javascript et Sass)
+-------------------------------------------------------
+
+Afin de contribuer au visuel du site, vous devez installer **webpack** et certaines dépendances. Pour cela, installez NPM et faites : ```npm install```.
+Webpack a l'avantage de compiler les fichiers modifiés en temps réel (watch) en mémoire et de les remplacer à chaud (grâce au hot loader). Afin d'utiliser ce système, il vous faut changer d'environnement (app_frontdev.php) et avoir le paramètre ```assets_base_url``` rempli :
+
+    # Si vous utilisez le serveur intégré de PHP
+    php bin/console server:run -r web/app_frontdev.php
+    # sinon rendez-vous sur l'URL http://.../web/app_frontdev.php/
+    
+    # Et enfin, on lance le serveur webpack
+    webpack-dev-server
+    
+Afin de sauvegarder vos changements, il faut compiler et enregistrer sur le disque grâce à la commande ```webpack``` tout simplement.

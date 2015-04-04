@@ -12,3 +12,8 @@ bin/
 !bin/console
 /composer.phar
 .idea/
+
+# Front end ignore
+*.map
+node_modules/
+npm-debug.log

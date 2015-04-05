@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/JeuxAmateurs/website.svg?branch=master)](https://travis-ci.org/JeuxAmateurs/website)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/JeuxAmateurs/website/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/JeuxAmateurs/website/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/JeuxAmateurs/website/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/JeuxAmateurs/website/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d149893e-b9ec-4689-ae99-3363332b1aae/mini.png)](https://insight.sensiolabs.com/projects/d149893e-b9ec-4689-ae99-3363332b1aae)
 
 JeuxAmateurs

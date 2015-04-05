@@ -131,7 +131,7 @@ class GameController extends FOSRestController implements ClassResourceInterface
     {
         if(false === $this->get('security.authorization_checker')->isGranted('create', 'JA\AppBundle\Entity\Game'))
         {
-            $this->get('logger')->debug('{user} can\'t create game.', array('user' => $this->get('security.token_storage')->getToken()->getUser()->getUsername()));
+            $this->get('logger')->debug('{user} can\'t create game.', array('user' => $this->get('security.token_storage')->getToken()->getUser()));
             throw $this->createAccessDeniedException();
         }
 

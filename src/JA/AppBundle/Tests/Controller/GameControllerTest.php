@@ -22,19 +22,15 @@ class GameControllerTest extends WebTestCase
 
     public function setUp()
     {
-        $this->auth = array(
-            'PHP_AUTH_USER' => 'IAmDev',
-            'PHP_AUTH_PW' => 'passdev',
-        );
-
-        $this->client = static::createClient();
+        $this->client = $this->makeClient(false, array('HTTP_HOST' => 'api.' . $this->getContainer()->getParameter('domain')));
     }
 
-    public function authenticate()
+    public function authenticate($username = 'Jean-Michel', $password = 'password')
     {
         // we need data to authenticate
         $this->loadFixtures(array('JA\AppBundle\DataFixtures\ORM\LoadUserData'));
-        $this->client->setServerParameters($this->auth);
+        $this->client->setServerParameter('PHP_AUTH_USER', $username);
+        $this->client->setServerParameter('PHP_AUTH_PW', $password);
     }
 
     public function loadGames()
@@ -207,12 +203,12 @@ class GameControllerTest extends WebTestCase
      */
     public function testJsonDeleteGame()
     {
-        $this->authenticate();
+        $this->authenticate('IAmDev', 'passdev');
         $games = $this->loadGames();
 
         // find a game created by user
         $gamesByUser = array_filter($games, function ($item) {
-            return $item->getOwner()->getUsername() == $this->auth['PHP_AUTH_USER'];
+            return $item->getOwner()->getUsername() == $this->client->getServerParameter('PHP_AUTH_USER');
         });
         if(empty($gamesByUser)) {
             $this->markTestSkipped('You need an user with games to perform a delete');

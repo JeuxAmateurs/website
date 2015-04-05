@@ -1,7 +1,7 @@
 ja_app:
     type: rest
     resource: "@JAAppBundle/Resources/config/routing.yml"
-    prefix:   /api
+    prefix:   /
 
 api_doc:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"

@@ -17,7 +17,7 @@ security:
             security: false
 
         api:
-            pattern: ^/api
+            request_matcher: ja_app.api_request_matcher
             anonymous: true
             form_login: false
             provider: fos_userbundle

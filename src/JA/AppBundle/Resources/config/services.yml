@@ -12,6 +12,9 @@ parameters:
     ja_app.profile.form.type.class: JA\AppBundle\Form\Type\ProfileFormType
 
 services:
+    ja_app.api_request_matcher:
+        class: JA\AppBundle\Security\ApiRequestMatcher
+        arguments: [@kernel]
     ja_app.user.handler:
         class: %ja_app.user.handler.class%
         arguments: [@doctrine.orm.entity_manager, %ja_app.user.class%]

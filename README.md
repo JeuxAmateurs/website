@@ -17,6 +17,9 @@ Le projet est basé sur Symfony2 et gère ses dépendances via l'outil Composer.
 
 Le second permettra d'accéder à l'API de JeuxAmateurs.
 
+Si comme moi, vous avez la flemme de mettre en place des virtual hosts, vous pouvez requêter l'API en dev (ou frontdev) en ajoutant ```_api=true&_format=json```
+à la fin de vos URLs dans votre client HTTP favori.
+
 2) Création de la base de données et de la structure
 ----------------------------------------------------
 

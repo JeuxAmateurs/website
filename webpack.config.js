@@ -4,7 +4,7 @@ var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require('path');
  
-var basedir = __dirname + '/src/JA/AppBundle/Resources/public/assets/';
+var basedir = __dirname + '/src/JA/AppBundle/Resources/assets/';
 
 var entry = {
   home: 'home',

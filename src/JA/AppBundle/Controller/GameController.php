@@ -71,9 +71,13 @@ class GameController extends FOSRestController implements ClassResourceInterface
      */
     public function getAction($slug)
     {
+        $this->get('logger')->info('Nous avons récupéré le logger');
+
         if(!($game = $this->getGameHandler()->get($slug))) {
             throw $this->createNotFoundException("The resource '". $slug ."' was not found.");
         }
+
+        $this->get('logger')->info($game->getSlug());
 
         return $game;
     }

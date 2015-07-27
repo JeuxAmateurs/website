@@ -28,3 +28,9 @@ JA\AppBundle\Entity\Game:
             recursion_groups:
                 add: [list]
                 remove: [details]
+        favoritesUsers:
+            expose: true
+            groups: [details, list]
+            recursion_groups:
+                add: [list]
+                remove: [details]

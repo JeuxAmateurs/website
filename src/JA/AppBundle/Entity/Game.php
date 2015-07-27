@@ -96,11 +96,19 @@ class Game implements GameInterface
      */
     protected $referencedNews;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="favoritesGames")
+     */
+    protected $favoritesUsers;
+
     public function  __construct()
     {
         $this->technologies = new ArrayCollection();
         $this->ownedNews = new ArrayCollection();
         $this->referencedNews = new ArrayCollection();
+        $this->favoritesUsers = new ArrayCollection();
     }
 
     /**
@@ -331,5 +339,43 @@ class Game implements GameInterface
     public function getReferencedNews()
     {
         return $this->referencedNews;
+    }
+
+    /**
+     * Return all users who marked the game as favorite
+     *
+     * @return ArrayCollection
+     */
+    public function getFavoritesUsers()
+    {
+        return $this->favoritesUsers;
+    }
+
+    /**
+     * Add a new user who marked the game as favorite
+     *
+     * @param User $user
+     */
+    public function addFavoriteUser(User $user)
+    {
+        $this->favoritesUsers->add($user);
+    }
+
+    /**
+     * The user doesn't favorize this game anymore
+     *
+     * @param User $user
+     */
+    public function removeFavoriteUser(User $user)
+    {
+        $this->favoritesUsers->removeElement($user);
+    }
+
+    /**
+     * Remove all users who marked the game as favorite
+     */
+    public function removeFavoritesUsers()
+    {
+        $this->favoritesUsers->clear();
     }
 }

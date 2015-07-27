@@ -12,3 +12,8 @@ JA\AppBundle\Entity\User:
             recursion_groups:
                 add: [list]
                 remove: [details]
+        favoritesGames:
+            groups: [Default]
+            recursion_groups:
+                add: [list]
+                remove: [details]

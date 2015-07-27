@@ -41,8 +41,9 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface, C
         $manager->persist($game2);
 
         $game3 = new $gameClass();
-        $game3->setName('Protal 2');
+        $game3->setName('Portal 2');
         $user->addOwnedGame($game3);
+        $user->addFavoriteGame($game3);
         $manager->persist($game3);
 
         $manager->persist($user);

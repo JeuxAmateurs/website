@@ -66,6 +66,13 @@ class User extends BaseUser implements UserInterface, AvatarInterface
      */
     protected $ownedNews;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Game", inversedBy="favoritesUsers")
+     */
+    protected $favoritesGames;
+
     public function __construct()
     {
         parent::__construct();
@@ -73,6 +80,7 @@ class User extends BaseUser implements UserInterface, AvatarInterface
         $this->skills = new ArrayCollection();
         $this->ownedGames = new ArrayCollection();
         $this->ownedNews = new ArrayCollection();
+        $this->favoritesGames = new ArrayCollection();
     }
 
     /**
@@ -224,5 +232,46 @@ class User extends BaseUser implements UserInterface, AvatarInterface
     public function getOwnedNews()
     {
         return $this->ownedNews;
+    }
+
+    /**
+     *
+     * Get all favorites games
+     *
+     * @return ArrayCollection
+     */
+    public function getFavoritesGames()
+    {
+        return $this->favoritesGames;
+    }
+
+    /**
+     * Add new favorite game
+     *
+     * @param Game $newGame
+     */
+    public function addFavoriteGame(Game $favGame)
+    {
+        $this->favoritesGames->add($favGame);
+        $favGame->addFavoriteUser($this);
+    }
+
+    /**
+     * Remove a game from favorites
+     *
+     * @param Game $favGame
+     */
+    public function removeFavoriteGame(Game $favGame)
+    {
+        $this->favoritesGames->removeElement($favGame);
+        $favGame->removeFavoriteUser($this);
+    }
+
+    /**
+     * Remove all games from favorites
+     */
+    public function removeFavoritesGames()
+    {
+        $this->favoritesGames->clear();
     }
 }

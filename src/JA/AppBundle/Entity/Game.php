@@ -64,8 +64,8 @@ class Game implements GameInterface
      *
      * @ORM\ManyToMany(targetEntity="Technology", inversedBy="games", cascade={"persist"})
      * @ORM\JoinTable(name="ja_games_technologies",
-     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id")},
+     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id", onDelete="CASCADE")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id", onDelete="CASCADE")},
      * )
      */
     private $technologies;
@@ -74,7 +74,7 @@ class Game implements GameInterface
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="ownedGames")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")//, nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")//, nullable=false)
      */
     protected $owner;
 
@@ -100,6 +100,10 @@ class Game implements GameInterface
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="User", mappedBy="favoritesGames")
+     * @ORM\JoinTable(name="ja_user_favorite_games",
+     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id", onDelete="CASCADE")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
+     * )
      */
     protected $favoritesUsers;
 

@@ -70,6 +70,10 @@ class User extends BaseUser implements UserInterface, AvatarInterface
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Game", inversedBy="favoritesUsers")
+     * @ORM\JoinTable(name="ja_user_favorite_games",
+     *  joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id", onDelete="CASCADE")},
+     * )
      */
     protected $favoritesGames;
 

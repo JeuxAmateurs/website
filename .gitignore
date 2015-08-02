@@ -1,5 +1,6 @@
 /web/bundles/
-/app/bootstrap.php.cache
+/var/bootstrap.php.cache
+/var/SymfonyRequirements.php
 /var/cache/*
 /app/config/parameters.yml
 /phpunit.xml

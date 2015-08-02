@@ -5,12 +5,13 @@ namespace JA\AppBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use FOS\RestBundle\Util\Codes;
+use JA\AppBundle\Entity\Game;
+use JA\AppBundle\Entity\GameRepository;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\Controller\Annotations\Put;
-use FOS\RestBundle\Controller\Annotations\Get;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations\Delete;
 
 class UserController extends FOSRestController implements ClassResourceInterface
 {
@@ -74,6 +75,8 @@ class UserController extends FOSRestController implements ClassResourceInterface
     /**
      * Set a game among favorites
      *
+     * @Put("/user/favorites/{game}")
+     *
      * @ApiDoc(
      *   description = "Enable to mark the game as favorite",
      *   output = "",
@@ -84,41 +87,43 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *   }
      * )
      *
-     * @Put("/games/{slug}/favorite")
      *
-     * @param $slug
+     * @param $game The game's slug
+     *
+     * @return View
+     *
+     * @throws NotFoundHttpException
      */
-    public function putFavoriteAction($slug)
+    public function putFavoriteAction($game)
     {
+        if(false === $this->get('security.authorization_checker')->isGranted('favorite', 'JA\AppBundle\Entity\Game'))
+            throw $this->createAccessDeniedException();
+
         $user = $this->getUser();
 
-        if(!$user)
-            return new Response("Unauthorized action", 401);
-
-        $repository = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('JAAppBundle:Game');
-
-        $game = $repository->findOneBySlug($slug);
+        $repository = $this->getDoctrine()->getRepository('JAAppBundle:Game');
+        /** @var Game $game */
+        $game = $repository->findOneBySlug($game);
 
         if(!$game)
-            return new Response("Game not found", 404);
+            throw $this->createNotFoundException('Game ' . $game->getSlug() . ' not found');
 
-        //if the game is already among the favorites, we dont do it again
-       if($user->getFavoritesGames()->contains($game))
-           return new Response("No content", 204);
+        //if the game is already among the favorites, we don't do it again
+        if(!$user->getFavoritesGames()->contains($game)) {
+            $user->addFavoriteGame($game);
 
-        $user->addFavoriteGame($game);
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($user);
+            $em->flush();
+        }
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        $em->persist($user);
-        $em->flush();
-
-        return new Response("No content", 204);
+        return $this->routeRedirectView('api_1_get_game', array('slug' => $game->getSlug()), Codes::HTTP_NO_CONTENT);
     }
 
     /**
      * Unset a game from favorites
+     *
+     * @Delete("/user/favorites/{game}")
      *
      * @ApiDoc(
      *   description = "Enable to remove the game from favorites",
@@ -130,37 +135,31 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *   }
      * )
      *
-     * @Put("/games/{slug}/favorite-remove")
+     * @param $game The game's slug
      *
-     * @param $slug
+     * @return View
      */
-    public function putFavoriteRemoveAction($slug)
+    public function deleteFavoriteAction($game)
     {
+        if(false === $this->get('security.authorization_checker')->isGranted('favorite', 'JA\AppBundle\Entity\Game'))
+            throw $this->createAccessDeniedException();
+
         $user = $this->getUser();
 
-        if(!$user)
-            return new Response("Unauthorized action", 401);
-
-        $repository = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('JAAppBundle:Game');
-
-        $game = $repository->findOneBySlug($slug);
-
-        if(!$game)
-            return new Response("Game not found", 404);
+        $repository = $this->getDoctrine()->getRepository('JAAppBundle:Game');
+        /** @var Game $game */
+        $game = $repository->findOneBySlug($game);
 
         //if the game is not among the favorites, we do nothing
-        if(!$user->getFavoritesGames()->contains($game))
-            return new Response("No content", 204);
+        if ($user->getFavoritesGames()->contains($game)) {
+            $user->removeFavoriteGame($game);
 
-        $user->removeFavoriteGame($game);
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($user);
+            $em->flush();
+        }
 
-        $em = $this->get('doctrine.orm.entity_manager');
-        $em->persist($user);
-        $em->flush();
-
-        return new Response("No content", 204);
+        return $this->routeRedirectView('api_1_get_game', array('slug' => $game->getSlug()), Codes::HTTP_NO_CONTENT);
     }
 
     protected function getUserHandler()

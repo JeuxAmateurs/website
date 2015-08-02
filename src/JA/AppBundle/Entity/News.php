@@ -101,7 +101,7 @@ class News implements NewsInterface
      * @var Game
      *
      * @ORM\ManyToOne(targetEntity="Game", inversedBy="ownedNews")
-     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
+     * @ORM\JoinColumn(onDelete="SET NULL") // when the game is deleted, the news still stays
      */
     protected $game;
 
@@ -110,9 +110,9 @@ class News implements NewsInterface
      *
      * @ORM\ManyToMany(targetEntity="Game", mappedBy="referencedNews")
      * @ORM\JoinTable(name="ja_news_mentioned_games",
-     *  joinColumns={@ORM\JoinColumn(name="news_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
-     * )
+     *  joinColumns={@ORM\JoinColumn(name="news_id", referencedColumnName="id", onDelete="CASCADE")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id", onDelete="CASCADE")},
+     * ) // when the news or game is deleted, the join table is deleted
      */
     protected $mentionedGames;
 

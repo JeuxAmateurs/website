@@ -64,8 +64,8 @@ class Game implements GameInterface
      *
      * @ORM\ManyToMany(targetEntity="Technology", inversedBy="games", cascade={"persist"})
      * @ORM\JoinTable(name="ja_games_technologies",
-     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id")},
+     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id", onDelete="CASCADE")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="technology_id", referencedColumnName="id", onDelete="CASCADE")},
      * )
      */
     private $technologies;
@@ -74,7 +74,7 @@ class Game implements GameInterface
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="ownedGames")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")//, nullable=false)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")//, nullable=false)
      */
     protected $owner;
 
@@ -96,11 +96,23 @@ class Game implements GameInterface
      */
     protected $referencedNews;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="favoritesGames")
+     * @ORM\JoinTable(name="ja_user_favorite_games",
+     *  joinColumns={@ORM\JoinColumn(name="game_id", referencedColumnName="id", onDelete="CASCADE")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
+     * )
+     */
+    protected $favoritesUsers;
+
     public function  __construct()
     {
         $this->technologies = new ArrayCollection();
         $this->ownedNews = new ArrayCollection();
         $this->referencedNews = new ArrayCollection();
+        $this->favoritesUsers = new ArrayCollection();
     }
 
     /**
@@ -331,5 +343,43 @@ class Game implements GameInterface
     public function getReferencedNews()
     {
         return $this->referencedNews;
+    }
+
+    /**
+     * Return all users who marked the game as favorite
+     *
+     * @return ArrayCollection
+     */
+    public function getFavoritesUsers()
+    {
+        return $this->favoritesUsers;
+    }
+
+    /**
+     * Add a new user who marked the game as favorite
+     *
+     * @param User $user
+     */
+    public function addFavoriteUser(User $user)
+    {
+        $this->favoritesUsers->add($user);
+    }
+
+    /**
+     * The user doesn't favorize this game anymore
+     *
+     * @param User $user
+     */
+    public function removeFavoriteUser(User $user)
+    {
+        $this->favoritesUsers->removeElement($user);
+    }
+
+    /**
+     * Remove all users who marked the game as favorite
+     */
+    public function removeFavoritesUsers()
+    {
+        $this->favoritesUsers->clear();
     }
 }

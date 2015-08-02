@@ -17,6 +17,7 @@ class GameVoter extends AbstractVoter
     const CREATE = 'create';
     const EDIT   = 'edit';
     const DELETE   = 'delete';
+    const FAVORITE   = 'favorite';
 
     private $roleHierarchy;
     private $logger;
@@ -31,7 +32,7 @@ class GameVoter extends AbstractVoter
 
     protected function getSupportedAttributes()
     {
-        return array(self::VIEW, self::CREATE, self::EDIT, self::DELETE);
+        return array(self::VIEW, self::CREATE, self::EDIT, self::DELETE, self::FAVORITE);
     }
 
     protected function getSupportedClasses()
@@ -84,6 +85,9 @@ class GameVoter extends AbstractVoter
             $vote = self::ACCESS_DENIED;
 
             // No need for object here
+            if($attribute === self::FAVORITE)
+                return self::ACCESS_GRANTED;
+
             if($attribute === self::CREATE
                 && !in_array('ROLE_BANNED', $token->getUser()->getRoles(), true))
                 return self::ACCESS_GRANTED;

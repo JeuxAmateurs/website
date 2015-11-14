@@ -63,7 +63,7 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface, C
         $manager->persist($yorunohikage);
 
 
-        self::$games = array($game, $game2, $HRMP);
+        self::$games = array($game, $game2, $portal3, $HRMP);
 
         $manager->flush();
 

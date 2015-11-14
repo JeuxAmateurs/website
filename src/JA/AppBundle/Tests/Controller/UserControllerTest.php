@@ -54,6 +54,20 @@ class UserControllerTest extends WebTestCase
         return $this->client->getResponse();
     }
 
+    protected function jsonGetOneUserRequest($username)
+    {
+        $route = $this->getUrl('api_1_get_user', array(
+            'username' => $username
+        ));
+
+        $this->client->request(
+            'GET',
+            $route,
+            array('Accept' => 'application/json')
+        );
+        return $this->client->getResponse();
+    }
+
     /**
      * Test getting the entire user collection
      */
@@ -90,6 +104,22 @@ class UserControllerTest extends WebTestCase
 
         $decoded = json_decode($content, true);
         $this->assertTrue(empty($decoded) && is_array($decoded), 'The response is not an empty array as expected');
+    }
+
+    /**
+     * Test getting one user
+     */
+    public function testJsonGetOneUserAction()
+    {
+        $users = $this->loadUsers();
+
+        $response = $this->jsonGetOneUserRequest($users[0]->getUsername());
+
+        $this->assertJsonResponse($response, 200, false);
+        $content = $response->getContent();
+
+        $decoded = json_decode($content, true);
+        $this->assertEquals($users[0]->getId(), $decoded['id'], 'The expected is not the same as received');
     }
 
     /**

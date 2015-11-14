@@ -77,7 +77,7 @@ Let's finish with a cool image :
         $manager->persist($user);
         $manager->flush();
 
-        self::$users = array($admin, $dev, $user);
+        self::$users = array($admin, $dev, $user, $user1Team, $user2Team, $user3Team, $brindesable, $yorunohikage);
 
         $this->setReference('user-admin', $admin);
         $this->setReference('user-dev', $dev);

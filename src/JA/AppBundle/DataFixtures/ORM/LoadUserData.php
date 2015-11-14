@@ -18,8 +18,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
     protected $container;
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public function load(ObjectManager $manager)
     {
         $um = $this->container->get('fos_user.util.user_manipulator');
@@ -27,9 +27,14 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $admin = $um->create('SuperAdmin', 'SuperPassword', 'SuperAdmin@SuperWebsite.fr', true, true);
         $dev = $um->create('IAmDev', 'passdev', 'IAmDev@dev.fr', true, false);
         $user = $um->create('Jean-Michel', 'password', 'jean-michel@francis.fr', true, false);
+        $user1Team = $um->create('user1-team', 'password1', 'user1@team.fr', true, false);
+        $user2Team = $um->create('user2-team', 'password2', 'user2@team.fr', true, false);
+        $user3Team = $um->create('user3-team', 'password3', 'user3@team.fr', true, false);
+        $brindesable = $um->create('brindesable', 'brindesable', 'brindesable@switchcode.fr', true, false);
+        $yorunohikage = $um->create('yorunohikage', 'yorunohikage', 'yorunohikage@switchcode.fr', true, false);
 
         $dev->setBiography(
-"# My life #
+            "# My life #
 ## the beginning ##
 
 First, I was a baby. And then, I grew up ! I am an adult now. I want to do many things. Ok, you understand ? Good.
@@ -67,7 +72,9 @@ Let's finish with a cool image :
 
 ![Super description](https://www.lafleur.com/webfolder_download/85ea142142497609e6e21904274aeca8/normal.png)"
         );
+        $manager->persist($admin);
         $manager->persist($dev);
+        $manager->persist($user);
         $manager->flush();
 
         self::$users = array($admin, $dev, $user);
@@ -75,6 +82,11 @@ Let's finish with a cool image :
         $this->setReference('user-admin', $admin);
         $this->setReference('user-dev', $dev);
         $this->setReference('user', $user);
+        $this->setReference('user1-team', $user1Team);
+        $this->setReference('user2-team', $user2Team);
+        $this->setReference('user3-team', $user3Team);
+        $this->setReference('brindesable', $brindesable);
+        $this->setReference('yorunohikage', $yorunohikage);
     }
 
     public function setContainer(ContainerInterface $container = null)

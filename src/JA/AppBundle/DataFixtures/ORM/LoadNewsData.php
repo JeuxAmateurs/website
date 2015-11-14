@@ -18,22 +18,22 @@ class LoadNewsData extends AbstractFixture implements OrderedFixtureInterface, C
     private $container;
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public function load(ObjectManager $manager)
     {
         $newsClass = $this->container->getParameter('ja_app.news.class');
 
-        $user = $this->getReference('user-dev');
-        $game = $this->getReference('protal');
+        $brindesable = $this->getReference('brindesable');
+        $portal3 = $this->getReference('portal3');
 
-        $news1 = new $newsClass();
-        $news1->setTitle('Sortie de Protal 2');
-        $news1->setContent(
-"Hélo les amis, Apèrture scayence, oui dou ouate oui love bicose oui canne.
+        $newsPortal = new $newsClass();
+        $newsPortal->setTitle('Sortie de Portal 3');
+        $newsPortal->setContent(
+            "Hélo les amis, Apèrture scayence, oui dou ouate oui love bicose oui canne.
 Toudaye, aï ame goingue tou spik in French.
 
-Protal 2 : Un jeu made in China
+Protal 3 : Un jeu made in China
 ===============================
 
 Tout le monde sait que l'industrie vidéo-ludique chinoise prospère et réalise de meilleurs chiffres chaque année.
@@ -47,20 +47,19 @@ modique somme de 0,12€. Et comme ici à Vlave nous aimons la transparence fina
 - Le reste ira au PDG de Vlave
 "
         );
-        $news1->setSources('protal.cn, vlave.com');
-        $game->addOwnedNews($news1);
+        $newsPortal->setSources('portal3.cn, vlave.com');
+        $portal3->addOwnedNews($newsPortal);
         //$news1->setMedia('');
         //$news1->setComments('');
         //$news1->setAuthorTeam('');
-        $manager->persist($news1);
+        $manager->persist($newsPortal);
+        $manager->persist($portal3);
 
-        $manager->persist($game);
-
-        self::$news = array($news1);
+        self::$news = array($newsPortal);
 
         $manager->flush();
 
-        $this->addReference('protal-news', $news1);
+        $this->addReference('portal3-news', $newsPortal);
     }
 
     public function getOrder()

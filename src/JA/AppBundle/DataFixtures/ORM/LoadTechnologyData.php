@@ -18,17 +18,33 @@ class LoadTechnologyData extends AbstractFixture implements OrderedFixtureInterf
     private $container;
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public function load(ObjectManager $manager)
     {
         $techClass = $this->container->getParameter('ja_app.technology.class');
 
-        $tech = new $techClass();
-        $tech->setName('SFML');
-        $tech->setDescription('Simple and Fast Multimedia Library');
-        $tech->setContent(
-"SFML is multi-media
+        $html = new $techClass();
+        $html->setName('HTML');
+        $html->setDescription('Markup language for describing a web page.');
+        $html->setContent(
+            "Hypertext Markup Language"
+        );
+        $manager->persist($html);
+
+        $css = new $techClass();
+        $css->setName('CSS');
+        $css->setDescription('Makes your web page prettier.');
+        $css->setContent(
+            "Cascading Stylesheet"
+        );
+        $manager->persist($css);
+
+        $sfml = new $techClass();
+        $sfml->setName('SFML');
+        $sfml->setDescription('Simple and Fast Multimedia Library');
+        $sfml->setContent(
+            "SFML is multi-media
 ====================
 
 SFML provides a simple interface to the various components of your PC, to ease the development of games
@@ -46,20 +62,31 @@ SFML is multi-language
 SFML has official bindings for the C and .Net languages. And thanks to its active community,
 it is also available in many other languages such as Java, Ruby, Python, Go, and more."
         );
-        $manager->persist($tech);
+        $manager->persist($sfml);
 
-        $tech2 = new $techClass();
-        $tech2->setName('C++');
-        $tech2->setDescription('Fast compiled OO language !');
-        $tech2->setContent('I know you TL;DR the last example !');
-        $manager->persist($tech2);
+        $cpp = new $techClass();
+        $cpp->setName('C++');
+        $cpp->setDescription('Fast compiled OO language !');
+        $cpp->setContent('I know you TL;DR the last example !');
+        $manager->persist($cpp);
 
-        self::$technologies = array($tech, $tech2);
+        $awesomeTech = new $techClass();
+        $awesomeTech->setName('Awesome Tech');
+        $awesomeTech->setDescription('An awesome tech for making awesome videogames.');
+        $awesomeTech->setContent(
+            "Wow very awesome. Such tech."
+        );
+        $manager->persist($awesomeTech);
+
+        self::$technologies = array($html, $css, $sfml, $cpp, $awesomeTech);
 
         $manager->flush();
 
-        $this->addReference('tech', $tech);
-        $this->addReference('tech2', $tech2);
+        $this->addReference('html', $html);
+        $this->addReference('css', $css);
+        $this->addReference('sfml', $sfml);
+        $this->addReference('cpp', $cpp);
+        $this->addReference('awesome-tech', $awesomeTech);
     }
 
     public function getOrder()

@@ -18,44 +18,59 @@ class LoadGameData extends AbstractFixture implements OrderedFixtureInterface, C
     private $container;
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public function load(ObjectManager $manager)
     {
         $gameClass = $this->container->getParameter('ja_app.game.class');
 
         $user = $this->getReference('user-dev');
+        $brindesable = $this->getReference('brindesable');
+        $yorunohikage = $this->getReference('yorunohikage');
 
         $game = new $gameClass();
         $game->setName('My Game');
-        $game->addTechnology($this->getReference('tech')); // Tech will auto add the game
-        $game->addTechnology($this->getReference('tech2'));
+        $game->addTechnology($this->getReference('html')); // Tech will auto add the game
+        $game->addTechnology($this->getReference('css'));
+        $brindesable->addOwnedGame($game);
         $user->addOwnedGame($game);
         $manager->persist($game);
 
 
         $game2 = new $gameClass();
         $game2->setName('My Second Game');
-        $game2->addTechnology($this->getReference('tech2'));
+        $game2->addTechnology($this->getReference('html'));
+        $yorunohikage->addFavoriteGame($game2);
         $user->addOwnedGame($game2);
         $manager->persist($game2);
 
-        $game3 = new $gameClass();
-        $game3->setName('Portal 2');
-        $user->addOwnedGame($game3);
-        $user->addFavoriteGame($game3);
-        $manager->persist($game3);
+        $portal3 = new $gameClass();
+        $portal3->setName('Portal 3');
+        $portal3->addTechnology($this->getReference('cpp'));
+        $portal3->addTechnology($this->getReference('awesome-tech'));
+        $yorunohikage->addOwnedGame($portal3);
+        $manager->persist($portal3);
+
+        $HRMP = new $gameClass();
+        $HRMP->setName('8BitRobotMusicParty');
+        $HRMP->addTechnology($this->getReference('html'));
+        $user->addOwnedGame($HRMP);
+        $user->addFavoriteGame($HRMP);
+        $manager->persist($HRMP);
 
         $manager->persist($user);
+        $manager->persist($brindesable);
+        $manager->persist($yorunohikage);
 
 
-        self::$games = array($game, $game2, $game3);
+        self::$games = array($game, $game2, $HRMP);
 
         $manager->flush();
 
         $this->addReference('game', $game);
         $this->addReference('game2', $game2);
-        $this->addReference('protal', $game3);
+        $this->addReference('8RMP', $HRMP);
+        $this->addReference('portal3', $portal3);
     }
 
     public function getOrder()

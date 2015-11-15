@@ -57,3 +57,7 @@ services:
         class: JA\AppBundle\Form\Type\SkillType
         tags:
             - { name: form.type, alias: skill }
+    ja_app.exception_listener:
+            class: JA\AppBundle\EventListener\ExceptionListener
+            tags:
+                - { name: kernel.event_listener, event: kernel.exception }

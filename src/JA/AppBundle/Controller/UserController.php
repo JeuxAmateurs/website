@@ -9,6 +9,7 @@ use FOS\RestBundle\Util\Codes;
 use JA\AppBundle\Entity\Game;
 use JA\AppBundle\Entity\GameRepository;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\Delete;
